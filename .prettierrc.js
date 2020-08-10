@@ -1,1 +1,4 @@
-module.exports = { semi: false, singleQuote: true }
+module.exports = {
+  semi: false,
+  singleQuote: true
+}
