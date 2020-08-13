@@ -6,6 +6,9 @@ import VueAxios from 'vue-axios'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import $ from 'jquery'
+// import Viewer from 'v-viewer'
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
 
 import App from './App.vue'
 import router from './router'
@@ -15,6 +18,7 @@ window.$ = $
 Vue.config.productionTip = false
 Vue.component('Loading', Loading)
 Vue.use(VueAxios, axios)
+Vue.use(Viewer)
 Vue.filter('filter', (num) => {
   var parts = num.toString().split('.')
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')

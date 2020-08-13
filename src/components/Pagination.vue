@@ -15,9 +15,9 @@
           class="page-item"
           v-for="(item, index) in pages.total_pages"
           :key="index"
-          :class="{ active: pages.current_page === item }"
+          :class="{ active: pages.current_page === item, disabled: pages.current_page === item}"
         >
-          <a class="page-link" @click.prevent="pageNum(item)" href="#">
+          <a class="page-link" @click.prevent="pageNum(item)" href="#" >
             {{ item }}
           </a>
         </li>
@@ -57,9 +57,9 @@ export default {
       box-shadow: none;
     }
   }
-  .disabled {
-    cursor: not-allowed;
-  }
+  // .disabled {
+  //   cursor: not-allowed;
+  // }
   .active .page-link,
   .page-link:hover {
     color: #fff;

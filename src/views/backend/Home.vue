@@ -1,8 +1,6 @@
 <template>
   <div>
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between"
-    >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
       <a class="navbar-brand" href="#">Logo</a>
       <button
         class="navbar-toggler"
@@ -19,19 +17,16 @@
       <div class="text-center">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/products"
-              >產品列表</router-link
-            >
+            <router-link class="nav-link" to="/admin/products">產品列表</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/coupons"
-              >優惠券列表</router-link
-            >
+            <router-link class="nav-link" to="/admin/coupons">優惠券列表</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/orders"
-              >訂單列表</router-link
-            >
+            <router-link class="nav-link" to="/admin/orders">訂單列表</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/storages">圖片列表</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/">回首頁</router-link>
@@ -63,12 +58,16 @@ export default {
   },
   methods: {
     checkLogin () {
-      this.token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1')
+      this.token = document.cookie.replace(
+        /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
+        '$1'
+      )
       this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`
       const api = `${process.env.VUE_APP_APIPATH}/auth/check`
-      this.axios.post(api, {
-        api_token: this.token
-      })
+      this.axios
+        .post(api, {
+          api_token: this.token
+        })
         .then((res) => {
           // this.isLoading = false
           this.checkSuccess = true
