@@ -16,8 +16,8 @@ const routes = [
   // backend
   {
     path: '/admin',
-    name: 'Home',
-    component: () => import('../views/backend/Home.vue'),
+    name: 'Dashboard',
+    component: () => import('../views/backend/Dashboard.vue'),
     children: [
       {
         path: 'products',

@@ -1,5 +1,6 @@
 <template>
   <div class="adminStorages">
+    <Loading :active.sync="isLoading"></Loading>
     <div class="container">
       <table class="table">
         <thead>
@@ -12,7 +13,9 @@
           <tr>
               <th class="border-0 images"  v-for="(item) in storages" :key="item.id">
                 <viewer :options="options">
+                  <figure>
                 <img :src="item.path" class="img-fluid">
+                </figure>
                 </viewer>
                 <div class="imgHover" >
                   <span @click="openModal(item)">
@@ -24,7 +27,6 @@
         </tbody>
       </table>
     </div>
-    <Loading :active.sync="isLoading"></Loading>
         <!-- delete Modal -->
     <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
       <div class="modal-dialog" role="document">
@@ -36,7 +38,7 @@
                       </button>
               </div>
               <div class="modal-body">
-                <img :src="tempImg.path" class="img-fluid" width="450" height="250">
+                <img :src="tempImg.path" class="img-fluid" width="200">
               </div>
               <div class="modal-footer justify-content-between" >
                 <p>是否 <span class="text-danger font-weight-bold">刪除</span> 這張圖片</p>
@@ -107,7 +109,6 @@ export default {
 .adminStorages {
   .modal-body{
     width: 1580;
-    // max-height: 600px;
     margin:  auto;
   }
   margin-top: 70px;
@@ -129,6 +130,17 @@ export default {
       &:hover .imgHover{
         color: white;
         opacity: 1;
+      }
+      figure{
+      height: 150px;
+      overflow: hidden;
+        img{
+          width: 100%;
+          height: 100%;
+          border-radius: 6px;
+          object-fit: cover;
+          object-position: center center;
+        }
       }
       .imgHover{
         // width: 100%;

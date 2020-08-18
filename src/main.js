@@ -6,7 +6,6 @@ import VueAxios from 'vue-axios'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import $ from 'jquery'
-// import Viewer from 'v-viewer'
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
 

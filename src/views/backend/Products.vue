@@ -1,5 +1,6 @@
 <template>
   <div class="adminProducts">
+    <Loading :active.sync="isLoading"></Loading>
     <div class="container">
       <div class="text-right mt-3">
         <button
@@ -211,7 +212,6 @@
         </div>
       </div>
     </div>
-    <Loading :active.sync="isLoading"></Loading>
   </div>
 </template>
 
@@ -289,7 +289,7 @@ export default {
         case 'delete':
           $('#deleteModal').modal('show')
           this.status = 'delete'
-          this.tempProduct = Object.assign({}, item)
+          this.tempProduct = { ...item }
           break
         default:
           break

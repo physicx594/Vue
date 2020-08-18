@@ -1,13 +1,283 @@
 <template>
-  <div>優惠券列表</div>
+  <div class="adminCoupons">
+    <Loading :active.sync="isLoading"></Loading>
+    <div class="container">
+      <div class="text-right mt-3">
+        <button type="button" class="btn btn-outline-dark" @click="openModal('add')">
+          建立新優惠券
+        </button>
+      </div>
+      <table class="table mt-3">
+        <thead class="table">
+          <tr scope="row ">
+            <th width="6%" class="text-center">編號</th>
+            <th width="30%">名稱</th>
+            <th>折扣百分比</th>
+            <th>到期日</th>
+            <th>上架</th>
+            <th width="15%">編輯</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr scope="row" v-for="(item, index) in coupons" :key="index">
+            <th class="text-center">{{ index + 1 }}</th>
+            <td>{{ item.title }}</td>
+            <td>{{ item.percent }}</td>
+            <td>{{ item.deadline.datetime }}</td>
+            <!-- <td>{{ item.enabled }}</td> -->
+            <td>
+              <div
+                class="box"
+                :class="{ open: item.enabled }"
+                @click="state('enabled', item)"
+              >
+                <div class="circle" :class="{ open: item.enabled }"></div>
+              </div>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-outline-primary mr-1"
+                @click="openModal('edit', item)"
+              >
+                編輯
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="openModal('delete', item)"
+              >
+                刪除
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- add、edit modal -->
+      <div id="couponModal" class="modal fade" tabindex="-1" role="dialog" ria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="exampleModalLabel" class="modal-title" >
+                {{ status === 'add' ? '新增優惠券' : '編輯優惠券'}}
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="title">標題</label>
+                <input id="title" v-model="tempCoupon.title" type="text" class="form-control" placeholder="請輸入標題" >
+              </div>
+              <div class="form-group">
+                <label for="coupon_code">優惠碼</label>
+                <input
+                  id="coupon_code" v-model="tempCoupon.code" type="text" class="form-control" placeholder="請輸入優惠碼">
+              </div>
+              <div class="form-group">
+                <label for="due_date">到期日</label>
+                <input id="due_date" type="date" v-model="due_date" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="due_time">到期時間</label>
+                <input id="due_time" type="time" v-model="due_time" step="1" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="price">折扣百分比</label>
+                <input id="price" v-model="tempCoupon.percent" type="number" class="form-control" placeholder="請輸入折扣數量">
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input id="enabled" v-model="tempCoupon.enabled"
+                    class="form-check-input" type="checkbox" >
+                  <label class="form-check-label" for="enabled">
+                    是否啟用
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                關閉
+              </button>
+              <button type="button" class="btn btn-primary" @click="updateCoupons">
+                {{ status === 'add' ? '新增' : '更新' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- delete modal -->
+      <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" >
+          <div class="modal-content border-0">
+            <div class="modal-header bg-danger text-white">
+              <h5 id="exampleModalLabel" class="modal-title" >
+                <span>刪除優惠卷</span>
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              是否刪除
+              <strong class="text-danger">{{ tempCoupon.title }}</strong> 優惠券(刪除後將無法恢復)。
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" >
+                取消
+              </button>
+              <button type="button" class="btn btn-danger" @click="deleteCoupon">
+                確認刪除
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
+  /* global $ */
+  data () {
+    return {
+      isLoading: false,
+      coupons: [],
+      status: '',
+      tempCoupon: {
+        title: '',
+        enabled: false,
+        percent: 100,
+        deadline_at: 0,
+        code: ''
+      },
+      due_date: '',
+      due_time: ''
+    }
+  },
+  methods: {
+    getCoupons () {
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupons`
+      this.axios.get(api)
+        .then((res) => {
+          this.coupons = res.data.data
+          this.isLoading = false
+          console.log(res)
+        })
+        .catch((res) => {
+          console.log(res, '執行失敗')
+        })
+    },
+    updateCoupons () {
+      this.tempCoupon.deadline_at = `${this.due_date} ${this.due_time}`
+      let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon`
+      let http = 'post'
 
+      if (this.tempCoupon.id) {
+        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
+        http = 'patch'
+      }
+      this.axios[http](api, this.tempCoupon)
+        .then((res) => {
+          $('#couponModal').modal('hide')
+          this.getCoupons()
+        })
+        .catch((res) => {
+          console.log(res, '執行失敗')
+        })
+    },
+    deleteCoupon () {
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
+      this.axios.delete(api)
+        .then((res) => {
+          this.getCoupons()
+        })
+        .catch((res) => {
+          console.log(res, '執行失敗')
+        })
+    },
+    openModal (type, item) {
+      this.status = type
+      switch (type) {
+        case 'add':
+          this.tempCoupon = {}
+          $('#couponModal').modal('show')
+          break
+        case 'edit': {
+          this.tempCoupon = { ...item }
+          const deadLineAt = this.tempCoupon.deadline.datetime.split(' ');
+          [this.due_date, this.due_time] = deadLineAt
+          $('#couponModal').modal('show')
+          break
+        }
+        case 'delete':
+          this.tempCoupon = { ...item }
+          $('#deleteModal').modal('show')
+          break
+      }
+    },
+    state (type, stateItem) {
+      console.log(stateItem)
+      switch (type) {
+        case 'enabled':
+          this.coupons.forEach((item) => {
+            if (item.id === stateItem.id) {
+              this.tempCoupon = stateItem
+              this.tempCoupon.enabled = !this.tempCoupon.enabled
+            }
+          })
+          break
+      }
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
+      this.axios.patch(api, this.tempCoupon)
+        .then(() => {
+          this.getCoupons()
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  },
+  created () {
+    this.getCoupons()
+  }
 }
 </script>
 
-<style>
+<style lang="scss">
+.adminCoupons{
+  .box {
+    cursor: pointer;
+    box-sizing: border-box;
+    width: 60px;
+    height: 30px;
+    background-color: #ebaca3;
+    border-radius: 35px;
+    transition: 0.3s;
+    &.open {
+      background-color: #afddae;
+    }
+  }
+  .circle {
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    transition: 0.3s;
+    &.open {
+      background-color: #28a745;
+      margin-left: 30px;
+    }
+  }
+
+}
 
 </style>

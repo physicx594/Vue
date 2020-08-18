@@ -14,3 +14,8 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .home{
+    text-align: center;
+  }
+</style>
