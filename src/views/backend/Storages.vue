@@ -2,6 +2,9 @@
   <div class="adminStorages">
     <Loading :active.sync="isLoading"></Loading>
     <div class="container">
+      <button @click="hide">hide</button>
+      <button @click="show">show</button>
+
       <table class="table">
         <thead>
           <tr>
@@ -38,7 +41,9 @@
                       </button>
               </div>
               <div class="modal-body">
-                <img :src="tempImg.path" class="img-fluid" width="200">
+                <figure>
+                  <img :src="tempImg.path" class="img-fluid" width="200">
+                </figure>
               </div>
               <div class="modal-footer justify-content-between" >
                 <p>是否 <span class="text-danger font-weight-bold">刪除</span> 這張圖片</p>
@@ -70,6 +75,15 @@ export default {
     }
   },
   methods: {
+    hide () {
+      $('#toast').toast('hide')
+      console.log('123')
+    },
+    show () {
+      $('#toast').toast('show')
+      $('#toast').toast({ delay: 500 })
+    },
+
     getStorages () {
       this.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage`
@@ -77,7 +91,6 @@ export default {
         .then((res) => {
           this.storages = res.data.data
           this.isLoading = false
-          $('#deleteModal').modal('hide')
         })
         .catch((res) => {
           console.log(res, '執行失敗')
@@ -88,7 +101,9 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage/${item.id}`
       this.axios.delete(api)
         .then((res) => {
+          $('#deleteModal').modal('hide')
           this.getStorages()
+          this.$bus.$emit('message', '刪除成功')
         })
         .catch((res) => {
           console.log(res, '執行失敗')
@@ -131,19 +146,7 @@ export default {
         color: white;
         opacity: 1;
       }
-      figure{
-      height: 150px;
-      overflow: hidden;
-        img{
-          width: 100%;
-          height: 100%;
-          border-radius: 6px;
-          object-fit: cover;
-          object-position: center center;
-        }
-      }
       .imgHover{
-        // width: 100%;
         position: absolute;
         left: 50%;
         top:50%;
@@ -154,6 +157,17 @@ export default {
           color: red;
         }
       }
+    }
+  }
+  figure{
+    height: 150px;
+    overflow: hidden;
+    img{
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      object-fit: cover;
+      object-position: center center;
     }
   }
 }

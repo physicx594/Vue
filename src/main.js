@@ -12,6 +12,7 @@ import 'viewerjs/dist/viewer.css'
 import App from './App.vue'
 import router from './router'
 import Pagination from './components/Pagination'
+import Toast from './components/Toast'
 
 window.$ = $
 Vue.config.productionTip = false
@@ -24,6 +25,8 @@ Vue.filter('filter', (num) => {
   return '$' + parts.join('.')
 })
 Vue.component('Pagination', Pagination)
+Vue.component('Toast', Toast)
+Vue.prototype.$bus = new Vue()
 
 new Vue({
   router,

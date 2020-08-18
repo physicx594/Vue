@@ -1,6 +1,9 @@
 <template>
   <div>
     <Navbar></Navbar>
+    <div class="container">
+      <Toast></Toast>
+    </div>
     <router-view :token="token" v-if="checkSuccess"></router-view>
     <div v-else class="mt-5">
       <Loading :active.sync="isLoading"></Loading>

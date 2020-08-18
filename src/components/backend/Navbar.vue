@@ -15,19 +15,19 @@
     <div class="text-center">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin/products">產品列表</router-link>
+          <router-link class="nav-link" to="/admin/products"><span> 產品列表 </span></router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin/coupons">優惠券列表</router-link>
+          <router-link class="nav-link" to="/admin/coupons"><span> 優惠券列表 </span></router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin/orders">訂單列表</router-link>
+          <router-link class="nav-link" to="/admin/orders"><span>訂單列表 </span></router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin/storages">圖片列表</router-link>
+          <router-link class="nav-link" to="/admin/storages"><span>圖片列表 </span></router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/">回首頁</router-link>
+          <router-link class="nav-link" to="/"><span>回首頁</span></router-link>
         </li>
       </ul>
     </div>
@@ -52,4 +52,23 @@ export default {
 
 <style lang="scss">
 
+.navbar-dark .navbar-nav .nav-link{
+  display: block;
+  margin:  0 8px;
+  &::after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background:white;
+    transition: width .5s;
+  }
+  &:hover::after{
+    width: 100%;
+  }
+  span{
+    display: block;
+    padding: 8px 0
+  }
+}
 </style>
