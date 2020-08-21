@@ -11,9 +11,10 @@
         <thead class="table">
           <tr scope="row ">
             <th width="6%" class="text-center">編號</th>
-            <th width="30%">名稱</th>
+            <th>名稱</th>
             <th>折扣百分比</th>
             <th>到期日</th>
+            <th>倒數</th>
             <th>上架</th>
             <th width="15%">編輯</th>
           </tr>
@@ -24,13 +25,10 @@
             <td>{{ item.title }}</td>
             <td>{{ item.percent }}</td>
             <td>{{ item.deadline.datetime }}</td>
+            <td class="countdown">{{ item.deadline.datetime | countdown}}</td>
             <!-- <td>{{ item.enabled }}</td> -->
             <td>
-              <div
-                class="box"
-                :class="{ open: item.enabled }"
-                @click="state('enabled', item)"
-              >
+              <div class="box" :class="{ open: item.enabled }" @click="state('enabled', item)">
                 <div class="circle" :class="{ open: item.enabled }"></div>
               </div>
             </td>
@@ -60,7 +58,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 id="exampleModalLabel" class="modal-title" >
-                {{ status === 'add' ? '新增優惠券' : '編輯優惠券'}}
+                {{ status.type === 'add' ? '新增優惠券' : '編輯優惠券'}}
               </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                 <span aria-hidden="true">&times;</span>
@@ -103,7 +101,7 @@
                 關閉
               </button>
               <button type="button" class="btn btn-primary" @click="updateCoupons">
-                {{ status === 'add' ? '新增' : '更新' }}
+                {{ status.type === 'add' ? '新增' : '更新' }}
               </button>
             </div>
           </div>
@@ -145,11 +143,16 @@
 <script>
 export default {
   /* global $ */
+  name: 'Coupons',
   data () {
     return {
       isLoading: false,
       coupons: [],
-      status: '',
+      status: {
+        type: '',
+        message: ''
+      },
+      countdownStatus: '',
       tempCoupon: {
         title: '',
         enabled: false,
@@ -169,7 +172,10 @@ export default {
         .then((res) => {
           this.coupons = res.data.data
           this.isLoading = false
-          console.log(res)
+          if (this.status.message) {
+            this.$bus.$emit('message', this.status.message)
+          }
+          this.status = {}
         })
         .catch((res) => {
           console.log(res, '執行失敗')
@@ -179,8 +185,9 @@ export default {
       this.tempCoupon.deadline_at = `${this.due_date} ${this.due_time}`
       let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon`
       let http = 'post'
-
+      this.status.message = '新增成功'
       if (this.tempCoupon.id) {
+        this.status.message = '編輯成功'
         api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
         http = 'patch'
       }
@@ -197,6 +204,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
       this.axios.delete(api)
         .then((res) => {
+          this.status.message = '刪除成功'
           this.getCoupons()
         })
         .catch((res) => {
@@ -204,7 +212,7 @@ export default {
         })
     },
     openModal (type, item) {
-      this.status = type
+      this.status.type = type
       switch (type) {
         case 'add':
           this.tempCoupon = {}
@@ -224,7 +232,6 @@ export default {
       }
     },
     state (type, stateItem) {
-      console.log(stateItem)
       switch (type) {
         case 'enabled':
           this.coupons.forEach((item) => {
@@ -247,12 +254,39 @@ export default {
   },
   created () {
     this.getCoupons()
+  },
+  filters: {
+    countdown: (v) => {
+      const deadline = Date.parse(v)
+      const now = new Date().getTime()
+      const days = Math.floor(((deadline - now) / 1000 / 60 / 60) / 24)
+      const hours = Math.floor(((deadline - now) / 1000 / 60 / 60) % 24)
+      const minutes = Math.floor(((deadline - now) / 1000 / 60) % 60)
+
+      if (minutes < 0) {
+        // document.querySelector('.countdown').style.color = 'red'
+        // this.countdownStatus = '過期囉'
+        return '過期囉'
+      } else if (days <= 0 && hours <= 0) {
+        return minutes + '分鐘'
+      } else if (days <= 0) {
+        return hours + '小時'
+      } else {
+        return days + '天'
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss">
 .adminCoupons{
+  .countdown{
+    color: green;
+  }
+  .deadline{
+    color: red;
+  }
   .box {
     cursor: pointer;
     box-sizing: border-box;

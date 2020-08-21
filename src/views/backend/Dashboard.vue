@@ -18,15 +18,13 @@ export default {
   components: {
     Navbar
   },
+  name: 'Dashboard',
   data () {
     return {
       token: '',
       checkSuccess: false,
       isLoading: true
     }
-  },
-  created () {
-    this.checkLogin()
   },
   methods: {
     checkLogin () {
@@ -48,6 +46,9 @@ export default {
           console.log(error, '登入失敗,請重新登入')
         })
     }
+  },
+  created () {
+    this.checkLogin()
   }
 }
 </script>

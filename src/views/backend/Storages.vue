@@ -2,9 +2,6 @@
   <div class="adminStorages">
     <Loading :active.sync="isLoading"></Loading>
     <div class="container">
-      <button @click="hide">hide</button>
-      <button @click="show">show</button>
-
       <table class="table">
         <thead>
           <tr>
@@ -69,21 +66,13 @@ export default {
         navbar: false,
         title: false
       },
+      status: '',
       isLoading: false,
       storages: [],
       tempImg: {}
     }
   },
   methods: {
-    hide () {
-      $('#toast').toast('hide')
-      console.log('123')
-    },
-    show () {
-      $('#toast').toast('show')
-      $('#toast').toast({ delay: 500 })
-    },
-
     getStorages () {
       this.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage`
@@ -91,22 +80,27 @@ export default {
         .then((res) => {
           this.storages = res.data.data
           this.isLoading = false
+          if (this.status === 'delete') this.$bus.$emit('message', '刪除成功')
+          this.status = ''
         })
         .catch((res) => {
-          console.log(res, '執行失敗')
+          this.isLoading = false
+          this.$bus.$emit('message', { fail: '操作失敗,請檢查' })
         })
     },
     deleteImg (item) {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage/${item.id}`
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/adin/storage/${item.id}`
       this.axios.delete(api)
         .then((res) => {
           $('#deleteModal').modal('hide')
+          this.status = 'delete'
           this.getStorages()
-          this.$bus.$emit('message', '刪除成功')
         })
         .catch((res) => {
-          console.log(res, '執行失敗')
+          this.isLoading = false
+          this.$bus.$emit('message', { fail: '操作失敗,請檢查' })
+          $('#deleteModal').modal('hide')
         })
     },
     openModal (item) {

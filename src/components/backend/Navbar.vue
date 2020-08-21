@@ -53,6 +53,7 @@ export default {
 <style lang="scss">
 
 .navbar-dark .navbar-nav .nav-link{
+  font-weight: bold;
   display: block;
   margin:  0 8px;
   &::after{

@@ -192,26 +192,6 @@
             </div>
         </div>
       </div>
-      <!-- message Modal -->
-      <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
-        aria-labelledby="mySmallModalLabel" aria-hidden="true" id="messageModal">
-        <div class="modal-dialog modal-sm ">
-          <div class="modal-content p-3 text-center">
-            <span v-if="status==='add'" style="lineHeight: 16px">
-              <i class="spinner-grow spinner-grow-sm text-success"></i>
-              新增成功
-            </span>
-            <span v-else-if="status==='edit'" style="lineHeight: 16px">
-              <i class="spinner-grow spinner-grow-sm text-success"></i>
-              編輯成功
-            </span>
-            <span v-else-if="status==='delete'" style="lineHeight: 16px">
-              <i class="spinner-grow spinner-grow-sm text-success"></i>
-              刪除成功
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -220,11 +200,15 @@
 /* global $ */
 
 export default {
+  name: 'Products',
   props: ['token'],
   data () {
     return {
       products: [],
-      status: '',
+      status: {
+        type: '',
+        message: ''
+      },
       isReverse: false,
       sortType: '',
       isLoading: false,
@@ -238,7 +222,7 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
-      if (this.status === '') this.isLoading = true
+      if (this.status.type === '') this.isLoading = true
       const params = {
         page,
         paged: '15',
@@ -248,22 +232,25 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/products?page=${params.page}&sort=${params.sort}&paged=${params.paged}`
       this.axios
         .get(api)
-        .then(res => {
+        .then((res) => {
           this.isLoading = false
           this.products = res.data.data
           this.pagination = res.data.meta.pagination
+          if (this.status.message) {
+            this.$bus.$emit('message', this.status.message)
+          }
           $('#productModal').modal('hide')
-          $('#messageModal').modal('hide')
-          this.status = ''
+          this.status = {}
         })
-        .catch(error => {
-          console.log(error, '讀取失敗,請重新登入')
+        .catch((res) => {
+          this.isLoading = false
+          this.$bus.$emit('message', { fail: '操作失敗,請檢查' })
         })
     },
     openModal (type, item) {
+      this.status.type = type
       switch (type) {
         case 'add':
-          this.status = 'add'
           this.tempProduct = {
             enabled: true,
             imageUrl: [],
@@ -275,7 +262,6 @@ export default {
           $('#productModal').modal('show')
           break
         case 'edit': {
-          this.status = 'edit'
           const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${item.id}`
           this.axios.get(api)
             .then(res => {
@@ -289,7 +275,6 @@ export default {
           break
         case 'delete':
           $('#deleteModal').modal('show')
-          this.status = 'delete'
           this.tempProduct = { ...item }
           break
         default:
@@ -301,22 +286,24 @@ export default {
       // 新增
       let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product`
       let httpMethod = 'post'
+      this.status.message = '新增成功'
       // 編輯
       if (this.tempProduct.id) {
-        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`
+        this.status.message = '編輯成功'
+        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/amin/ec/product/${this.tempProduct.id}`
         httpMethod = 'patch'
       }
       this.axios[httpMethod](api, this.tempProduct)
         .then(() => {
           this.isLoading = false
           $('#productModal').modal('hide')
-          $('#messageModal').modal('show')
           this.getProducts()
         })
-        .catch((error) => {
-          console.log(error)
-          this.getProducts()
-          this.status = ''
+        .catch((res) => {
+          this.isLoading = false
+          $('#productModal').modal('hide')
+          this.$bus.$emit('message', { fail: '操作失敗,請檢查' })
+          this.status = {}
         })
     },
     uploadFile () {
@@ -348,13 +335,15 @@ export default {
         })
     },
     deleteItem () {
+      this.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`
       this.axios
         .delete(api, this.tempProduct)
         .then((res) => {
-          this.getProducts()
+          this.isLoading = false
           $('#deleteModal').modal('hide')
-          $('#messageModal').modal('show')
+          this.status.message = '刪除成功'
+          this.getProducts()
         })
         .catch((error) => {
           console.log(error)
@@ -453,10 +442,6 @@ export default {
       background-color: rgba(0, 0, 0, 0.01);
       transform: scale(1.005);
       box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.5);
-    }
-    tr td,
-    th {
-      vertical-align: middle;
     }
   }
   .modal{
