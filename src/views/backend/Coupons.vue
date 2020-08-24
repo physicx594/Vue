@@ -28,8 +28,12 @@
             <td class="countdown text-danger" v-if="item.countdownStatus === '過期囉'">{{ countdown(item) }}</td>
             <td class="countdown" v-else>{{ countdown(item) }}</td>
 
-            <!-- <td>{{ item.enabled }}</td> -->
-            <td>
+            <td v-if="item.countdownStatus === '過期囉'">
+              <div class="box deadline" >
+                <div class="circle"></div>
+              </div>
+            </td>
+            <td v-else>
               <div class="box" :class="{ open: item.enabled }" @click="state('enabled', item)">
                 <div class="circle" :class="{ open: item.enabled }"></div>
               </div>
@@ -91,7 +95,8 @@
               <div class="form-group">
                 <div class="form-check">
                   <input id="enabled" v-model="tempCoupon.enabled"
-                    class="form-check-input" type="checkbox" >
+                    class="form-check-input" type="checkbox"
+                    :disabled="tempCoupon.countdownStatus === '過期囉'">
                   <label class="form-check-label" for="enabled">
                     是否啟用
                   </label>
@@ -262,6 +267,7 @@ export default {
   computed: {
     countdown () {
       return function (v) {
+        console.log(v)
         const deadline = Date.parse(v.deadline.datetime)
         const now = new Date().getTime()
         const days = Math.floor(((deadline - now) / 1000 / 60 / 60) / 24)
@@ -270,6 +276,7 @@ export default {
 
         if (minutes < 0) {
           v.countdownStatus = '過期囉'
+          v.enabled = false
           return v.countdownStatus
         } else if (days <= 0 && hours <= 0) {
           return minutes + '分鐘'
@@ -302,6 +309,9 @@ export default {
     transition: 0.3s;
     &.open {
       background-color: #afddae;
+    }
+    &.deadline{
+      cursor: not-allowed;
     }
   }
   .circle {
