@@ -7,7 +7,13 @@ const routes = [
   // frontend
   {
     path: '/',
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/Home.vue'),
+    children: [
+      {
+        path: 'products',
+        component: () => import('../views/fontend/Products.vue')
+      }
+    ]
   },
   {
     path: '/login',

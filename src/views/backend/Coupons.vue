@@ -25,7 +25,9 @@
             <td>{{ item.title }}</td>
             <td>{{ item.percent }}</td>
             <td>{{ item.deadline.datetime }}</td>
-            <td class="countdown">{{ item.deadline.datetime | countdown}}</td>
+            <td class="countdown text-danger" v-if="item.countdownStatus === '過期囉'">{{ countdown(item) }}</td>
+            <td class="countdown" v-else>{{ countdown(item) }}</td>
+
             <!-- <td>{{ item.enabled }}</td> -->
             <td>
               <div class="box" :class="{ open: item.enabled }" @click="state('enabled', item)">
@@ -152,7 +154,6 @@ export default {
         type: '',
         message: ''
       },
-      countdownStatus: '',
       tempCoupon: {
         title: '',
         enabled: false,
@@ -171,6 +172,9 @@ export default {
       this.axios.get(api)
         .then((res) => {
           this.coupons = res.data.data
+          this.coupons.forEach((item) => {
+            this.$set(item, 'countdownStatus', '')
+          })
           this.isLoading = false
           if (this.status.message) {
             this.$bus.$emit('message', this.status.message)
@@ -255,24 +259,25 @@ export default {
   created () {
     this.getCoupons()
   },
-  filters: {
-    countdown: (v) => {
-      const deadline = Date.parse(v)
-      const now = new Date().getTime()
-      const days = Math.floor(((deadline - now) / 1000 / 60 / 60) / 24)
-      const hours = Math.floor(((deadline - now) / 1000 / 60 / 60) % 24)
-      const minutes = Math.floor(((deadline - now) / 1000 / 60) % 60)
+  computed: {
+    countdown () {
+      return function (v) {
+        const deadline = Date.parse(v.deadline.datetime)
+        const now = new Date().getTime()
+        const days = Math.floor(((deadline - now) / 1000 / 60 / 60) / 24)
+        const hours = Math.floor(((deadline - now) / 1000 / 60 / 60) % 24)
+        const minutes = Math.floor(((deadline - now) / 1000 / 60) % 60)
 
-      if (minutes < 0) {
-        // document.querySelector('.countdown').style.color = 'red'
-        // this.countdownStatus = '過期囉'
-        return '過期囉'
-      } else if (days <= 0 && hours <= 0) {
-        return minutes + '分鐘'
-      } else if (days <= 0) {
-        return hours + '小時'
-      } else {
-        return days + '天'
+        if (minutes < 0) {
+          v.countdownStatus = '過期囉'
+          return v.countdownStatus
+        } else if (days <= 0 && hours <= 0) {
+          return minutes + '分鐘'
+        } else if (days <= 0) {
+          return hours + '小時'
+        } else {
+          return days + '天'
+        }
       }
     }
   }
