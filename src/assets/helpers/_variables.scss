@@ -16,6 +16,7 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #000 !default;
+$dark:     #474747 !default;
 
 $grays: () !default;
 $grays: map-merge(
@@ -43,6 +44,7 @@ $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
+$brown:   #de9e36 !default;
 
 $colors: () !default;
 $colors: map-merge(
@@ -59,7 +61,8 @@ $colors: map-merge(
     "cyan":       $cyan,
     "white":      $white,
     "gray":       $gray-600,
-    "gray-dark":  $gray-800
+    "gray-dark":  $gray-800,
+    "brown":      $brown
   ),
   $colors
 );
@@ -71,19 +74,21 @@ $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$dark:          $dark !default;
+$main:          $brown;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
   (
     "primary":    $primary,
     "secondary":  $secondary,
-    "success":    #04844B,
+    "success":    #22fa75,
     "info":       $info,
     "warning":    $warning,
     "danger":     #C23934,
     "light":      $light,
-    "dark":       $dark
+    "dark":       $dark,
+    "brown":      $brown
   ),
   $theme-colors
 );
@@ -737,7 +742,7 @@ $navbar-dark-disabled-color:        rgba($white, .25) !default;
 $navbar-dark-toggler-icon-bg:       url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path stroke='#{$navbar-dark-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>") !default;
 $navbar-dark-toggler-border-color:  rgba($white, .1) !default;
 
-$navbar-light-color:                rgba($black, 0.5) !default;
+$navbar-light-color:                rgba($black, 1) !default;
 $navbar-light-hover-color:          rgba($black, 1) !default;
 $navbar-light-active-color:         rgba(#de9e36, 1) !default;
 $navbar-light-disabled-color:       rgba($black, .3) !default;

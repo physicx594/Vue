@@ -1,6 +1,5 @@
 <template>
   <div class="adminProducts">
-
     <Loading :active.sync="isLoading"></Loading>
     <div class="container">
       <div class="text-right mt-3">

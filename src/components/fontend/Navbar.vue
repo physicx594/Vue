@@ -1,8 +1,8 @@
 <template>
   <div class="fontNavBar">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light  justify-content-between">
-        <a class="navbar-brand p-0" href="#"><img src="../../assets/logo1.png" width="40"></a>
+    <div class="container p-0">
+      <nav class="navbar navbar-expand-lg navbar-light  justify-content-between p-0">
+        <a class="navbar-brand p-0" href="#"><img src="../../assets/logo1.png" width="60"></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -14,7 +14,6 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="text-center">
           <ul class="navbar-nav">
             <li class="nav-item">
               <router-link class="nav-link" to="/" :class="{active: status === '首頁'}"><span
@@ -27,14 +26,17 @@
               <router-link class="nav-link" to="/" :class="{active: status === '關於我們'}"><span @click="status = '關於我們'"> 關於我們 </span></router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/" :class="{active: status === '會員'}"><span @click="status = '會員'"><i class="fas fa-user" style="font-size:16px"></i></span></router-link>
+              <router-link class="nav-link" to="/" :class="{active: status === '會員'}"><span @click="status = '會員'"><i class="fas fa-user" style="font-size:18px"></i></span></router-link>
             </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/" :class="{active: status === '購物車'}"><span @click="status = '購物車'"><i class="fas fa-shopping-cart" style="font-size:16px" ></i>
-</span></router-link>
+            <li class="nav-item d-flex">
+              <router-link class="nav-link" to="/" :class="{active: status === '購物車'}">
+                <span @click="status = '購物車'">
+                  <i class="fas fa-shopping-cart" style="font-size:18px"></i>
+                </span>
+              </router-link>
+              <span class="badge badge-pill badge-brown" v-if="cart.length">{{ cart.length }}</span>
             </li>
           </ul>
-        </div>
       </nav>
     </div>
   </div>
@@ -44,12 +46,21 @@
 export default {
   data () {
     return {
-      status: ''
+      status: '',
+      cart: []
     }
   },
   methods: {
+    getCart () {
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
+      this.axios.get(api)
+        .then((res) => {
+          this.cart = res.data.data
+        })
+    }
   },
   created () {
+    this.getCart()
   }
 }
 </script>
@@ -71,9 +82,6 @@ export default {
     background:#de9e36;
     transition:  0.7s;
     }
-    // &:active{
-    //   border-bottom: 1px #de9e36 solid;
-    // }
     &:hover::after{
     width: 100%;
     }
@@ -81,6 +89,12 @@ export default {
       display: block;
       padding: 4px 0
     }
+  }
+  .badge{
+    height: 20px;
+    color: white;
+    text-align: center;
+    transform: translateX(-16px) translateY(20px);
   }
 }
 </style>
