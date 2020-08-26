@@ -1,7 +1,7 @@
 <template>
   <div class="fontNavBar">
     <div class="container p-0">
-      <nav class="navbar navbar-expand-lg navbar-light  justify-content-between p-0">
+      <nav class="navbar navbar-expand-lg navbar-light  justify-content-between">
         <a class="navbar-brand p-0" href="#"><img src="../../assets/logo1.png" width="60"></a>
         <button
           class="navbar-toggler"

@@ -15,14 +15,14 @@
           </ul>
         </div>
         <div class="col-md-10">
-          <div class="row justify-content-around m-0">
-            <div class="card mb-4 p-0" v-for="(item, index) in products" :key="index">
+          <div class="row justify-content-around">
+            <div class="card mb-4 p-0"  v-for="(item, index) in products" :key="index">
               <div class="card_img">
                   <figure><img  :src="item.imageUrl[0]" class="img-fluid"></figure>
               </div>
               <div class="card_body px-2">
                   <div class="description text-left">
-                      <h5 class="title card-title text-center text-brown">{{item.title}}</h5>
+                      <h5 class="title card-title text-center text-brown"><router-link :to="`/product/${item.id}`">{{item.title}}</router-link></h5>
                       <h6 class="card-subtitle">{{item.category}}</h6>
                   </div>
                   <div class="money text-right">
@@ -35,15 +35,13 @@
                           <div class="price"><h5>{{item.price | filter}}</h5></div>
                       </div>
                   </div>
+                  <button class="btn btn-outline-dark">加入購物車</button>
               </div>
-              <div class="card-footer">
-                  <button class="btn detail btn-outline-dark float-left" @click.prevent="openProductModal(item), status=(item.id)" :disabled="status === item.id">詳細資料
+              <!-- <div class="card-footer p-2">
+                  <button href="#" class="btn addCart btn-dark float-right" @click="addToCart(item);status=(item.id)" :disabled="status === item.id">
                       <span class="spinner-border spinner-border-sm" v-if="status === item.id"></span>
                   </button>
-                  <button href="#" class="btn addCart btn-dark float-right" @click="addToCart(item);status=(item.id)" :disabled="status === item.id">加入購物車
-                      <span class="spinner-border spinner-border-sm" v-if="status === item.id"></span>
-                  </button>
-              </div>
+              </div> -->
             </div>
           </div>
           <Pagination :pages="pagination" @update="getProducts"></Pagination>
@@ -127,6 +125,10 @@ $main: #de9e36;
 $dark: #474747;
 
 .Products{
+  a{
+    color: inherit;
+    text-decoration: none;
+  }
   .banner{
     img{
         width: 100%;
@@ -161,6 +163,11 @@ $dark: #474747;
       &:hover{
         box-shadow: 2px 1px 10px 1px rgba(0, 0, 0, 0.349);
         transform: scale(1.005);
+      }
+      .btn {
+        width: 60%;
+        border: 1px solid #c9c7c7;
+        margin:  10px 0 16px 0;
       }
     }
   }
