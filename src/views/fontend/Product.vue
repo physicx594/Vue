@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     getProduct () {
+      console.log(this.$route.params.id)
       const { id } = this.$router.params
       console.log(id)
     }
