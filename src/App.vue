@@ -16,6 +16,9 @@
   .table th, .table td {
     vertical-align: middle;
   }
+  a{
+    text-decoration: none;
+  }
 }
 
 #nav {

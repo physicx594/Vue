@@ -16,16 +16,17 @@ import Toast from './components/Toast'
 
 window.$ = $
 Vue.config.productionTip = false
-Vue.component('Loading', Loading)
 Vue.use(VueAxios, axios)
 Vue.use(Viewer)
+
+Vue.component('Loading', Loading)
+Vue.component('Pagination', Pagination)
+Vue.component('Toast', Toast)
 Vue.filter('filter', (num) => {
   var parts = num.toString().split('.')
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return '$ ' + parts.join('.')
+  return 'NT$' + parts.join('.')
 })
-Vue.component('Pagination', Pagination)
-Vue.component('Toast', Toast)
 Vue.prototype.$bus = new Vue()
 
 new Vue({

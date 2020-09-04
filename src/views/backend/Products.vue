@@ -289,7 +289,7 @@ export default {
       // 編輯
       if (this.tempProduct.id) {
         this.status.message = '編輯成功'
-        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/amin/ec/product/${this.tempProduct.id}`
+        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`
         httpMethod = 'patch'
       }
       this.axios[httpMethod](api, this.tempProduct)

@@ -90,7 +90,7 @@ export default {
     },
     deleteImg (item) {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/adin/storage/${item.id}`
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage/${item.id}`
       this.axios.delete(api)
         .then((res) => {
           $('#deleteModal').modal('hide')

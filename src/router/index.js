@@ -16,6 +16,10 @@ const routes = [
       {
         path: 'product/:id',
         component: () => import('../views/fontend/Product.vue')
+      },
+      {
+        path: 'Cart',
+        component: () => import('../views/fontend/Cart.vue')
       }
     ]
   },
@@ -47,11 +51,17 @@ const routes = [
       }
     ]
   }
-
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+
+  scrollBehavior (to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    }
+  }
 })
 
 export default router

@@ -21,7 +21,7 @@
           <router-link class="nav-link" to="/admin/coupons"><span> 優惠券列表 </span></router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin/orders"><span>訂單列表 </span></router-link>
+          <router-link class="nav-link" to="/admin/orders"><span>訂單列表</span></router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/admin/storages"><span>圖片列表 </span></router-link>
@@ -53,23 +53,29 @@ export default {
 <style lang="scss">
 
 .navbar-dark .navbar-nav .nav-link{
+  position: relative;
   font-weight: bold;
   display: block;
   margin:  0 8px;
+
   &::after{
     content: '';
+    // position: absolute;
+    // left: 0;
     display: block;
     width: 0;
     height: 2px;
     background:white;
-    transition: width .5s;
+    transition: width .5s linear;
   }
   &:hover::after{
     width: 100%;
   }
   span{
+    position: relative;
     display: block;
-    padding: 8px 0
+    padding: 8px 0;
   }
 }
+
 </style>
