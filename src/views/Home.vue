@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Navbar from '@/components/fontend/Navbar'
+import Navbar from '@/components/frontend/Navbar'
 
 export default {
   name: 'Home',
@@ -18,5 +18,7 @@ export default {
 <style lang="scss">
   .home{
     text-align: center;
+    height: 100%;
+
   }
 </style>

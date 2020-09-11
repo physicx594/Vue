@@ -10,16 +10,37 @@ const routes = [
     component: () => import('../views/Home.vue'),
     children: [
       {
+        path: '',
+        component: () => import('../views/frontend/Index.vue')
+      },
+      {
         path: 'products',
-        component: () => import('../views/fontend/Products.vue')
+        component: () => import('../views/frontend/Products.vue')
       },
       {
         path: 'product/:id',
-        component: () => import('../views/fontend/Product.vue')
+        component: () => import('../views/frontend/Product.vue')
       },
       {
-        path: 'Cart',
-        component: () => import('../views/fontend/Cart.vue')
+        path: 'about',
+        name: 'about',
+        component: () => import('../views/frontend/About.vue')
+      },
+      {
+        path: 'cart',
+        component: () => import('../views/frontend/Cart.vue')
+      },
+      {
+        path: 'checkout',
+        component: () => import('../views/frontend/Checkout.vue')
+      },
+      {
+        path: 'checkoutPay',
+        component: () => import('../views/frontend/CheckoutPay.vue')
+      },
+      {
+        path: 'checkoutSuccess',
+        component: () => import('../views/frontend/CheckoutSuccess.vue')
       }
     ]
   },
