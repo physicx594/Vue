@@ -3,12 +3,9 @@
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item" :class="{ disabled: pages.current_page === 1 }">
-          <a
-            class="page-link"
-            href="#"
-            @click.prevent="pageNum(pages.current_page - 1)"
-          >
-            Previous
+          <a class="page-link" @click.prevent="pageNum(pages.current_page - 1)">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
           </a>
         </li>
         <li
@@ -21,16 +18,10 @@
             {{ item }}
           </a>
         </li>
-        <li
-          class="page-item"
-          :class="{ disabled: pages.current_page === pages.total_pages }"
-        >
-          <a
-            class="page-link"
-            href="#"
-            @click.prevent="pageNum(pages.current_page + 1)"
-          >
-            Next
+        <li class="page-item" :class="{ disabled: pages.current_page === pages.total_pages }">
+          <a class="page-link" href="#" @click.prevent="pageNum(pages.current_page + 1)">
+            <span aria-hidden="true" >&raquo;</span>
+            <span class="sr-only">Next</span>
           </a>
         </li>
       </ul>
@@ -57,9 +48,6 @@ export default {
       box-shadow: none;
     }
   }
-  // .disabled {
-  //   cursor: not-allowed;
-  // }
   .active .page-link,
   .page-link:hover {
     color: #fff;

@@ -16,6 +16,8 @@ import App from './App.vue'
 import router from './router'
 import Pagination from './components/Pagination'
 import Toast from './components/Toast'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 window.$ = $
 Vue.config.productionTip = false
@@ -49,6 +51,9 @@ Vue.filter('orderId', (num) => {
 Vue.prototype.$bus = new Vue()
 
 new Vue({
+  created () {
+    AOS.init()
+  },
   router,
   render: h => h(App)
 }).$mount('#app')

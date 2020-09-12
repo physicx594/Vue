@@ -52,9 +52,6 @@ export default {
     &.show{
       opacity: 1;
     }
-    &:focus{
-      background: #de9e36;
-    }
     @keyframes jump {
       25% {
         transform: translateY(10px);
@@ -70,17 +67,5 @@ export default {
       }
 
     }
-    // svg
-    //     position: absolute;
-    //     stroke: black;
-    //     stroke-width: 1px;
-    //     fill: none;
-    //     stroke-dasharray: 300
-    //     stroke-dashoffset: 300
-    //     transform: rotate(-90deg)
-    //     transition: 1s linear
-    //     &:hover
-    //         stroke-dasharray: 300
-    //         stroke-dashoffset: 0
 }
 </style>

@@ -11,8 +11,8 @@
         <div class="row ">
           <div class="aboutUs w-100 my-5">
             <div class="content">
-              <figure class="col-md-7 p-0 mb-0"><img src="https://images.unsplash.com/photo-1595786802424-d6efbc413db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80" alt=""></figure>
-              <div class="col-md-5">
+              <figure class="col-md-7 p-0 mb-0" data-aos="fade-right" data-aos-easing="ease-in-out"><img src="https://images.unsplash.com/photo-1595786802424-d6efbc413db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80" alt=""></figure>
+              <div class="col-md-5" data-aos="fade-left" data-aos-easing="ease-in-out" data-aos-delay="250">
                 <div class="article font-weight-bold">
                   <h3 class="title mb-5">關於我們</h3>
                   <p> 在生活步調快速的現代，忙於課業、工作及娛樂上<br>
@@ -29,10 +29,10 @@
           </div>
         </div>
     </div>
-    <div class="sentence mt-5 mb-4">
-      <div class="section">
-        <span class="first">最單純的食物</span><br>
-        <span class="second">最簡單的健康</span>
+    <div class="sentence mt-5 mb-4" >
+      <div class="section" >
+        <div class="first" data-aos="slide-left" data-aos-duration="500">最單純的食物</div>
+        <div class="second" data-aos="slide-right" data-aos-duration="500">最簡單的健康</div>
       </div>
     </div>
     <div class="container">
@@ -40,7 +40,7 @@
           <div class="products w-100">
             <h3 class="title m-0 my-3">產品分類</h3>
             <div class="category mb-5 mt-4">
-              <div class="cardList lunchbox col-md-4">
+              <div class="cardList lunchbox col-md-4" data-aos="flip-up" data-aos-duration="1000">
                 <span>Bento</span>
                 <div class="bg">
                   <div class="hoverpic"><img src="../../assets/logo.png" alt=""></div>
@@ -52,7 +52,7 @@
                   </p>
                 </div>
               </div>
-              <div class="cardList chicken col-md-4">
+              <div class="cardList chicken col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="150">
                 <span class="float-left pl-3">Sous</span><br>
                 <span class="float-right pr-3">vide</span>
                 <div class="bg">
@@ -65,7 +65,7 @@
                   </p>
                 </div>
               </div>
-              <div class="cardList salad col-md-4">
+              <div class="cardList salad col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="300">
                 <span >Salad</span>
                 <div class="bg">
                   <div class="hoverpic"><img src="../../assets/logo.png" alt=""></div>
@@ -83,7 +83,7 @@
         </div>
     </div>
     <div class="subscription mt-5">
-      <div class="content">
+      <div class="content" data-aos="zoom-in" data-aos-duration="500">
         <p class="text-left">訂閱我們<br>獲得最新消息及優惠</p>
         <Validation-Provider rules="required|email" v-slot="{ errors, classes }" class="input-group">
           <input type="email" class="form-control" id="email" name='電子信箱' placeholder="請輸入信箱"  :class="classes" v-model="email">
@@ -120,6 +120,7 @@ export default {
 }
 
 .Index {
+
   .title{
     border-top: 2px solid rgb(28, 91, 103) ;
     border-bottom: 2px solid rgb(28, 91, 103) ;
@@ -234,6 +235,7 @@ export default {
       width: 100%;
       height: 300px;
       padding: 20px;
+      overflow: hidden;
       .first{
         padding-right: 20%;
       }
@@ -313,13 +315,11 @@ export default {
     min-height: 300px;
     background-attachment: fixed;
     background-size: cover;
+    padding-top: 50px;
     filter: saturate(80%);
     .content{
       width: 500px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      margin: 0 auto;
       background: rgba(255, 255, 255, 0.4);
       color: rgb(28, 91, 103);
       padding: 30px;
