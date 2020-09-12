@@ -1,5 +1,6 @@
 <template>
   <div class="Index">
+    <Gotop></Gotop>
     <div class="banner mb-5">
       <div class="Slogan">
         <div class="first">Healthy Diet</div>
@@ -93,14 +94,16 @@
         </Validation-Provider>
       </div>
     </div>
-    <div class="footer">© 2020 Healthy Diet All Rights Reserved.
-
-圖片為練習使用，無商業用途。</div>
+    <div class="footer">© 2020 Healthy Diet All Rights Reserved.圖片為練習使用，無商業用途。</div>
   </div>
 </template>
 
 <script>
+import Gotop from '../../components/frontend/Gotop'
 export default {
+  components: {
+    Gotop
+  },
   data () {
     return {
       email: ''
