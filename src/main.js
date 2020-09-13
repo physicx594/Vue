@@ -11,13 +11,14 @@ import 'viewerjs/dist/viewer.css'
 import { ValidationObserver, ValidationProvider, extend, localize, configure } from 'vee-validate'
 import * as rules from 'vee-validate/dist/rules'
 import TW from 'vee-validate/dist/locale/zh_TW.json'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 import App from './App.vue'
 import router from './router'
 import Pagination from './components/Pagination'
 import Toast from './components/Toast'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import Gotop from './components/frontend/Gotop'
 
 window.$ = $
 Vue.config.productionTip = false
@@ -39,6 +40,7 @@ configure({
 Vue.component('Loading', Loading)
 Vue.component('Pagination', Pagination)
 Vue.component('Toast', Toast)
+Vue.component('Gotop', Gotop)
 Vue.filter('filter', (num) => {
   var parts = num.toString().split('.')
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')

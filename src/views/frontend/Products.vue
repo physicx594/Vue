@@ -1,14 +1,19 @@
 <template>
   <div class="Products">
     <Loading :active.sync="isLoading"></Loading>
-    <div class="block"></div>
-    <div class="banner"></div>
+    <Gotop></Gotop>
+    <div class="banner">
+      <div class="Slogan" v-if="!isLoading">
+        <div class="first">Products List</div>
+        <span class="second">享受蔬食的喜悅與美好</span>
+      </div>
+    </div>
     <div class="container mt-5">
       <div class="ProductsRow row">
         <div class="navigationBar col-md-12">
           <div class="menu w-100">
             <ul class="list-unstyled d-flex justify-content-around w-75">
-              <li @click="category = !category"><a class="btn" >全部商品</a></li>
+              <li @click="category = '全部商品'"><a class="btn" >全部商品</a></li>
               <li><button class="btn">新鮮沙拉</button></li>
               <li><button class="btn">健康餐盒</button></li>
               <li><button class="btn">舒肥系列</button></li>
@@ -59,7 +64,8 @@ export default {
     return {
       isLoading: false,
       products: [],
-      pagination: {}
+      pagination: {},
+      category: ''
     }
   },
   methods: {
@@ -112,12 +118,8 @@ $main: #de9e36;
 $dark: #474747;
 
 .Products{
-
   .banner{
-    width: 100%;
-    height: 400px;
-    background: url('../../assets/Images/product/banner2.png') no-repeat center center;
-    background-size: cover;
+    background: url('https://images.unsplash.com/photo-1543353071-10c8ba85a904?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjI0MX0&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
   }
   .ProductsRow{
     .navigationBar{

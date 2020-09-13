@@ -46,7 +46,7 @@
                 </table>
                 <div class="footer"></div>
             </div>
-            <div class="cartSection">
+            <div class="cartSection mb-5">
               <div class="orderForm">
                 <div class="header"><span>選擇送貨及付款方式</span></div>
                 <form>
@@ -152,9 +152,6 @@ export default {
 </script>
 
 <style lang="scss">
-.frontNavBar{
-  position: sticky;
-}
 .Cart{
   counter-reset: step;
   .checkoutNav{
@@ -300,6 +297,9 @@ export default {
       }
     }
   }
+  // .footer{
+  //   margin-top: 15px;
+  // }
 }
 
 </style>

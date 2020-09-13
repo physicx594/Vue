@@ -1,5 +1,5 @@
 <template>
-  <div class="frontNavBar fixed-top">
+  <div class="frontNavBar">
     <div class="container p-0">
       <nav class="navbar navbar-expand-lg navbar-light  justify-content-between ">
         <a class="navbar-brand p-0" href="#"><img src="../../assets/logo.png" width="60"></a>
@@ -99,6 +99,11 @@ export default {
 
 <style lang="scss">
 .frontNavBar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
     background: rgb(255, 255, 255);
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
   .navbar-light .navbar-nav .nav-link{

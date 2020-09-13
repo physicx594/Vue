@@ -39,7 +39,7 @@ export default {}
     position: absolute;
     top: 0;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
-    transform: translateX(30%) translateY(20%) ;
+    transform: translateX(30%) translateY(10%) ;
     width: 30%;
     height: 80%;
     background-color: white;

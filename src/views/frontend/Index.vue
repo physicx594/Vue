@@ -113,14 +113,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Mrs+Sheppards&family=Yellowtail&display=swap');
 @font-face {
   font-family: hanyi;
   src: url(../../assets/font/hanyi.ttf);
 }
 
 .Index {
-
   .title{
     border-top: 2px solid rgb(28, 91, 103) ;
     border-bottom: 2px solid rgb(28, 91, 103) ;
@@ -129,54 +127,8 @@ export default {
     font-weight: bold;
     padding: 10px;
   }
-  .banner {
-    width: 100%;
-    height: 100vh;
-    background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat center
-      center;
-    background-attachment: fixed;
-    background-size: cover;
-    .Slogan {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: linear-gradient(
-        225deg,
-        #ffe29f 0%,
-        #ffa99f 48%,
-        #ff719a 100%
-      );
-      background-clip: text;
-      color: transparent;
-      animation: title 1.5s 1 ease-out forwards;
-      & .first{
-        font-family: 'Yellowtail', cursive;
-        font-size: 80px;
-        font-weight: bold;
-        color: #de9e36;
-        padding-right: 20px;
-      }
-      & .second{
-        padding: 0px 20px;
-        border: 1px solid white;
-        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
-        font-size: 24px;
-        font-weight: bold;
-        color: rgb(255, 255, 255);
-      }
-    }
-
-    @keyframes title {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -80%);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, 0%);
-      }
-    }
+  .banner{
+    background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
   }
   .aboutUs{
     .content{
@@ -184,6 +136,7 @@ export default {
       justify-content: space-between;
       .btn{
         color: white;
+        padding: 5px 15px;
         &:hover{
           background: transparent;
           color: #de9e36;
@@ -328,4 +281,7 @@ export default {
     }
   }
 }
+// .Footer{
+//   margin-top: 0;
+// }
 </style>

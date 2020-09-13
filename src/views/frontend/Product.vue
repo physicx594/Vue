@@ -1,7 +1,6 @@
 <template>
   <div class="Product">
     <Loading :active.sync="isLoading"></Loading>
-    <div class="block"></div>
     <Breadcrumb :product="tempProduct"></Breadcrumb>
     <div class="container">
       <div class="row">

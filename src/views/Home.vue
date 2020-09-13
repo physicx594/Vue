@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <Navbar></Navbar>
+    <div class="block"></div>
     <router-view></router-view>
     <Footer></Footer>
   </div>
@@ -22,6 +23,5 @@ export default {
   .home{
     text-align: center;
     height: 100%;
-
   }
 </style>

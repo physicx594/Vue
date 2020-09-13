@@ -38,7 +38,7 @@
                 </table>
             </div>
             <div class="arrowDown"><i class="fas fa-angle-double-down"></i></div>
-            <div class="orderInfo mb-5">
+            <div class="orderInfo">
               <div class="header">訂單資訊 <h6 class="float-right pt-1">{{ tempProduct.id | orderId}}</h6></div>
                 <table class="table m-0">
                   <tbody>
@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     getOrder (id) {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/6yx3fXo551OlQqRDnxoYaz90tm0IVN0NBmfdYj8Q2k2mOC6QkP0sKcITgNGwBnO7`
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/${id}`
       this.axios.get(api)
         .then(res => {
           this.tempProduct = res.data.data
@@ -193,7 +193,7 @@ export default {
     .orderInfo{
       position: relative;
       width: 50%;
-      margin: 0 auto;
+      margin: 0 auto 96px;
       border: 1px solid #EDEDED;
       .pay{
         position: absolute;

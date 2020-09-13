@@ -8,7 +8,7 @@
             <div class="step"><div>訂單確認</div></div>
           </div>
           <div class="checkContent">
-            <div class="customerForm">
+            <div class="customerForm mb-5">
               <div class="header ">顧客資料</div>
                 <Validation-Observer  v-slot="{ invalid }">
                   <form>
