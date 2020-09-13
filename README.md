@@ -6,3 +6,5 @@
 - 第五週作業連結：[表單驗證](https://physicx594.github.io/hexschool-JS-LIVE/week5_formValidation/index.html)
 - 第六週作業連結：[建立路由](https://physicx594.github.io/hexschool-JS-LIVE/week6_router/dist/index.html#/)
 - 第七週作業連結：[完成後台功能](https://physicx594.github.io/Vue/)
+- 第八週作業連結：[最終挑戰](https://physicx594.github.io/Vue/)
+
