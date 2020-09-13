@@ -23,7 +23,7 @@
                       蔬果，降低消費者對身體的負擔，注重消費者能夠吃得健康又安心。
                   </p>
                 </div>
-                <button class="btn btn-brown  mt-5">了解更多</button>
+                <router-link to="/about"><button class="btn btn-brown  mt-5">了解更多</button></router-link>
               </div>
             </div>
           </div>
@@ -94,12 +94,12 @@
         </Validation-Provider>
       </div>
     </div>
-    <div class="footer">© 2020 Healthy Diet All Rights Reserved.圖片為練習使用，無商業用途。</div>
   </div>
 </template>
 
 <script>
 import Gotop from '../../components/frontend/Gotop'
+
 export default {
   components: {
     Gotop
@@ -326,12 +326,6 @@ export default {
       font-size: 28px;
       font-weight: bold;
     }
-  }
-  .footer{
-    height: 64px;
-    line-height: 76px;
-    color: rgb(28, 91, 103);
-    font-weight: bold;
   }
 }
 </style>

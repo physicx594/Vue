@@ -1,38 +1,17 @@
 <template>
   <div class="Products">
     <Loading :active.sync="isLoading"></Loading>
+    <div class="block"></div>
     <div class="banner"></div>
     <div class="container mt-5">
       <div class="ProductsRow row">
-        <!-- <div class="sideBar col-md-2 ">
-          <ul class="list-unstyled">
-            <li><router-link to="/" class="current"><span>全部商品</span></router-link></li>
-            <li><router-link to="/"><span>健康餐盒</span></router-link></li>
-            <li><router-link to="/"><span>舒肥系列</span></router-link></li>
-            <li><router-link to="/"><span>新鮮沙拉</span></router-link></li>
-          </ul>
-        </div> -->
-        <!-- <div class="navigationBar col-md-12">
-          <div class="nav">
-            <input type="checkbox">
-              <span></span>
-              <span></span>
-              <div class="menu">
-                <li><a href="#">about</a></li>
-                <li><a href="#">新鮮沙拉</a></li>
-                <li><a href="#">cursos</a></li>
-                <li><a href="#">blog</a></li>
-                <li><a href="#">contactos</a></li>
-              </div>
-          </div>
-        </div> -->
         <div class="navigationBar col-md-12">
           <div class="menu w-100">
             <ul class="list-unstyled d-flex justify-content-around w-75">
-              <li><router-link to="/" class="current"><span>全部商品</span></router-link></li>
-              <li><router-link to="/"><span>健康餐盒</span></router-link></li>
-              <li><router-link to="/"><span>舒肥系列</span></router-link></li>
-              <li><router-link to="/"><span>新鮮沙拉</span></router-link></li>
+              <li @click="category = !category"><a class="btn" >全部商品</a></li>
+              <li><button class="btn">新鮮沙拉</button></li>
+              <li><button class="btn">健康餐盒</button></li>
+              <li><button class="btn">舒肥系列</button></li>
             </ul>
           </div>
         </div>
@@ -41,7 +20,7 @@
             <div class="circle mb-4 col-md-4" v-for="(item, index) in products" :key="index" >
                 <figure class="mb-3">
                   <router-link :to="`/product/${item.id}`">
-                  <img  :src="item.imageUrl[0]" class="img-fluid">
+                  <img  :src="item.imageUrl[0]" class="img-fluid"  :data-key = index>
                   <!-- <div class="imgHover" >
                     <span @click="openModal(item)">
                       <i class="far fa-heart fa-2x"></i>
@@ -84,9 +63,15 @@ export default {
     }
   },
   methods: {
-    getProducts () {
+    getProducts (page = 1) {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products`
+      const params = {
+        page,
+        paged: '9',
+        orderBy: 'created_at, updated_at',
+        sort: 'asc' // 排序遞增
+      }
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products?page=${params.page}&sort=${params.sort}&paged=${params.paged}`
       this.axios.get(api)
         .then(res => {
           this.products = res.data.data
@@ -127,6 +112,7 @@ $main: #de9e36;
 $dark: #474747;
 
 .Products{
+
   .banner{
     width: 100%;
     height: 400px;
@@ -138,135 +124,13 @@ $dark: #474747;
       .menu{
         display: flex;
         justify-content: center;
-        a{
-          // border: 1px solid rgb(28, 91, 103);
+        .btn{
           border-radius: 50px;
-          // font-weight: bold;
           color: white;
           background: $main;
           box-shadow: 0 8px 10px rgba(0,0,0,.2);
           padding: 5px 10px;
           margin: 0 10px;
-        }
-      }
-    }
-    // .navigationBar{
-    //     display: flex;
-    //     // justify-content: center;
-    //     .nav {
-    //       position: relative;
-
-    //       // width: 40px;
-    //       // height: 40px;
-    //       background-color: white;
-    //       border-radius: 50px;
-    //       box-shadow: 0 8px 15px rgba(0,0,0,.2);
-    //       padding: 10px;
-    //       transition: 0.5s;
-    //       // overflow: hidden;
-    //       // justify-content: center;
-    //       // align-items: center;
-    //       & span {
-    //         position: absolute;
-    //         left: 20px;
-    //         width: 20px;
-    //         height: 3px;
-    //         border-radius: 50px;
-    //         background-color: #666;
-    //         pointer-events: none;
-    //         transition: 0.5s;
-    //         &:nth-child(2) {
-    //           transform: translateY(10px);
-    //       }
-    //       &:nth-child(3) {
-    //           transform: translateY(20px);
-    //       }
-    //     }
-    //     & input {
-    //         width: 40px;
-    //         height: 40px;
-    //         cursor: pointer;
-    //         opacity: 0;
-    //     }
-    //     & input:checked ~ .menu {
-    //           width: 450px;
-    //     }
-    //     & input:checked ~ span {
-    //         background-color: #f974a1;
-    //         &:nth-child(2) {
-    //           transform: translateY(20px) rotate(-45deg);
-    //       }
-    //       &:nth-child(3) {
-    //           transform: translateY(20px) rotate(45deg);
-    //       }
-    //     }
-    //   }
-    //   .menu {
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: space-between;
-    //       margin: 0;
-    //       padding: 0;
-    //       width: 0px;
-    //       // overflow: hidden;
-    //       transition: 0.5s;
-    //       background: white;
-    //       li {
-    //         // display: none;
-    //         // overflow: hidden;
-    //         list-style: none;
-    //         margin: 0 10px;
-    //         a {
-    //           text-decoration: none;
-    //           color: #666;
-    //           text-transform: uppercase;
-    //           font-weight: 600;
-    //           transition: 0.5s;
-    //                       width: 150px;
-
-    //           &:hover{
-    //             color: #161919;
-    //           }
-    //       }
-    //     }
-    //   }
-    // }
-    .sideBar{
-      padding: 10px 0;
-      ul{
-        li{
-          position: relative;
-          margin: 0 auto;
-          box-sizing: border-box;
-          width: 130px;
-          height: 40px;
-          background-color: white;
-          margin-bottom: 15px;
-          font-size: 24px;
-          text-align: left;
-          letter-spacing: 6px;
-          line-height: 36px;
-          overflow: hidden;
-          box-shadow: 4px 5px 12px -10px black;
-          &::before {
-            content: '';
-            position: absolute;
-            width: 44px;
-            height: inherit;
-            background-color: black;
-            border-radius: 50%;
-            top: 50%;
-            left: -18px;
-            transform: translate(0, -50%);
-            transition: 0.8s ease-out;
-          }
-          &:hover::before{
-            transform: scale(10);
-          }
-          span{
-            color: white;
-            mix-blend-mode: difference;
-          }
         }
       }
     }
@@ -327,9 +191,11 @@ $dark: #474747;
       border-color: $main;
     }
     ul{
-      margin: 20px 0;
       justify-content: center;
+      margin-bottom: 72px;
     }
   }
+
 }
+
 </style>

@@ -77,6 +77,13 @@ export default {
           })
         })
     },
+    clearCart () {
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`
+      this.axios.delete(api)
+        .then((res) => {
+          console.log(res)
+        })
+    },
     closeCart () {
       this.openCart = false
     }
@@ -92,10 +99,8 @@ export default {
 
 <style lang="scss">
 .frontNavBar{
-    // height: 76px;
     background: rgb(255, 255, 255);
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
-    // opacity: .5;
   .navbar-light .navbar-nav .nav-link{
     position: relative;
     font-size: 18px;

@@ -17,12 +17,15 @@ height: 100%;
   font-family: 'Noto Sans TC', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: black;
   .table th, .table td {
     vertical-align: middle;
   }
   a{
     text-decoration: none;
+  }
+  .block{
+    height: 64px;
   }
   .header{
     width: 100%;

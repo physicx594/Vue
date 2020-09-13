@@ -95,7 +95,7 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-4">
-                    <div class="form-group mb-0" v-for="(i, index) in 3" :key="index">
+                    <div class="form-group mb-0" v-for="(i, index) in 5" :key="index">
                       <label :for="'imageUrl'+[i-1]">圖片網址</label>
                       <input type="text" class="form-control " :id="'imageUrl'+[i-1]" placeholder="請輸入圖片網址" v-model="tempProduct.imageUrl[i-1]">
                     </div>

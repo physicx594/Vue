@@ -1,6 +1,7 @@
 <template>
   <div class="Product">
     <Loading :active.sync="isLoading"></Loading>
+    <div class="block"></div>
     <Breadcrumb :product="tempProduct"></Breadcrumb>
     <div class="container">
       <div class="row">
@@ -16,29 +17,34 @@
         </div>
         <div class="col-md-5">
           <div class="productInfo text-left">
-            <div class="title "> <h2>{{ tempProduct.title}}</h2></div>
-            <div class="content">{{ tempProduct.content}}</div>
-            <div class="origin_price text-muted text-right" v-if="tempProduct.origin_price"> <del>{{ tempProduct.origin_price | filter }}</del></div>
-            <div class="d-flex justify-content-between">
-              <div class="heavy">商品重量: 160克  ± 10%</div>
-              <div class="price h4 font-weight-bold text-right" v-if="tempProduct.price"> {{tempProduct.price | filter}}</div>
+            <div class="title"><h2 class="font-weight-bold">{{ tempProduct.title}}</h2></div>
+            <!-- <div class="content">{{ tempProduct.description}}</div>
+            <div class="content">{{ tempProduct.content}}</div> -->
+            <div class="price">
+              <div class=" h2 font-weight-bold m-0" v-if="tempProduct.price"> {{tempProduct.price | filter}}  <span class="sale">sale</span> </div>
+              <div class="origin_price text-muted font-italic" v-if="tempProduct.origin_price"> <del>{{ tempProduct.origin_price | filter }}</del></div>
             </div>
-            <div class="shipping">
+            <div class="content" style="font-size:13px">{{tempProduct.content}}</div>
+            <div class="promotions">
+              <p class="mb-1">雙十節9 折優惠碼 : <span>taiwan1010</span></p>
+              <p class="m-0">周年慶，全館滿<span>3000免運費</span></p>
+            </div>
+            <!-- <div class="shipping">
               <div>全店，常溫 滿 1000 免運 </div>
               <div>全店，冷凍 滿 3000 免運</div>
-            </div>
+            </div> -->
             <div class="d-flex justify-content-between footer">
-              <div class="input-group bg-dark">
+              <div class="input-group">
                 <div class="input-group-prepend">
-                  <button type="button" class="btn btn-outline-brown text-white border-0 p-0" @click="tempProduct.quantity --"
-                  :disabled="tempProduct.quantity === 1">
-                    -
+                  <button type="button" class="btn text-white p-0" @click="tempProduct.quantity --"
+                  :disabled="tempProduct.quantity === 1" :class="{stop:tempProduct.quantity === 1}">
+                    <i class="fas fa-minus" style="font-size:16px"></i>
                   </button>
                 </div>
-                <input type="number" class="form-control bg-dark py-0 border-0 text-center text-white" v-model="tempProduct.quantity" disabled min="1">
+                <input type="text" class="form-control" v-model="tempProduct.quantity" disabled min="1">
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-outline-brown text-white border-0 p-0" @click="tempProduct.quantity ++">
-                    +
+                  <button type="button" class="btn  text-white p-0" @click="tempProduct.quantity ++">
+                    <i class="fas fa-plus" style="font-size:16px"></i>
                   </button>
                 </div>
               </div>
@@ -46,12 +52,16 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 mt-5">
+        <div class="productDetail col-md-12">
+          <div class="detail h3 my-5"><span>商品描述</span></div>
+          <div class="section d-flex">
+            <div class="description p-0" >{{ tempProduct.description }}</div>
+            <!-- <div class="content col-md-6 p-0">{{tempProduct.content}}</div> -->
+          </div>
+        </div>
+        <div class="my-5">
           <div class="productImg">
-            <!-- <img src="../../assets/Images/product/cooking.png" class="img-fluid" width="800"> -->
-            <!-- <img src="../../assets/Images/product/2.png" class="img-fluid" width="800"> -->
-            <img src="../../assets/Images/product/itemDetail-3big.png" class="img-fluid" width="800">
-            <!-- <img src="../../assets/Images/product/4.jpg" class="img-fluid" width="800"> -->
+            <img src="../../assets/Images/product/itemDetail-3big.png" class="img-fluid">
           </div>
         </div>
       </div>
@@ -112,65 +122,146 @@ export default {
 
 <style lang="scss">
 .Product{
-    .pics{
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      height: 350px;
-      .show-pic{
-        width: 80%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-      }
-      .other-pic{
-        width: 18%;
-        figure{
+  .pics{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    .show-pic{
+      width: 80%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .other-pic{
+      width: 18%;
+      figure{
+        width: 100%;
+        height: 80px;
+        margin-bottom: 10px;
+        img{
           width: 100%;
-          height: 80px;
-          margin-bottom: 10px;
-          img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center center;
-          }
+          height: 100%;
+          object-fit: cover;
+          object-position: center center;
         }
       }
     }
+  }
   .productInfo{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 100%;
+    // padding: 10px;
+    .sale{
+      font-size: 12px;
+      font-weight: 300;
+      padding: 0px 5px;
+      border-radius: 10px;
+      background: #C64702;
+      color: white;
+    }
+    .promotions>p{
+      border-left: 3px solid #CED4DA;
+      padding-left: 5px;
+      &>span{
+        color:#C64702;
+        font-weight: bold;
+        font-size: 18px;
+        margin-left: 5px;
+      }
+    }
     .footer{
       width: 100%;
-      position: absolute;
-      bottom: 0;
+      // position: absolute;
+      // bottom: 0;
       .cartBtn{
         color: white;
+        border: 1px solid transparent;
         &:hover{
           background: white;
           color: #de9e36;
+          border: 1px solid #de9e36;
         }
       }
     }
     .input-group, .cartBtn{
-        width: 45%;
-        border-radius: 50px;
+      width: 45%;
+      border-radius: 50px;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
       .btn{
         width: 30px;
-        font-size: 26px;
+        i{
+        color: #de9e36;
+        }
+        &.focus, &:focus {
+          box-shadow: none;
+        }
       }
-      .input-group-prepend .btn{
-        border-top-left-radius: 50px;
+      input{
+        background: #F7F7F7;
+        border: none;
+        height: 100%;
+        color: #de9e36;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 28px;
+        font-family: 'sans-serif';
+        padding: 0;
+      }
+       .btn:active{
+        animation: btn 0.5s infinite linear;
         border-bottom-left-radius: 50px;
       }
-      .input-group-append .btn{
-        border-top-right-radius: 50px;
-        border-bottom-right-radius: 50px;
+      .btn.stop:active{
+        animation: none;
+      }
+      @keyframes btn {
+        25% {
+          transform: translateY(-10px);
+        }
       }
     }
   }
+  .productDetail{
+    .detail{
+      font-weight: bold;
+      span{
+        position: relative;
+        &::before{
+          position: absolute;
+          bottom: 0;
+          transform: translateX(50%);
+          content: "";
+          width: 50%;
+          height: 2px;
+          background: #de9e36;
+          color: #de9e36;
+          margin-bottom: -10px;
+        }
+      }
+
+    }
+    .section{
+      white-space: pre-wrap;
+      text-align: center;
+      line-height: 30px;
+      background: #F7F7F7;
+      .description{
+        width: 100%;
+      }
+    }
+
+  }
   .productImg{
+    // background: url('../../assets/Images/product/itemDetail-3big.png') center center no-repeat;
+    // background-size: cover;
+    // width: 100%;
+    // min-height: 600px;
+    // background-attachment: fixed;
     img{
       object-fit: cover;
       object-position: center center;
