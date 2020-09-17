@@ -33,7 +33,7 @@
               </div>
             </div>
             <div class="col-md-5 d-flex flex-column justify-content-center text-center">
-              <img src="../../assets/logo.png" class="img-fluid">
+              <img src="@/assets/logo.png" class="img-fluid">
               <router-link to="/products"><button class="btn">立即訂購</button></router-link>
             </div>
           </div>
@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import LoadingPage from '../../components/frontend/LoadingPage'
-import Navbar from '../../components/frontend/Navbar'
+import LoadingPage from '@/components/frontend/LoadingPage'
+import Navbar from '@/components/frontend/Navbar'
 
-import Footer from '../../components/frontend/Footer'
+import Footer from '@/components/frontend/Footer'
 export default {
   components: {
     LoadingPage,
@@ -64,7 +64,7 @@ export default {
   created () {
     this.isLoading = true
     setInterval(() => {
-      this.isLoading = true
+      this.isLoading = false
     }, 1000)
   }
 }

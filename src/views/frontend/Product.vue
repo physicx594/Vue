@@ -57,7 +57,7 @@
         </div>
         <div class="my-5">
           <div class="productImg">
-            <img src="../../assets/Images/product/itemDetail-3big.png" class="img-fluid">
+            <img src="@/assets/Images/product/itemDetail-3big.png" class="img-fluid">
           </div>
         </div>
       </div>

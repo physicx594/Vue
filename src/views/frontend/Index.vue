@@ -46,7 +46,7 @@
                 <div class="cardList lunchbox col-md-4" data-aos="flip-up" data-aos-duration="1000">
                   <span>Bento</span>
                   <div class="bg">
-                    <div class="hoverpic"><img src="../../assets/logo.png" alt=""></div>
+                    <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
                     <p class="font-weight-bold">
                       健康餐盒<br>
                       每天都拿不定主意吃什麼嗎？<br>
@@ -60,7 +60,7 @@
                   <span class="float-left pl-3">Sous</span><br>
                   <span class="float-right pr-3">vide</span>
                   <div class="bg">
-                    <div class="hoverpic"><img src="../../assets/logo.png" alt=""></div>
+                    <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
                       <p class="font-weight-bold">
                       舒肥雞胸肉<br>
                       多種口味任你挑，滿足挑剔的味蕾<br>
@@ -72,7 +72,7 @@
                 <div class="cardList salad col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="300">
                   <span >Salad</span>
                   <div class="bg">
-                    <div class="hoverpic"><img src="../../assets/logo.png" alt=""></div>
+                    <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
                     <p class="font-weight-bold">
                       新鮮沙拉<br>
                       採用豐富的萵苣、蘿蔓、歐式生菜葉與蔬果<br>
@@ -104,10 +104,10 @@
 </template>
 
 <script>
-import Gotop from '../../components/frontend/Gotop'
-import LoadingPage from '../../components/frontend/LoadingPage'
+import Gotop from '@/components/frontend/Gotop'
+import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
-import Footer from '../../components/frontend/Footer'
+import Footer from '@/components/frontend/Footer'
 
 export default {
   components: {

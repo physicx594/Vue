@@ -66,9 +66,9 @@
 </template>
 <script>
 // /* global $ */
-import LoadingPage from '../../components/frontend/LoadingPage'
+import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
-import Footer from '../../components/frontend/Footer'
+import Footer from '@/components/frontend/Footer'
 
 export default {
   name: 'Products',
