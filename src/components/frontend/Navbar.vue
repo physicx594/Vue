@@ -32,7 +32,7 @@
               </router-link>
             </li>
             <li class="nav-item " @click="status = '購物車', openCart = true" >
-              <router-link class="nav-link" to="" :class="{active: status === '購物車'}" >
+              <router-link class="nav-link cart" to="" :class="{active: status === '購物車'}" >
                 <span>
                   <i class="fas fa-shopping-cart" style="font-size:18px"></i>
                 </span>
@@ -42,13 +42,13 @@
           </ul>
       </nav>
     </div>
-    <div is="ShoppingCart" :openCart="openCart" :cart="cart" :totalPrice="totalPrice" @update="getCart" @close="closeCart"></div>
+    <ShoppingCart :openCart="openCart" :cart="cart" :totalPrice="totalPrice" @update="getCart" @close="closeCart"></ShoppingCart>
     <div class="mask" :class="{ 'open': openCart }" @click.prevent="openCart = !openCart, status = ''"></div>
   </div>
 </template>
 
 <script>
-import ShoppingCart from '../ShoppingCart'
+import ShoppingCart from './ShoppingCart'
 
 export default {
   components: {
@@ -98,36 +98,42 @@ export default {
 </script>
 
 <style lang="scss">
+$primary : #204969;
+$secondary: #de9e36;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+
 .frontNavBar{
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
     z-index: 1030;
-    background: rgb(255, 255, 255);
+    background: #ffffff;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
   .navbar-light .navbar-nav .nav-link{
     position: relative;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     margin-right: 10px;
     padding: 0 10px;
-    transition: 1s;
+    transition: 0.5s;
+    color: $primary;
     &:hover, &:active{
-      color: #de9e36;
+      color: $secondary;
     }
     &:hover .cartQTY, .cartQTY.active{
-      border: 1px solid #de9e36;
-      background-color: white;
-      color: #de9e36;
+      border: 1px solid $secondary;
+      background-color: #fff;
+      color: $secondary;
     }
     &::after{
     content: '';
     display: block;
     width: 0;
     height: 1px;
-    background:#de9e36;
-    transition:  0.7s;
+    background:$secondary;
+    transition:  0.5s;
     }
     &:hover::after{
     width: 100%;
@@ -147,11 +153,11 @@ export default {
       line-height: 20px;
       font-size: 14px;
       text-align: center;
-      background: #de9e36;
-      color: white;
+      background: white;
+      color: $primary;
       transform: translateX(2px) translateY(13px);
-      transition:  1s;
-      border: 1px solid transparent;
+      transition:  0.5s;
+      border: 1px solid $primary;
     }
   }
   .mask{

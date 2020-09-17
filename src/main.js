@@ -19,12 +19,21 @@ import router from './router'
 import Pagination from './components/Pagination'
 import Toast from './components/Toast'
 import Gotop from './components/frontend/Gotop'
+import orderIdFilter from './filters/orderId'
+import moneyfilter from './filters/money'
+import './bus'
 
 window.$ = $
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 Vue.use(Viewer)
 
+Vue.filter('money', moneyfilter)
+Vue.filter('orderId', orderIdFilter)
+Vue.component('Loading', Loading)
+Vue.component('Pagination', Pagination)
+Vue.component('Toast', Toast)
+Vue.component('Gotop', Gotop)
 Vue.component('ValidationObserver', ValidationObserver)
 Vue.component('ValidationProvider', ValidationProvider)
 localize('zh_TW', TW)
@@ -37,20 +46,6 @@ configure({
     invalid: 'is-invalid'
   }
 })
-Vue.component('Loading', Loading)
-Vue.component('Pagination', Pagination)
-Vue.component('Toast', Toast)
-Vue.component('Gotop', Gotop)
-Vue.filter('filter', (num) => {
-  var parts = num.toString().split('.')
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return 'NT $' + parts.join('.')
-})
-Vue.filter('orderId', (num) => {
-  var parts = num.slice(0, 20)
-  return parts
-})
-Vue.prototype.$bus = new Vue()
 
 new Vue({
   created () {

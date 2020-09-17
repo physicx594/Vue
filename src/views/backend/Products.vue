@@ -41,8 +41,8 @@
             <th class="text-center">{{ index + 1 }}</th>
             <td>{{ item.category }}</td>
             <td>{{ item.title }}</td>
-            <td>{{ item.origin_price | filter }}</td>
-            <td>{{ item.price | filter }}</td>
+            <td>{{ item.origin_price | money }}</td>
+            <td>{{ item.price | money }}</td>
             <td v-if="item.options">{{ item.options.quantity }}</td>
             <td v-else></td>
             <td v-if="item.options">

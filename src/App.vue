@@ -9,13 +9,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mrs+Sheppards&family=Yellowtail&display=swap');
 
+$primary : #204969;
+$secondary: #de9e36;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+
 html,body{
   height: 100%;
   margin:0;
+  background-color: white;
 }
 #app {
 height: 100%;
-  font-family: 'Noto Sans TC', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto','Noto Sans TC', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: black;
@@ -42,16 +48,16 @@ height: 100%;
         font-family: 'Yellowtail', cursive;
         font-size: 80px;
         font-weight: bold;
-        color: #de9e36;
+        color: $primary;
         padding-right: 20px;
       }
       & .second{
         padding: 0px 20px;
-        border: 1px solid white;
+        border: 1px solid $primary;;
         box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
         font-size: 24px;
         font-weight: bold;
-        color: rgb(255, 255, 255);
+        color: $primary;;
       }
     }
     @keyframes title {
@@ -72,7 +78,7 @@ height: 100%;
     text-decoration: none;
   }
   .block{
-    height: 64px;
+    height: 0px;
   }
   .header{
     width: 100%;

@@ -1,6 +1,7 @@
 <template>
   <div class="Product">
-    <Loading :active.sync="isLoading"></Loading>
+    <Navbar></Navbar>
+    <LoadingPage :isLoading="isLoading"></LoadingPage>
     <Breadcrumb :product="tempProduct"></Breadcrumb>
     <div class="container">
       <div class="row">
@@ -20,18 +21,14 @@
             <!-- <div class="content">{{ tempProduct.description}}</div>
             <div class="content">{{ tempProduct.content}}</div> -->
             <div class="price">
-              <div class=" h2 font-weight-bold m-0" v-if="tempProduct.price"> {{tempProduct.price | filter}}  <span class="sale">sale</span> </div>
-              <div class="origin_price text-muted font-italic" v-if="tempProduct.origin_price"> <del>{{ tempProduct.origin_price | filter }}</del></div>
+              <div class=" h2 font-weight-bold m-0" v-if="tempProduct.price"> {{tempProduct.price | money}}  <span class="sale">sale</span> </div>
+              <div class="origin_price text-muted font-italic" v-if="tempProduct.origin_price"> <del>{{ tempProduct.origin_price | money }}</del></div>
             </div>
             <div class="content" style="font-size:13px">{{tempProduct.content}}</div>
             <div class="promotions">
               <p class="mb-1">雙十節9 折優惠碼 : <span>taiwan1010</span></p>
               <p class="m-0">周年慶，全館滿<span>3000免運費</span></p>
             </div>
-            <!-- <div class="shipping">
-              <div>全店，常溫 滿 1000 免運 </div>
-              <div>全店，冷凍 滿 3000 免運</div>
-            </div> -->
             <div class="d-flex justify-content-between footer">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -47,7 +44,7 @@
                   </button>
                 </div>
               </div>
-              <button type="button" class="btn btn-brown cartBtn" @click="addToCart(tempProduct)">加入購物車</button>
+              <button type="button" class="btn cartBtn" @click="addToCart(tempProduct)">加入購物車</button>
             </div>
           </div>
         </div>
@@ -65,26 +62,43 @@
         </div>
       </div>
     </div>
+    <div class="joinMsg px-5" :class="{open: openMsg}" v-if="joinMsg">
+      <span >成功加入購物車</span>
+    </div>
+    <div class="joinMsg bg-danger" :class="{open: openMsg}" v-else>
+      <span>該商品已放入購物車當中，</span><br>
+      <span>請至購物車修改數量即可。</span>
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Breadcrumb from '@/components/Breadcrumb'
+import Navbar from '@/components/frontend/Navbar'
+import Footer from '@/components/frontend/Footer'
+import Breadcrumb from '@/components/frontend/Breadcrumb'
+import LoadingPage from '@/components/frontend/LoadingPage'
+
 export default {
   name: 'Product',
   components: {
-    Breadcrumb
+    Navbar,
+    Footer,
+    Breadcrumb,
+    LoadingPage
   },
   data () {
     return {
       tempProduct: {},
       selectPic: '',
-      isLoading: false
+      isLoading: false,
+      openMsg: false,
+      joinMsg: true
+
     }
   },
   methods: {
     addToCart (item, quantity = 1) {
-      this.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
       const cart = {
         product: item.id,
@@ -93,15 +107,24 @@ export default {
       this.axios.post(api, cart)
         .then((res) => {
           this.$bus.$emit('get-cart')
-          this.isLoading = false
+          this.openMsg = true
+          setTimeout(() => {
+            this.openMsg = false
+          }, 2500)
         })
         .catch(error => {
-          this.isLoading = false
+          this.openMsg = true
+          this.joinMsg = false
+          setTimeout(() => {
+            this.openMsg = false
+            this.joinMsg = true
+          }, 2500)
           console.log(error)
         })
     }
   },
   created () {
+    this.isLoading = true
     const { id } = this.$route.params
     const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/product/${id}`
     this.axios.get(api)
@@ -111,6 +134,7 @@ export default {
           quantity: 1
         }
         this.selectPic = this.tempProduct.imageUrl[0]
+        this.isLoading = false
       })
       .catch(error => {
         console.log(error)
@@ -120,7 +144,29 @@ export default {
 </script>
 
 <style lang="scss">
+$primary : #204969;
+$secondary: #de9e36;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+
 .Product{
+  .frontNavBar{
+    position: sticky;
+  }
+  .joinMsg{
+    position: fixed;
+    top: 103px;
+    right: -350px;
+    padding: 5px 10px;
+    color: white;
+    background: $primary;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.5s ease-out;
+    font-size: 13px;
+    &.open{
+      right: 10px;
+    }
+  }
   .pics{
     display: flex;
     justify-content: space-between;
@@ -154,7 +200,6 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    // padding: 10px;
     .sale{
       font-size: 12px;
       font-weight: 300;
@@ -175,15 +220,12 @@ export default {
     }
     .footer{
       width: 100%;
-      // position: absolute;
-      // bottom: 0;
       .cartBtn{
         color: white;
         border: 1px solid transparent;
+        background: $primary;
         &:hover{
-          background: white;
-          color: #de9e36;
-          border: 1px solid #de9e36;
+          background: #1b381b;
         }
       }
     }
@@ -194,7 +236,7 @@ export default {
       .btn{
         width: 30px;
         i{
-        color: #de9e36;
+        color: $primary;
         }
         &.focus, &:focus {
           box-shadow: none;
@@ -204,7 +246,7 @@ export default {
         background: #F7F7F7;
         border: none;
         height: 100%;
-        color: #de9e36;
+        color: $primary;
         text-align: center;
         font-weight: bolder;
         font-size: 28px;
@@ -228,6 +270,7 @@ export default {
   .productDetail{
     .detail{
       font-weight: bold;
+      color: $primary;
       span{
         position: relative;
         &::before{
@@ -237,8 +280,7 @@ export default {
           content: "";
           width: 50%;
           height: 2px;
-          background: #de9e36;
-          color: #de9e36;
+          background: $primary;
           margin-bottom: -10px;
         }
       }
@@ -249,6 +291,7 @@ export default {
       text-align: center;
       line-height: 30px;
       background: #F7F7F7;
+      padding: 20px 40px;
       .description{
         width: 100%;
       }

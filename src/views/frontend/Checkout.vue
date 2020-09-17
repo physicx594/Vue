@@ -1,12 +1,9 @@
 <template>
     <div class="Checkout">
+      <Navbar></Navbar>
       <div class="container">
         <div class="row">
-          <div class="checkoutNav">
-            <div class="step active"><div>購物車</div></div>
-            <div class="step active"><div>填寫資料</div></div>
-            <div class="step"><div>訂單確認</div></div>
-          </div>
+          <CheckoutNav :step1="step.step1" :step2="step.step2"></CheckoutNav>
           <div class="checkContent">
             <div class="customerForm mb-5">
               <div class="header ">顧客資料</div>
@@ -89,16 +86,27 @@
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
 </template>
 
 <script>
-
+import Navbar from '../../components/frontend/Navbar'
+import Footer from '../../components/frontend/Footer'
+import CheckoutNav from '../../components/frontend/CheckoutNav'
 export default {
   name: 'Checkout',
-
+  components: {
+    Navbar,
+    Footer,
+    CheckoutNav
+  },
   data () {
     return {
+      step: {
+        step1: true,
+        step2: true
+      },
       cart: [],
       totalPrice: 0,
       shippingFee: 200,
@@ -147,78 +155,41 @@ export default {
 <style lang="scss">
 .Checkout{
   counter-reset: step;
-    .checkoutNav{
-      margin: 30px auto;
-      display: flex;
-      .step{
-          position: relative;
-          width: 240px;
-          height: 70px;
-          color: #CED4DA;
-          &::before{
-              content:counter(step);
-              counter-increment: step;
-              display:block;
-              color: white;
-              width: 25px;
-              height: 25px;
-              line-height: 25px;
-              margin: 5px auto;
-              border-radius: 50%;
-              background-color: #CED4DA;
-          }
-          &:first-child:after {
-              content:none;
-          }
-      }
-      .step.active{
-          color: green;
-          &::before{
-              background-color: green;
-          }
-      }
-      .step.finished{
-          & + .step::after{
-              height: 2px;
-              background-color: green;
-          }
-      }
-    }
-    .checkContent{
+  .checkContent{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    .customerForm{
       width: 100%;
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      .customerForm{
-        width: 100%;
-        margin: 0 auto;
-        border: 1px solid #EDEDED;
-        input::placeholder{
-          font-size: 13px;
-        }
-        .form-control:focus, .btn:focus{
-          border: 1px solid #ced4da;
-          box-shadow: none;
-        }
-        form{
-          padding: 24px;
-          text-align: left;
-          .footer{
-            position: relative;
-            .footBtn{
-              position: absolute;
-              width: 100%;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              bottom: 0;
-              right: 0;
-              padding: 0 5px;
-            }
+      margin: 0 auto;
+      border: 1px solid #EDEDED;
+      input::placeholder{
+        font-size: 13px;
+      }
+      .form-control:focus, .btn:focus{
+        border: 1px solid #ced4da;
+        box-shadow: none;
+      }
+      form{
+        padding: 24px;
+        text-align: left;
+        .footer{
+          position: relative;
+          .footBtn{
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            bottom: 0;
+            right: 0;
+            padding: 0 5px;
           }
         }
       }
     }
+  }
 }
 
 </style>

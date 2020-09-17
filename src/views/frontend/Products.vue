@@ -1,76 +1,99 @@
 <template>
   <div class="Products">
-    <Loading :active.sync="isLoading"></Loading>
+    <Navbar></Navbar>
+        <div class="block"></div>
+
+    <LoadingPage :isLoading="isLoading"></LoadingPage>
+    <!-- <Loading :active.sync="isLoading"></Loading> -->
     <Gotop></Gotop>
-    <div class="banner">
-      <div class="Slogan" v-if="!isLoading">
-        <div class="first">Products List</div>
-        <span class="second">享受蔬食的喜悅與美好</span>
-      </div>
-    </div>
-    <div class="container mt-5">
-      <div class="ProductsRow row">
-        <div class="navigationBar col-md-12">
-          <div class="menu w-100">
-            <ul class="list-unstyled d-flex justify-content-around w-75">
-              <li @click="category = '全部商品'"><a class="btn" >全部商品</a></li>
-              <li><button class="btn">新鮮沙拉</button></li>
-              <li><button class="btn">健康餐盒</button></li>
-              <li><button class="btn">舒肥系列</button></li>
-            </ul>
-          </div>
+    <div v-if="!isLoading">
+      <div class="banner">
+        <div class="Slogan">
+          <div class="first">Products List</div>
+          <span class="second">享受蔬食的喜悅與美好</span>
         </div>
-        <div class="col-md-12">
-          <div class="row justify-content-around p-5" >
-            <div class="circle mb-4 col-md-4" v-for="(item, index) in products" :key="index" >
-                <figure class="mb-3">
-                  <router-link :to="`/product/${item.id}`">
-                  <img  :src="item.imageUrl[0]" class="img-fluid"  :data-key = index>
-                  <!-- <div class="imgHover" >
-                    <span @click="openModal(item)">
-                      <i class="far fa-heart fa-2x"></i>
-                    </span>
-                  </div> -->
-                  <div class="itemPrice">
-                    <div v-if="!item.price">
-                      <div style=" visibility:hidden">0</div>
-                      <div class="origin_price text-decoration-none text-danger"><h5>{{item.origin_price | filter}}</h5></div>
-                    </div>
-                    <div v-else>
-                        <div class="origin_price text-center text-muted"><del>{{item.origin_price | filter}}</del></div>
-                        <div class="price text-danger font-weight-bold"><h2>{{item.price | filter}}</h2></div>
-                    </div>
-                  </div>
-                  </router-link>
-                </figure>
-                <h5 class="title text-center mb-3">{{item.title}}</h5>
-                <button class="btn btn-outline-brown" @click="addToCart(item)">加入購物車</button>
+      </div>
+      <div class="container mt-5">
+        <div class="ProductsRow row">
+          <div class="navigationBar col-md-12">
+            <div class="menu w-100">
+              <ul class="list-unstyled w-75 my-2">
+                <li class="nav-item" @click="category='全部商品'"><button type="button" class="btn" >全部商品</button></li>
+                <li @click="category = '新鮮沙拉'"><button type="button" class="btn">新鮮沙拉</button></li>
+                <li @click="category='健康餐盒'"><button class="btn">健康餐盒</button></li>
+                <li @click="category='舒肥系列'"><button class="btn">舒肥系列</button></li>
+              </ul>
             </div>
+            <!-- {{ category }} -->
           </div>
-          <Pagination :pages="pagination" @update="getProducts"></Pagination>
+          <div class="col-md-12">
+            <div class="row justify-content-start p-5" >
+              <div class="circle mb-4 col-md-4" v-for="(item, index) in filtedProducts" :key="index" >
+                  <figure class="mb-3">
+                    <router-link :to="`/product/${item.id}`">
+                    <img  :src="item.imageUrl[0]" class="img-fluid"  :data-key = index>
+                    <div class="itemPrice">
+                      <div v-if="!item.price">
+                        <div style=" visibility:hidden">0</div>
+                        <div class="origin_price text-decoration-none text-danger"><h5>{{item.origin_price | money}}</h5></div>
+                      </div>
+                      <div v-else>
+                          <div class="origin_price text-center text-muted"><del>{{item.origin_price | money}}</del></div>
+                          <div class="price text-danger font-weight-bold"><h2>{{item.price | money}}</h2></div>
+                      </div>
+                    </div>
+                    </router-link>
+                  </figure>
+                  <h5 class="title text-center mb-3 font-weight-bold">{{item.title}}</h5>
+                  <button class="btn" @click="addToCart(item)">加入購物車</button>
+              </div>
+            </div>
+            <Pagination :pages="pagination" @update="getProducts"></Pagination>
+          </div>
         </div>
       </div>
     </div>
+    <div class="joinMsg px-5" :class="{open: openMsg}" v-if="joinMsg">
+      <span >成功加入購物車</span>
+    </div>
+    <div class="joinMsg bg-danger" :class="{open: openMsg}" v-else>
+      <span>該商品已放入購物車當中，</span><br>
+      <span>請至購物車修改數量即可。</span>
+    </div>
+
+    <Footer></Footer>
   </div>
 </template>
 <script>
 // /* global $ */
+import LoadingPage from '../../components/frontend/LoadingPage'
+import Navbar from '@/components/frontend/Navbar'
+import Footer from '../../components/frontend/Footer'
 
 export default {
   name: 'Products',
-  props: ['user'],
-
+  components: {
+    LoadingPage,
+    Navbar,
+    Footer
+  },
   data () {
     return {
       isLoading: false,
+      category: '全部商品',
       products: [],
+      // filterProducts: [],
       pagination: {},
-      category: ''
+      openMsg: false,
+      joinMsg: true
     }
   },
   methods: {
+    getCategory () {
+      this.category = '全部商品'
+    },
     getProducts (page = 1) {
-      this.isLoading = true
+      if (!this.openMsg) this.isLoading = true
       const params = {
         page,
         paged: '9',
@@ -89,7 +112,6 @@ export default {
         })
     },
     addToCart (item, quantity = 1) {
-      this.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
       const cart = {
         product: item.id,
@@ -98,14 +120,30 @@ export default {
       this.axios.post(api, cart)
         .then((res) => {
           this.$bus.$emit('get-cart')
+          this.openMsg = true
           this.getProducts()
+          setTimeout(() => {
+            this.openMsg = false
+          }, 2500)
         })
         .catch(error => {
-          this.isLoading = false
+          this.joinMsg = false
+          this.openMsg = true
+          setTimeout(() => {
+            this.openMsg = false
+            this.joinMsg = true
+          }, 2500)
           console.log(error.response.data.errors[0])
         })
     }
   },
+  computed: {
+    filtedProducts () {
+      if (this.category === '全部商品') return this.products
+      return this.products.filter(item => this.category === item.category)
+    }
+  },
+
   created () {
     this.getProducts()
   }
@@ -114,10 +152,27 @@ export default {
 
 <style lang="scss">
 
-$main: #de9e36;
+$primary : #204969;
+$secondary: #de9e36;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
 $dark: #474747;
 
 .Products{
+  .joinMsg{
+    position: fixed;
+    top: 71px;
+    right: -350px;
+    padding: 5px 10px;
+    color: white;
+    background: #3A602F;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.5s ease-out;
+    font-size: 13px;
+    &.open{
+      right: 10px;
+    }
+  }
   .banner{
     background: url('https://images.unsplash.com/photo-1543353071-10c8ba85a904?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjI0MX0&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
   }
@@ -126,17 +181,20 @@ $dark: #474747;
       .menu{
         display: flex;
         justify-content: center;
-        .btn{
-          border-radius: 50px;
-          color: white;
-          background: $main;
-          box-shadow: 0 8px 10px rgba(0,0,0,.2);
-          padding: 5px 10px;
-          margin: 0 10px;
+        ul{
+          display: flex;
+          justify-content: space-between;
+          .btn{
+            border-radius: 50px;
+            color: white;
+            background: $primary;
+            padding: 5px 30px;
+          }
         }
       }
     }
     .circle{
+      margin: 50px 0;
       figure{
         position: relative;
         box-sizing: content-box;
@@ -171,10 +229,14 @@ $dark: #474747;
         }
       }
       .btn{
+        background: transparent;
+        border: 1px solid $primary;
+        color: $primary;
         border-radius: 50px;
-        padding: 5px 10px;
+        padding: 5px 30px;
         &:hover{
           color: white;
+          background: $primary;
         }
       }
     }
@@ -182,15 +244,15 @@ $dark: #474747;
   .Pagination {
     border-radius: 50px;
     .page-link {
-      color: $main;
+      color: $primary;
       &:focus {
         box-shadow: none;
       }
     }
     .active .page-link, .page-link:hover {
       color: #fff;
-      background-color: $main;
-      border-color: $main;
+      background-color: $primary;
+      border-color: $primary;
     }
     ul{
       justify-content: center;

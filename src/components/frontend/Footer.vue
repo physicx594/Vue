@@ -1,11 +1,9 @@
 <template>
     <div class="Footer">
-    <div class="section">
+      <div class="section">
         <span>© 2020 Healthy Diet All Rights Reserved.圖片為練習使用，無商業用途。</span>
-        <router-link to="/admin/products" class="float-right"><button type="button" class="btn btn-outline-dark">後台管理</button> </router-link>
-    </div>
-    <div class="sidebtn">
-    </div>
+      </div>
+      <router-link to="/admin/products" class="gobackend">後台管理</router-link>
     </div>
 </template>
 
@@ -16,14 +14,26 @@ export default {
 </script>
 
 <style lang="scss">
+$primary : #2a5529;
+$secondary: #de9e36;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+
 .Footer{
+  background: #F7F7F7;
+  position: relative;
   .section{
     padding: 0 10%;
     height: 64px;
+      text-align: center;
     line-height: 64px;
-    color: rgb(28, 91, 103);
     font-weight: bold;
-    box-shadow: 0 -1px 10px -1px rgba(0,0,0,.2);
+    color: $primary;
+  }
+  .gobackend{
+    position: absolute;
+    top: 20px;
+    right: 15%;
   }
 }
 

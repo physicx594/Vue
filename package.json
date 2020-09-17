@@ -16,6 +16,7 @@
     "eslint-loader": "^2.1.2",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
+    "swiper": "^6.2.0",
     "v-viewer": "^1.5.1",
     "vee-validate": "^3.3.9",
     "vue": "^2.6.11",
