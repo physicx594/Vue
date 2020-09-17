@@ -152,7 +152,7 @@ export default {
 
 <style lang="scss">
 
-$primary : #204969;
+$primary : #264710;
 $secondary: #de9e36;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;

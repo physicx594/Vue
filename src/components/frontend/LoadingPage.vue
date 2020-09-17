@@ -50,8 +50,8 @@ export default {
 </script>
 
 <style lang="scss">
-$primary : #204969;
-$secondary: #de9e36;
+$primary : #264710;
+$secondary: #FEC81A;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
@@ -80,7 +80,7 @@ $bgL:#F7F7F7;
         font-family: 'Yellowtail', cursive;
         font-size: 40px;
         font-weight: bold;
-        color: #fff;
+        color: $secondary;
         &::after{
           content: '™';
           font-family: 'Noto Sans TC';

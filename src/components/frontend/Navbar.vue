@@ -15,28 +15,28 @@
           <span class="navbar-toggler-icon"></span>
         </button>
           <ul class="navbar-nav">
-            <li class="nav-item"  @click="status = '首頁'">
-              <router-link class="nav-link" to="/" :class="{active: status === '首頁'}"><span> 首頁 </span></router-link>
+            <li class="nav-item" >
+              <router-link class="nav-link" to="/"><span> 首頁 </span></router-link>
             </li>
-            <li class="nav-item" @click="status = '產品列表'">
-              <router-link class="nav-link" to="/products" :class="{active: status === '產品列表'}"><span> 產品列表 </span></router-link>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/products"><span> 產品列表 </span></router-link>
             </li>
-            <li class="nav-item" @click="status = '關於我們'">
-              <router-link class="nav-link" to="/about" :class="{active: status === '關於我們'}"><span > 關於我們 </span></router-link>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/about"><span > 關於我們 </span></router-link>
             </li>
-            <li class="nav-item" @click="status = '會員'">
-              <router-link class="nav-link" to="/" :class="{active: status === '會員'}">
+            <li class="nav-item">
+              <router-link class="nav-link" to="#" >
                 <span>
                   <i class="fas fa-user" style="font-size:18px"></i>
                 </span>
               </router-link>
             </li>
-            <li class="nav-item " @click="status = '購物車', openCart = true" >
-              <router-link class="nav-link cart" to="" :class="{active: status === '購物車'}" >
+            <li class="nav-item " @click="openCart = true" >
+              <router-link class="nav-link cart" to="#" >
                 <span>
                   <i class="fas fa-shopping-cart" style="font-size:18px"></i>
                 </span>
-                <div class="cartQTY" :class="{active: status === '購物車'}" v-if="cart.length >= 0">{{ cart.length }}</div>
+                <div class="cartQTY" v-if="cart.length >= 0">{{ cart.length }}</div>
               </router-link>
             </li>
           </ul>
@@ -56,7 +56,6 @@ export default {
   },
   data () {
     return {
-      status: '',
       cart: [],
       openCart: false,
       totalPrice: 0,
@@ -98,8 +97,9 @@ export default {
 </script>
 
 <style lang="scss">
-$primary : #204969;
+$primary : #264710;
 $secondary: #de9e36;
+$contrast: #800000;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
@@ -119,20 +119,20 @@ $bgL:#F7F7F7;
     padding: 0 10px;
     transition: 0.5s;
     color: $primary;
-    &:hover, &:active{
-      color: $secondary;
+    &:hover, &.active{
+      color: $contrast;
     }
     &:hover .cartQTY, .cartQTY.active{
-      border: 1px solid $secondary;
+      border: 1px solid $contrast;
       background-color: #fff;
-      color: $secondary;
+      color: $contrast;
     }
     &::after{
     content: '';
     display: block;
     width: 0;
     height: 1px;
-    background:$secondary;
+    background: $contrast;
     transition:  0.5s;
     }
     &:hover::after{

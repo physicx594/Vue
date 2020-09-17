@@ -9,7 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mrs+Sheppards&family=Yellowtail&display=swap');
 
-$primary : #204969;
+$primary : #264710;
 $secondary: #de9e36;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;

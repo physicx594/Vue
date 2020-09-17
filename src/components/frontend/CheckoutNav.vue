@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
-$primary : #2a5529;
+$primary : #264710;
 
 .checkoutNav{
     margin: 96px auto 30px;

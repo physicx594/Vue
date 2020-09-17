@@ -1,7 +1,7 @@
 <template>
     <div class="Footer">
       <div class="section">
-        <span>© 2020 Healthy Diet All Rights Reserved.圖片為練習使用，無商業用途。</span>
+        <span>© 2020 Healthy Diet All Rights Reserved.  圖片為練習使用，無商業用途。</span>
       </div>
       <router-link to="/admin/products" class="gobackend">後台管理</router-link>
     </div>
@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
-$primary : #2a5529;
+$primary : #264710;
 $secondary: #de9e36;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;

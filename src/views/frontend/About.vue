@@ -71,6 +71,12 @@ export default {
 </script>
 
 <style lang="scss">
+$primary : #264710;
+$secondary: #FEC81A;
+$contrast: #800000;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+
 .About{
   .banner{
     background: url('https://images.unsplash.com/photo-1543352634-99a5d50ae78e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80') center center no-repeat;
@@ -79,7 +85,7 @@ export default {
     text-align: left;
     .title{
       position: relative;
-      color: #de9e36;
+      color: $primary;
       font-weight: bold;
       font-family: 'Yellowtail';
       padding: 10px;
@@ -89,13 +95,15 @@ export default {
         bottom: 0;
         width: 145px;
         height: 3px;
-        background: #de9e36;
+        background: $primary;
       }
     }
     .btn{
-      background: #de9e36;
-      color: white;
-      padding: 5px 15px;
+      border-radius: 50px;
+      border: 1px solid $primary;
+      background: transparent;
+      color: $primary;
+      padding: 5px 30px;
       margin-top: 50px;
     }
   }

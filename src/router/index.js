@@ -76,7 +76,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-
+  linkExactActiveClass: 'active',
   scrollBehavior (to, from, savedPosition) {
     return {
       x: 0,
