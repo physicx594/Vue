@@ -13,10 +13,12 @@
 
 <script>
 import Navbar from '@/components/backend/Navbar'
+import Toast from '@/components/backend/Toast'
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    Toast
   },
   name: 'Dashboard',
   data () {

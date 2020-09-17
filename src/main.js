@@ -17,7 +17,6 @@ import 'aos/dist/aos.css'
 import App from './App.vue'
 import router from './router'
 import Pagination from './components/Pagination'
-import Toast from './components/Toast'
 import Gotop from './components/frontend/Gotop'
 import orderIdFilter from './filters/orderId'
 import moneyfilter from './filters/money'
@@ -32,7 +31,6 @@ Vue.filter('money', moneyfilter)
 Vue.filter('orderId', orderIdFilter)
 Vue.component('Loading', Loading)
 Vue.component('Pagination', Pagination)
-Vue.component('Toast', Toast)
 Vue.component('Gotop', Gotop)
 Vue.component('ValidationObserver', ValidationObserver)
 Vue.component('ValidationProvider', ValidationProvider)
