@@ -134,10 +134,12 @@ export default {
   },
   created () {
     this.getOrder()
-    // this.getOrders()
     this.$bus.$on('orderId', item => {
       this.getOrder(item)
     })
+  },
+  beforeDestroy () {
+    this.$bus.$off('orderId')
   }
 }
 </script>

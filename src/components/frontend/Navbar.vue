@@ -92,6 +92,9 @@ export default {
     this.$bus.$on('get-cart', () => {
       this.getCart()
     })
+  },
+  beforeDestroy () {
+    this.$bus.$off('get-cart')
   }
 }
 </script>
