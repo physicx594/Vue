@@ -82,21 +82,6 @@ export default {
     }
   },
   methods: {
-    scrollDown () {
-      if (this.$route.params.category) {
-        console.log('123')
-        window.scrollTo({
-          top: 561,
-          behavior: 'smooth'
-        })
-      } else {
-        window.scrollTo({
-          top: 561,
-          behavior: 'smooth'
-        })
-        console.log('456')
-      }
-    },
     getProducts (page = 1) {
       if (!this.openMsg) this.isLoading = true
       const params = {
@@ -112,7 +97,10 @@ export default {
           this.pagination = res.data.meta.pagination
           if (this.$route.params.category) {
             this.category = this.$route.params.category
-            this.scrollDown()
+            window.scrollTo({
+              top: 561,
+              behavior: 'smooth'
+            })
           }
           this.isLoading = false
         })
@@ -188,43 +176,6 @@ $dark: #474747;
   .banner{
     position: relative;
     background: url('https://images.unsplash.com/photo-1543353071-10c8ba85a904?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjI0MX0&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
-    section{
-      position: absolute;
-      bottom: 5%;
-      left: 50%;
-      transform: translateX(-50%);
-      a {
-        color: $primary;
-        padding: 50px;
-        span{
-          position: absolute;
-          left: 50%;
-          top: -50px;
-          width: 24px;
-          height: 24px;
-          border-left: 5px solid $primary;
-          border-bottom: 5px solid $primary;
-          -webkit-transform: rotate(-45deg);
-          transform: translateX(-50%) rotate(-45deg);
-          box-sizing: border-box;
-          animation: scroll 1s linear infinite ;
-          @keyframes scroll {
-            25% {
-              transform: translate(-50%, 5px) rotate(-45deg);
-            }
-            50%{
-              transform: translate(-50%, 0) rotate(-45deg);
-            }
-            75% {
-              transform: translate(-50%, -5px) rotate(-45deg);
-            }
-            100% {
-              transform: translate(-50%, 0) rotate(-45deg);
-            }
-          }
-        }
-      }
-    }
   }
   .ProductsRow{
     .navigationBar{
