@@ -3,13 +3,8 @@
     <Navbar></Navbar>
     <LoadingPage :isLoading="isLoading"></LoadingPage>
     <Gotop></Gotop>
-    <div v-if="!isLoading">
-      <div class="banner mb-5">
-        <div class="Slogan">
-          <div class="first">Healthy Diet</div>
-          <span class="second">發現蔬食最新鮮純淨的美味</span>
-        </div>
-      </div>
+      <div v-if="!isLoading">
+      <Banner :pageName="'Healthy Diet'" :content="'發現蔬食最新鮮純淨的美味'"></Banner>
       <div class="container">
           <div class="row ">
             <div class="aboutUs w-100 my-5">
@@ -98,7 +93,7 @@
           </Validation-Provider>
         </div>
       </div>
-    </div>
+      </div>
     <Footer></Footer>
   </div>
 </template>
@@ -107,6 +102,7 @@
 import Gotop from '@/components/frontend/Gotop'
 import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
+import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
 
 export default {
@@ -114,6 +110,7 @@ export default {
     Gotop,
     LoadingPage,
     Navbar,
+    Banner,
     Footer
   },
   data () {
@@ -138,7 +135,6 @@ export default {
   }
 }
 </script>
-2e4e18  4b7f28
 <style lang="scss">
 $primary : #2e4e18;
 $secondary: #FEC81A;

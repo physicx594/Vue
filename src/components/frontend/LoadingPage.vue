@@ -1,5 +1,5 @@
 <template>
-  <div class="LoadingPage" v-if="isLoading">
+  <div class="LoadingPage">
     <div class="loading" :class="{ 'open': isLoading }" >
       <div class="section">
         <span>Healthy Diet</span>
@@ -56,7 +56,6 @@ $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
 .LoadingPage{
-  height: 600px;
   .loading{
     display: none;
     position: fixed;

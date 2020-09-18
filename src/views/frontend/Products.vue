@@ -1,18 +1,10 @@
 <template>
-  <div class="Products">
+  <div class="Products" :class="{high: this.$route.params.category}">
     <Navbar></Navbar>
     <LoadingPage :isLoading="isLoading"></LoadingPage>
     <Gotop></Gotop>
-    <div :isLoading="!isLoading">
-      <div class="banner">
-        <div class="Slogan">
-          <div class="first">Products List</div>
-          <span class="second">享受蔬食的喜悅與美好</span>
-        </div>
-        <section id="section03" class="demo">
-          <a href="#" @click.prevent="scrollDown"><span></span>Scroll</a>
-        </section>
-      </div>
+    <div v-if="!isLoading">
+      <Banner :pageName="'Products List'" :content="'享受疏食的喜悅與美好'"></Banner>
       <div class="container mt-5">
         <div class="ProductsRow row">
           <div class="navigationBar col-md-12">
@@ -68,6 +60,7 @@
 // /* global $ */
 import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
+import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
 
 export default {
@@ -75,6 +68,7 @@ export default {
   components: {
     LoadingPage,
     Navbar,
+    Banner,
     Footer
   },
   data () {
@@ -174,6 +168,9 @@ $bgL:#F7F7F7;
 $dark: #474747;
 
 .Products{
+  &.high{
+    min-height: 1700px;
+  }
   .joinMsg{
     position: fixed;
     top: 71px;

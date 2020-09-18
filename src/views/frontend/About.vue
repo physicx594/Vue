@@ -3,12 +3,7 @@
     <Navbar></Navbar>
     <LoadingPage :isLoading="isLoading"></LoadingPage>
     <div v-if="!isLoading">
-      <div class="banner">
-        <div class="Slogan">
-          <div class="first">About Us</div>
-          <span class="second">發掘蔬食的喜悅與美好</span>
-        </div>
-      </div>
+      <Banner :pageName="'About Us'" :content="'發掘蔬食的喜悅與美好'"></Banner>
       <div class="container">
         <div class="row">
           <div class="section d-flex my-5">
@@ -47,12 +42,14 @@
 <script>
 import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
-
+import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
+
 export default {
   components: {
     LoadingPage,
     Navbar,
+    Banner,
     Footer
   },
   data () {
