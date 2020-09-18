@@ -8,7 +8,7 @@
           <div class="cartList">
             <div class="header text-center">
               <div>合計{{ tempProduct.amount | money }}</div>
-              <span style="font-size:13px">購物車({{tempProduct.products.length}}件)</span>
+              <span style="font-size:13px">購物車({{ tempProduct.products.length }}件)</span>
             </div>
               <table class="table mb-0 table-borderless">
                 <template v-if="true">
@@ -23,11 +23,11 @@
                   <tbody>
                       <tr scope="row" v-for="(item, index) in tempProduct.products" :key="index">
                       <td><img :src="item.product.imageUrl[0]"></td>
-                      <td>{{item.product.title}}</td>
+                      <td>{{ item.product.title }}</td>
                       <!-- <td v-if="!item.product.price">{{item.product.origin_price | money}}</td>
                       <td v-else>{{item.product.price | money}}</td> -->
-                      <td>x{{item.quantity}}</td>
-                      <td>{{ item.product.price * item.quantity | money }}</td>
+                      <td>x{{ item.quantity }}</td>
+                      <td v-if="item.product.price">{{ item.product.price * item.quantity | money }}</td>
                       </tr>
                   </tbody>
                 </template>

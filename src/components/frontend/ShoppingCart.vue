@@ -8,27 +8,26 @@
               <th width="25%">品名</th>
               <th width="30%">數量</th>
               <th >單價</th>
-              <!-- <th width="10%">   <button type="button" class="btn btn-outline-danger float-left" @click="clearCart">清空</button></th> -->
             </tr>
           </thead>
           <tbody>
             <tr scope="row" v-for="(item, index) in cart" :key="index">
               <td><img :src="item.product.imageUrl[0]"></td>
-              <td>{{item.product.title}}</td>
+              <td>{{ item.product.title }}</td>
               <td>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <button type="button" class="btn btn-outline-dark"  @click="item.quantity--;changeQuantity(item)"
                     :disabled="item.quantity === 1 || isLoading === true">-</button>
                   </div>
-                  <input type="text" class="form-control col-4 quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item)">
+                  <input type="text" class="form-control col-4 quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
                   <div class="input-group-append">
                     <button type="button" class="btn btn-outline-dark" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
                   </div>
                 </div>
               </td>
-              <td v-if="!item.product.price">{{item.product.origin_price | filter}}</td>
-              <td v-else>{{item.product.price | filter}}</td>
+              <td v-if="!item.product.price">{{ item.product.origin_price | money }}</td>
+              <td v-else>{{ item.product.price | money }}</td>
               <td><button type="button" class="btn btn-outline-danger" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
               </td>
             </tr>
@@ -36,14 +35,14 @@
         </table>
         <div  class="totalPrice" v-if="isLoading === false">
           <div class="mr-1">小計:</div>
-          <div class=" text-danger font-weight-bolder" >{{ totalPrice | filter}}</div>
+          <div class=" text-danger font-weight-bolder" v-if="totalPrice">{{ totalPrice | money }}</div>
         </div>
         <div class="load" v-else></div>
         <router-link to="/cart"><button class="btn checkout" v-if="isLoading === false" @click="closeCart">前往購物車</button></router-link>
       </div>
       <div class="py-3" v-else>
-         <h3 class="text-danger font-weight-bold mb-5">購物車是空的</h3>
-        <router-link to="/products"><button class="btn btn-brown d-block p-0 w-50" style="margin: 0 auto; color:white" @click="closeCart">繼續購物</button></router-link>
+         <h3 class="empty font-weight-bold mb-5">購物車是空的</h3>
+        <router-link to="/products"><button class="btn" @click="closeCart">來去購物</button></router-link>
       </div>
     </div>
 </template>
@@ -105,7 +104,8 @@ export default {
 
 <style lang="scss">
 $primary : #2a5529;
-$secondary: #de9e36;
+$secondary: #FEC81A;
+$contrast: #800000;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
@@ -118,7 +118,7 @@ $bgL:#F7F7F7;
   color: black;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.950);
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
   transition: all 0.5s ease-out;
   z-index: 2000;
@@ -172,6 +172,20 @@ $bgL:#F7F7F7;
     color: white;
     &:hover{
       background: #1b381b;
+    }
+  }
+  .empty{
+    color: $primary;
+  }
+  .btn{
+    padding: 5px 30px;
+    border: 1px solid $primary;
+    border-radius: 50px;
+    color: $primary;
+    font-weight: bold;
+    &:hover{
+      background: $primary;
+      color: $secondary;
     }
   }
 }

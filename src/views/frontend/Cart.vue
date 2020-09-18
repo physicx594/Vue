@@ -22,9 +22,9 @@
                   <tbody>
                       <tr scope="row" v-for="(item, index) in cart" :key="index">
                       <td><img :src="item.product.imageUrl[0]"></td>
-                      <td>{{item.product.title}}</td>
-                      <td v-if="!item.product.price">{{item.product.origin_price | money}}</td>
-                      <td v-else>{{item.product.price | money}}</td>
+                      <td>{{ item.product.title }}</td>
+                      <td v-if="!item.product.price">{{ item.product.origin_price | money }}</td>
+                      <td v-else>{{ item.product.price | money }}</td>
                       <td>
                           <div class="input-group">
                           <div class="input-group-prepend">

@@ -100,11 +100,15 @@ $bgL:#F7F7F7;
     }
     .btn{
       border-radius: 50px;
-      border: 1px solid $primary;
-      background: transparent;
-      color: $primary;
+      border: 1px solid $contrast;
+      color: $contrast;
       padding: 5px 30px;
       margin-top: 50px;
+      &:hover{
+        border: 1px solid $contrast;
+        background: $contrast;
+        color: #fff;
+      }
     }
   }
 }

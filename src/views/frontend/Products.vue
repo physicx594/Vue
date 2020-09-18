@@ -1,17 +1,17 @@
 <template>
   <div class="Products">
     <Navbar></Navbar>
-        <div class="block"></div>
-
     <LoadingPage :isLoading="isLoading"></LoadingPage>
-    <!-- <Loading :active.sync="isLoading"></Loading> -->
     <Gotop></Gotop>
-    <div v-if="!isLoading">
+    <div :isLoading="!isLoading">
       <div class="banner">
         <div class="Slogan">
           <div class="first">Products List</div>
           <span class="second">享受蔬食的喜悅與美好</span>
         </div>
+        <section id="section03" class="demo">
+          <a href="#" @click.prevent="scrollDown"><span></span>Scroll</a>
+        </section>
       </div>
       <div class="container mt-5">
         <div class="ProductsRow row">
@@ -24,7 +24,7 @@
                 <li @click="category='舒肥系列'"><button class="btn">舒肥系列</button></li>
               </ul>
             </div>
-            <!-- {{ category }} -->
+            <!-- <div>{{ category }}</div> -->
           </div>
           <div class="col-md-12">
             <div class="row justify-content-start p-5" >
@@ -35,16 +35,16 @@
                     <div class="itemPrice">
                       <div v-if="!item.price">
                         <div style=" visibility:hidden">0</div>
-                        <div class="origin_price text-decoration-none text-danger"><h5>{{item.origin_price | money}}</h5></div>
+                        <div class="origin_price text-decoration-none text-danger"><h5>{{ item.origin_price | money }}</h5></div>
                       </div>
                       <div v-else>
-                          <div class="origin_price text-center text-muted"><del>{{item.origin_price | money}}</del></div>
-                          <div class="price text-danger font-weight-bold"><h2>{{item.price | money}}</h2></div>
+                          <div class="origin_price text-center text-muted"><del>{{ item.origin_price | money }}</del></div>
+                          <div class="price text-danger font-weight-bold"><h2>{{ item.price | money }}</h2></div>
                       </div>
                     </div>
                     </router-link>
                   </figure>
-                  <h5 class="title text-center mb-3 font-weight-bold">{{item.title}}</h5>
+                  <h5 class="title text-center mb-3 font-weight-bold">{{ item.title }}</h5>
                   <button class="btn" @click="addToCart(item)">加入購物車</button>
               </div>
             </div>
@@ -82,15 +82,26 @@ export default {
       isLoading: false,
       category: '全部商品',
       products: [],
-      // filterProducts: [],
       pagination: {},
       openMsg: false,
       joinMsg: true
     }
   },
   methods: {
-    getCategory () {
-      this.category = '全部商品'
+    scrollDown () {
+      if (this.$route.params.category) {
+        console.log('123')
+        window.scrollTo({
+          top: 561,
+          behavior: 'smooth'
+        })
+      } else {
+        window.scrollTo({
+          top: 561,
+          behavior: 'smooth'
+        })
+        console.log('456')
+      }
     },
     getProducts (page = 1) {
       if (!this.openMsg) this.isLoading = true
@@ -105,6 +116,10 @@ export default {
         .then(res => {
           this.products = res.data.data
           this.pagination = res.data.meta.pagination
+          if (this.$route.params.category) {
+            this.category = this.$route.params.category
+            this.scrollDown()
+          }
           this.isLoading = false
         })
         .catch(res => {
@@ -143,7 +158,6 @@ export default {
       return this.products.filter(item => this.category === item.category)
     }
   },
-
   created () {
     this.getProducts()
   }
@@ -153,7 +167,8 @@ export default {
 <style lang="scss">
 
 $primary : #264710;
-$secondary: #de9e36;
+$secondary: #FEC81A;
+$contrast: #800000;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;
 $dark: #474747;
@@ -174,7 +189,45 @@ $dark: #474747;
     }
   }
   .banner{
+    position: relative;
     background: url('https://images.unsplash.com/photo-1543353071-10c8ba85a904?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjI0MX0&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
+    section{
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      a {
+        color: $primary;
+        padding: 50px;
+        span{
+          position: absolute;
+          left: 50%;
+          top: -50px;
+          width: 24px;
+          height: 24px;
+          border-left: 5px solid $primary;
+          border-bottom: 5px solid $primary;
+          -webkit-transform: rotate(-45deg);
+          transform: translateX(-50%) rotate(-45deg);
+          box-sizing: border-box;
+          animation: scroll 1s linear infinite ;
+          @keyframes scroll {
+            25% {
+              transform: translate(-50%, 5px) rotate(-45deg);
+            }
+            50%{
+              transform: translate(-50%, 0) rotate(-45deg);
+            }
+            75% {
+              transform: translate(-50%, -5px) rotate(-45deg);
+            }
+            100% {
+              transform: translate(-50%, 0) rotate(-45deg);
+            }
+          }
+        }
+      }
+    }
   }
   .ProductsRow{
     .navigationBar{

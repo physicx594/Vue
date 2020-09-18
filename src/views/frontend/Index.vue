@@ -26,7 +26,7 @@
                           蔬果，降低消費者對身體的負擔，注重消費者能夠吃得健康又安心。
                       </p>
                   </div>
-                  <router-link to="/about"><button class="btn mt-5">了解更多</button></router-link>
+                  <router-link to="/about"><button class="btn mt-5">更多...</button></router-link>
                 </div>
               </div>
             </div>
@@ -43,7 +43,7 @@
             <div class="products w-100">
               <div class="title h2 m-0 my-3"><span>產品分類</span></div>
               <div class="category mb-5 mt-4">
-                <div class="cardList lunchbox col-md-4" data-aos="flip-up" data-aos-duration="1000">
+                <div class="cardList lunchbox col-md-4" data-aos="flip-up" data-aos-duration="1000" @click="toCategory('健康餐盒')">
                   <span>Bento</span>
                   <div class="bg">
                     <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
@@ -56,7 +56,7 @@
                     </p>
                   </div>
                 </div>
-                <div class="cardList chicken col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="150">
+                <div class="cardList sousvide col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="150" @click="toCategory('舒肥系列')">
                   <span class="float-left pl-3">Sous</span><br>
                   <span class="float-right pr-3">vide</span>
                   <div class="bg">
@@ -69,7 +69,7 @@
                     </p>
                   </div>
                 </div>
-                <div class="cardList salad col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="300">
+                <div class="cardList salad col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="300" @click="toCategory('新鮮沙拉')">
                   <span >Salad</span>
                   <div class="bg">
                     <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
@@ -122,6 +122,14 @@ export default {
       isLoading: false
     }
   },
+  methods: {
+    toCategory (item) {
+      this.$router.push({
+        name: 'products',
+        params: { category: item }
+      })
+    }
+  },
   created () {
     this.isLoading = true
     setInterval(() => {
@@ -130,10 +138,11 @@ export default {
   }
 }
 </script>
-
+2e4e18  4b7f28
 <style lang="scss">
-$primary : #264710;
-$secondary: #de9e36;
+$primary : #2e4e18;
+$secondary: #FEC81A;
+$contrast: #800000;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
@@ -167,15 +176,15 @@ $bgL:#F7F7F7;
       text-align: left;
       .btn{
         float: right;
-        border: 1px solid $primary;
-        background: $primary;
+        border: 1px solid $contrast;
         color: #fff;
+        color: $contrast;
         font-weight: bold;
         border-radius: 50px;
         padding: 5px 30px;
         &:hover{
-          background: transparent;
-          color: $primary;
+          background: $contrast;
+          color: #fff;
         }
       }
 
@@ -269,7 +278,7 @@ $bgL:#F7F7F7;
       }
       span{
         display: block;
-        color: #fff;
+        color: $secondary;
         font-size: 100px;
         font-family: Yellowtail, cursive;
         font-weight: bold;
@@ -287,7 +296,7 @@ $bgL:#F7F7F7;
           center center;
         background-size: cover;
       }
-      &.chicken {
+      &.sousvide{
         background: url('../../assets/Images/product/chicken.jpg') no-repeat
           center center;
         background-size: cover;
@@ -325,7 +334,4 @@ $bgL:#F7F7F7;
     }
   }
 }
-// .Footer{
-//   margin-top: 0;
-// }
 </style>

@@ -17,14 +17,14 @@
         </div>
         <div class="col-md-5">
           <div class="productInfo text-left">
-            <div class="title"><h2 class="font-weight-bold">{{ tempProduct.title}}</h2></div>
+            <div class="title"><h2 class="font-weight-bold">{{ tempProduct.title }}</h2></div>
             <!-- <div class="content">{{ tempProduct.description}}</div>
             <div class="content">{{ tempProduct.content}}</div> -->
             <div class="price">
-              <div class=" h2 font-weight-bold m-0" v-if="tempProduct.price"> {{tempProduct.price | money}}  <span class="sale">sale</span> </div>
+              <div class=" h2 font-weight-bold m-0" v-if="tempProduct.price"> {{tempProduct.price | money }}  <span class="sale">sale</span> </div>
               <div class="origin_price text-muted font-italic" v-if="tempProduct.origin_price"> <del>{{ tempProduct.origin_price | money }}</del></div>
             </div>
-            <div class="content" style="font-size:13px">{{tempProduct.content}}</div>
+            <div class="content" style="font-size:13px">{{ tempProduct.content }}</div>
             <div class="promotions">
               <p class="mb-1">雙十節9 折優惠碼 : <span>taiwan1010</span></p>
               <p class="m-0">周年慶，全館滿<span>3000免運費</span></p>
@@ -33,7 +33,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <button type="button" class="btn text-white p-0" @click="tempProduct.quantity --"
-                  :disabled="tempProduct.quantity === 1" :class="{stop:tempProduct.quantity === 1}">
+                  :disabled="tempProduct.quantity === 1" :class="{ stop:tempProduct.quantity === 1 }">
                     <i class="fas fa-minus" style="font-size:16px"></i>
                   </button>
                 </div>
@@ -52,7 +52,7 @@
           <div class="detail h3 my-5"><span>商品描述</span></div>
           <div class="section d-flex">
             <div class="description p-0" >{{ tempProduct.description }}</div>
-            <!-- <div class="content col-md-6 p-0">{{tempProduct.content}}</div> -->
+            <!-- <div class="content col-md-6 p-0">{{ tempProduct.content }}</div> -->
           </div>
         </div>
         <div class="my-5">
@@ -62,10 +62,10 @@
         </div>
       </div>
     </div>
-    <div class="joinMsg px-5" :class="{open: openMsg}" v-if="joinMsg">
+    <div class="joinMsg px-5" :class="{ open: openMsg }" v-if="joinMsg">
       <span >成功加入購物車</span>
     </div>
-    <div class="joinMsg bg-danger" :class="{open: openMsg}" v-else>
+    <div class="joinMsg bg-danger" :class="{ open: openMsg }" v-else>
       <span>該商品已放入購物車當中，</span><br>
       <span>請至購物車修改數量即可。</span>
     </div>

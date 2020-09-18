@@ -11,14 +11,17 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'index',
         component: () => import('../views/frontend/Index.vue')
       },
       {
         path: 'products',
+        name: 'products',
         component: () => import('../views/frontend/Products.vue')
       },
       {
         path: 'product/:id',
+        name: 'product',
         component: () => import('../views/frontend/Product.vue')
       },
       {
@@ -28,18 +31,22 @@ const routes = [
       },
       {
         path: 'cart',
+        name: 'cart',
         component: () => import('../views/frontend/Cart.vue')
       },
       {
         path: 'checkout',
+        name: 'checkout',
         component: () => import('../views/frontend/Checkout.vue')
       },
       {
         path: 'checkoutPay',
+        name: 'checkoutPay',
         component: () => import('../views/frontend/CheckoutPay.vue')
       },
       {
         path: 'checkoutSuccess',
+        name: 'checkoutSuccess',
         component: () => import('../views/frontend/CheckoutSuccess.vue')
       }
     ]

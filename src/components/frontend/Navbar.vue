@@ -25,7 +25,7 @@
               <router-link class="nav-link" to="/about"><span > 關於我們 </span></router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="#" >
+              <router-link class="nav-link" to="##" >
                 <span>
                   <i class="fas fa-user" style="font-size:18px"></i>
                 </span>
