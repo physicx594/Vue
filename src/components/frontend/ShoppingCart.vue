@@ -17,31 +17,33 @@
               <td>
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <button type="button" class="btn btn-outline-dark"  @click="item.quantity--;changeQuantity(item)"
+                    <button type="button" class="btn"  @click="item.quantity--;changeQuantity(item)"
                     :disabled="item.quantity === 1 || isLoading === true">-</button>
                   </div>
                   <input type="text" class="form-control col-4 quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-dark" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
+                    <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
                   </div>
                 </div>
               </td>
               <td v-if="!item.product.price">{{ item.product.origin_price | money }}</td>
               <td v-else>{{ item.product.price | money }}</td>
-              <td><button type="button" class="btn btn-outline-danger" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
+              <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
               </td>
             </tr>
           </tbody>
         </table>
-        <div  class="totalPrice" v-if="isLoading === false">
-          <div class="mr-1">小計:</div>
-          <div class=" text-danger font-weight-bolder" v-if="totalPrice">{{ totalPrice | money }}</div>
+        <div class="footer">
+          <div  class="totalPrice" v-if="isLoading === false">
+            <div class="mr-1">小計:</div>
+            <div class=" text-danger font-weight-bolder" v-if="totalPrice">{{ totalPrice | money }}</div>
+          </div>
+          <div class="load" v-else></div>
+          <router-link to="/cart"><button class="btn checkout" v-if="isLoading === false" @click="closeCart">前往購物車</button></router-link>
         </div>
-        <div class="load" v-else></div>
-        <router-link to="/cart"><button class="btn checkout" v-if="isLoading === false" @click="closeCart">前往購物車</button></router-link>
       </div>
       <div class="py-3" v-else>
-         <h3 class="empty font-weight-bold mb-5">購物車是空的</h3>
+         <h3 class="empty mb-5">購物車是空的</h3>
         <router-link to="/products"><button class="btn" @click="closeCart">來去購物</button></router-link>
       </div>
     </div>
@@ -137,50 +139,55 @@ $bgL:#F7F7F7;
         height: 50px;
       }
     }
+    .delete{
+      color: $contrast;
+      border: 1px solid $contrast;
+      &:hover{
+        background: $contrast;
+        color: #fff;
+      }
+    }
   }
-  .totalPrice{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: rgba(247, 247, 247, 0.98);
-    margin: 8px 0;
-  }
-  .load{
-    width: 100%;
-    height: 24px;
-    text-align: center;
-    letter-spacing: 10px;
-    background: linear-gradient(45deg,#fc0 0%,#fc0 20%,#de9e36 20%, #de9e36 45%,#fc0 45%,#fc0 70%,#de9e36 70%, #de9e36 95%,#fc0 95%,#fc0 100%);
-    background-size:30px 30px;
-    background-position:0 0;
-    animation:loading 0.5s infinite linear;
-  }
-  @keyframes loading{
-    0%{
+  .footer{
+    .totalPrice{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background-color: rgba(247, 247, 247, 0.98);
+      margin: 8px 0;
+    }
+    .load{
+      width: 100%;
+      height: 24px;
+      text-align: center;
+      letter-spacing: 10px;
+      background: linear-gradient(45deg,#fc0 0%,#fc0 20%,#de9e36 20%, #de9e36 45%,#fc0 45%,#fc0 70%,#de9e36 70%, #de9e36 95%,#fc0 95%,#fc0 100%);
+      background-size:30px 30px;
       background-position:0 0;
+      animation:loading 0.5s infinite linear;
+      @keyframes loading{
+        0%{
+          background-position:0 0;
+        }
+        100%{
+          background-position:30px 0;
+        }
+      }
     }
-    100%{
-      background-position:30px 0;
-    }
-  }
-  .checkout{
-    display: block;
-    width: 50%;
-    margin: 0 auto;
-    padding: 0;
-    background: $primary;
-    color: white;
-    &:hover{
-      background: #1b381b;
+    .checkout{
+      width: 50%;
+      margin: 0 auto;
+      background: $primary;
+      color: white;
+      border-radius: 50px;
     }
   }
   .empty{
     color: $primary;
+    font-weight: bold;
   }
   .btn{
-    padding: 5px 30px;
     border: 1px solid $primary;
-    border-radius: 50px;
     color: $primary;
     font-weight: bold;
     &:hover{
