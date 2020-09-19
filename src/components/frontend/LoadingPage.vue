@@ -52,8 +52,10 @@ export default {
 <style lang="scss">
 $primary : #264710;
 $secondary: #FEC81A;
+$contrast: #800000;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;
+$dark: #474747;
 
 .LoadingPage{
   .loading{

@@ -120,7 +120,7 @@ $bgL:#F7F7F7;
   color: black;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: rgba(255, 255, 255, 0.950);
+  background-color: rgb(255, 255, 255);
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
   transition: all 0.5s ease-out;
   z-index: 2000;
@@ -153,7 +153,7 @@ $bgL:#F7F7F7;
       width: 100%;
       display: flex;
       justify-content: center;
-      background-color: rgba(247, 247, 247, 0.98);
+      background-color: $bgL;
       margin: 8px 0;
     }
     .load{
@@ -176,6 +176,7 @@ $bgL:#F7F7F7;
     }
     .checkout{
       width: 50%;
+      padding: 5px 15px;
       margin: 0 auto;
       background: $primary;
       color: white;

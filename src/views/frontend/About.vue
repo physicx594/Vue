@@ -73,6 +73,7 @@ $secondary: #FEC81A;
 $contrast: #800000;
 $bgD:#CED4DA;
 $bgL:#F7F7F7;
+$dark: #474747;
 
 .About{
   .banner{

@@ -15,6 +15,11 @@ export default {
 
 <style lang="scss">
 $primary : #264710;
+$secondary: #FEC81A;
+$contrast: #800000;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+$dark: #474747;
 
 .checkoutNav{
     margin: 96px auto 30px;
@@ -23,18 +28,18 @@ $primary : #264710;
         position: relative;
         width: 240px;
         height: 70px;
-        color: #CED4DA;
+        color: $bgD;
         &::before{
             content:counter(step);
             counter-increment: step;
             display:block;
-            color: white;
+            color: #fff;
             width: 25px;
             height: 25px;
             line-height: 25px;
             margin: 5px auto;
             border-radius: 50%;
-            background-color: #CED4DA;
+            background-color: $bgD;
         }
         &::after{
             content:'';
@@ -51,9 +56,9 @@ $primary : #264710;
         }
     }
     .step.active{
-        color: green;
+        color: $primary;
         &::before{
-            background-color: green;
+            background-color: $primary;
         }
     }
     .step.finished{
