@@ -86,7 +86,7 @@ export default {
       if (!this.openMsg) this.isLoading = true
       const params = {
         page,
-        paged: '9',
+        paged: '15',
         orderBy: 'created_at, updated_at',
         sort: 'asc' // 排序遞增
       }

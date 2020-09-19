@@ -74,7 +74,8 @@ $bgL:#F7F7F7;
         left: 50%;
         transform: translateX(-50%);
         a {
-            color: $primary;
+            color: $contrast;
+            font-weight: bold;
             padding: 50px;
             span{
                 position: absolute;

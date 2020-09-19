@@ -283,17 +283,14 @@ $bgL:#F7F7F7;
         text-shadow: 1px 1px rgba(0, 0, 0, 0.3), 2px 2px rgba(0, 0, 0, 0.3), 3px 3px rgba(0, 0, 0, 0.3),
         4px 4px rgba(0, 0, 0, 0.3), 5px 5px rgba(0, 0, 0, 0.3), 6px 6px rgba(0, 0, 0, 0.3);
 
-        // background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
-        // background-clip: text;
-        // color: transparent;
       }
       &.lunchbox {
-        background: url('../../assets/Images/product/lunchbox.jpg') no-repeat
+        background: url('https://hexschool-api.s3.us-west-2.amazonaws.com/custom/OPhdY2kmO8HAqDeuhKtYSjrASzxp7Pw1Aec1SlNBasCFMFltg3ZnHape0h8QrovzUQj2YkCyiTS3ZC4e4gdS8lXIc9FQU2wXh6QRlNNU2MGvsCQCo3nnkcwiTnAet9WY.jpg') no-repeat
           center center;
         background-size: cover;
       }
       &.sousvide{
-        background: url('../../assets/Images/product/chicken.jpg') no-repeat
+        background: url('https://hexschool-api.s3.us-west-2.amazonaws.com/custom/H5qxPcglJ1S9RagBQnAT7pKkMgbFlgu7BRyydNvHaPhVkTnuXG6NLduRdk3zsHrfOKTpUzN2rCye7HTKc3JOkCBTe4XiX3fasKdKaM00jWOjiPcvPbxA8IXlPm1RleCK.jpg') no-repeat
           center center;
         background-size: cover;
         span{
