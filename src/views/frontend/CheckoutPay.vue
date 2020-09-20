@@ -5,44 +5,45 @@
     <div class="container" v-if="!isLoading">
         <div class="row">
           <CheckoutNav :step1="step" :step2="step" :step3="step"></CheckoutNav>
-          <div class="cartList">
-            <div class="header text-center">
+          <div class="cartList p-3">
+            <div class="text-center">
               <div>合計{{ tempProduct.amount | money }}</div>
               <span style="font-size:13px">購物車({{ tempProduct.products.length }}件)</span>
+              <span class="arrowDown" @click="open = !open"><i class="fa fa-angle-down text-danger" :class="{open: open}" ></i></span>
             </div>
-              <table class="table mb-0 table-borderless">
-                <template v-if="true">
+          </div>
+          <div class="opensection w-100" :class="{open: open}">
+              <table class="table mb-0 table-borderless border border-top-0" >
                   <thead class="table">
                       <tr scope="row" >
                       <th></th>
                       <th>品名</th>
-                      <th >單價</th>
+                      <th>單價</th>
                       <th>小計</th>
                     </tr>
                   </thead>
                   <tbody>
                       <tr scope="row" v-for="(item, index) in tempProduct.products" :key="index">
-                      <td><img :src="item.product.imageUrl[0]"></td>
+                      <td class="pic"><img :src="item.product.imageUrl[0]" class="img-fluid"></td>
                       <td>{{ item.product.title }}</td>
                       <!-- <td v-if="!item.product.price">{{item.product.origin_price | money}}</td>
                       <td v-else>{{item.product.price | money}}</td> -->
-                      <td>x{{ item.quantity }}</td>
+                      <td >x{{ item.quantity }}</td>
                       <td v-if="item.product.price">{{ item.product.price * item.quantity | money }}</td>
                       </tr>
                   </tbody>
-                </template>
                   <tfoot>
                     <tr>
-                    <td colspan="2"></td>
-                    <th>合計</th>
-                    <th class="text-danger">{{ tempProduct.amount | money }}</th>
+                      <td colspan="2" class="text-right" ><i class="fa fa-angle-up fa-2x text-danger" @click="open = !open"></i></td>
+                      <th>合計</th>
+                      <th class="text-danger">{{ tempProduct.amount | money }}</th>
                     </tr>
                   </tfoot>
               </table>
           </div>
-          <div class="arrowDown"><i class="fas fa-angle-double-down"></i></div>
-          <div class="orderInfo">
+          <div class="orderInfo mt-5">
             <div class="header">訂單資訊 <h6 class="float-right pt-1">{{ tempProduct.id | orderId}}</h6></div>
+
               <table class="table m-0">
                 <tbody>
                   <tr>
@@ -96,7 +97,8 @@ export default {
     return {
       tempProduct: {},
       isLoading: false,
-      step: true
+      step: true,
+      open: false
     }
   },
   methods: {
@@ -148,41 +150,66 @@ export default {
 .CheckoutPay{
     counter-reset: step;
     .cartList{
+      position: relative;
       width: 100%;
       border: 1px solid #EDEDED;
-      table{
-        tr{
-          border-bottom: 1px solid #EDEDED;
-        }
-        tbody td{
-          padding: 20px 0;
-        }
-        tfoot{
-          // background: #F7F7F7;
-          th{
-            height: 40px;
-            padding: 0 12px;
+      .arrowDown{
+        position: absolute;
+        top: 50%;
+        left: 56%;
+        transform: translateY(-50%);
+        padding: 20px;
+        cursor: pointer;
+        i{
+          transition: .5s;
+          &.open{
+            transition: .5s;
+            transform: rotate(180deg);
           }
-        }
-        img{
-          width: 50px;
-          height: 50px;
         }
       }
     }
-    .arrowDown{
-      width: 100%;
-      margin: 0 auto;
+
+    .opensection{
+      height: 0px;
+      overflow: hidden;
+      transition: all .5s ease-out;
+      table{
+        font-size: 16px;
+        tr{
+          border-bottom: 1px solid #EDEDED;
+                    position: relative;
+          .fa-angle-up{
+            margin-right: 90px;
+            left: 50%;
+            cursor: pointer;
+          }
+        }
+        img{
+          width: 80px;
+          height: 80px;
+        }
+      }
+      &.open{
+        height: 529px;
+      }
     }
     .orderInfo{
       position: relative;
-      width: 50%;
+      width: 100%;
       margin: 0 auto 96px;
       border: 1px solid #EDEDED;
+      font-size: 13px;
+      .form-control-plaintext{
+        border-bottom: 1px solid #000;
+      }
       .pay{
         position: absolute;
         right: 0;
         bottom: -43px;
+      }
+      table{
+        opacity: 1;
       }
     }
 }

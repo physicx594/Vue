@@ -83,9 +83,11 @@ height: 100%;
   .header{
     width: 100%;
     height: 40px;
+    color: $primary;
     background: #F7F7F7;
     text-align: left;
     font-size: 17px;
+    font-weight: bold;
     line-height: 28px;
     padding: 6px 12px;
   }

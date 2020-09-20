@@ -28,17 +28,17 @@
                       <td>
                           <div class="input-group">
                           <div class="input-group-prepend">
-                              <button type="button" class="btn btn-outline-dark"  @click="item.quantity--;changeQuantity(item)"
+                              <button type="button" class="btn "  @click="item.quantity--;changeQuantity(item)"
                               :disabled="item.quantity === 1 || isLoading === true">-</button>
                           </div>
                           <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.quantity" @change="changeQuantity(item)" >
                           <div class="input-group-append">
-                              <button type="button" class="btn btn-outline-dark" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
+                              <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
                           </div>
                           </div>
                       </td>
                       <td>{{ item.product.price * item.quantity | money }}</td>
-                      <td><button type="button" class="btn btn-outline-danger" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
+                      <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
                       </td>
                       </tr>
                   </tbody>
@@ -79,8 +79,14 @@
                   <input type="text" class="form-control w-75" id="coupon" placeholder="請輸入折扣碼">
                   <button type="button" class="btn">使用</button>
                 </div>
-                <div class="infoPrice"> <div>總計:</div><div>{{ totalPrice + shippingFee | money }}</div></div>
-                <router-link to="/Checkout" ><button :disabled="totalPrice < 600" type="button" class="btn btn-success d-block w-100" style="font-size: 13px;">前往結帳 </button></router-link>
+                <div class="infoPrice">
+                  <div>總計:</div><div>{{ totalPrice + shippingFee | money }}</div>
+                </div>
+                <div class="minimum" v-if="totalPrice < 600">最低訂單量，需滿600元才配送(不含運費)</div>
+
+                <router-link to="/Checkout" class="toCheckout">
+                  <button :disabled="totalPrice < 600" type="button" class="btn">前往結帳</button>
+                </router-link>
               </div>
             </div>
           </div>
@@ -172,6 +178,12 @@ export default {
 </script>
 
 <style lang="scss">
+$primary : #2a5529;
+$secondary: #FEC81A;
+$contrast: #800000;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+
 .Cart{
   counter-reset: step;
   .cartload{
@@ -186,15 +198,16 @@ export default {
     background-size:30px 30px;
     background-position:0 0;
     animation:loading 0.5s infinite linear;
-  }
-  @keyframes loading{
-    0%{
-      background-position:0 0;
+    @keyframes loading{
+      0%{
+        background-position:0 0;
+      }
+      100%{
+        background-position:30px 0;
+      }
     }
-    100%{
-      background-position:30px 0;
-    }
   }
+
   .form-control:focus, .btn:focus{
     border: 1px solid #ced4da;
     box-shadow: none;
@@ -204,12 +217,12 @@ export default {
     margin: 0 auto;
     border: 1px solid #EDEDED;
     table{
-    text-align: left;
-    font-size: 13px;
-    th{
-      border: none;
-    }
-    td, th{
+      text-align: left;
+      font-size: 13px;
+      th{
+        border: none;
+      }
+      td, th{
         padding: 8px;
         img{
           width: 50px;
@@ -218,7 +231,23 @@ export default {
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;
-          margin: 0;
+        }
+        .btn{
+          border: 1px solid $primary;
+          color: $primary;
+          font-weight: bold;
+          &:hover{
+            background: $primary;
+            color: $secondary;
+          }
+        }
+        .delete{
+          color: $contrast;
+          border: 1px solid $contrast;
+          &:hover{
+            background: $contrast;
+            color: #fff;
+          }
         }
       }
     }
@@ -241,9 +270,11 @@ export default {
       }
     }
     .orderSummary{
+      position: relative;
       width: 35%;
       border: 1px solid #EDEDED;
       .info{
+        height: auto;
         padding: 12px;
         &Section{
           display: flex;
@@ -262,9 +293,25 @@ export default {
         &Price{
           display: flex;
           justify-content: space-between;
-          padding: 20px 0;
+          padding: 20px 0 0;
           margin-top: 20px;
           border-top: 1px solid #ced4da;
+        }
+        & .minimum{
+          text-align: left;
+          color: red;
+        }
+        & .toCheckout{
+          .btn{
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 324px;
+            font-size: 13px;
+            color: #fff;
+            background: $primary;
+          }
         }
       }
     }

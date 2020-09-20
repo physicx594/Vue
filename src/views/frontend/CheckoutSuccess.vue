@@ -1,87 +1,58 @@
 <template>
   <div class="CheckoutSuccess">
-      <!-- <div class="picL"></div> -->
-      <div class="picR"></div>
-        <!-- <div class="card">
-            <div class="content">
-              <div class="float-left">
-                <h1>付款完成</h1>
-                <span class="d-block">我們已收到您的訂單，感謝您的支持</span>
-              </div>
-                <router-link to="/products"><button type="button" class="btn d-block">繼續購物</button></router-link>
-            </div>
-        </div> -->
+    <Navbar></Navbar>
+    <LoadingPage></LoadingPage>
+    <div class="thanks"></div>
+    <div class="h1 payed">付款完成</div>
+    <span class="d-block">我們已收到您的訂單，感謝您的支持</span>
+
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Navbar from '@/components/frontend/Navbar'
+import Footer from '@/components/frontend/Footer'
+import LoadingPage from '@/components/frontend/LoadingPage'
 
-export default {}
+export default {
+  components: {
+    Navbar,
+    Footer,
+    LoadingPage
+  }
+}
 </script>
 
 <style lang="scss">
+$primary : #264710;
+$secondary: #FEC81A;
+$contrast: #800000;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+$dark: #474747;
+
 .CheckoutSuccess {
-  overflow: hidden;
-  margin-bottom: 19px;
-  // .picL {
-  //   position: absolute;
-  //   right: 0;
-  //   width: 65%;
-  //   height: 100vh;
-  //   background: url('https://images.unsplash.com/photo-1555243896-c709bfa0b564?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat center top;
-  //   background-size: cover;
-  //   transform: scale(-1);
-  //   z-index: 1;
-  // }
-  .picR {
-    position: absolute;
-    left: 0;
+  .thanks{
     width: 100%;
-    height: 100vh;
-    background: url('https://images.unsplash.com/photo-1569420077790-afb136b3bb8c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3000&q=80') no-repeat center center;
+    height: 50vh;
+    background-attachment: fixed;
     background-size: cover;
-    // transform: scale(-1);
-    z-index: 2000;
+    background: url("https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80") no-repeat center center;
   }
-  .card {
-    // position: absolute;
-  //   top: 0;
-  //   left: 10;
-  //   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
-  //   transform: translateX(50%) translateY(19%) ;
-  //   width: 30%;
-  //   height: 80%;
-  //   background-color: white;
-  //   overflow: hidden;
-  //   padding: 0 20px;
-  //   z-index: 2;
-  //   .content{
-  //       height: 100%;
-  //       transform: translate(0,25%);
-  //       h1{
-  //         background: linear-gradient(-225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%);
-  //         background-clip: text;
-  //         color: transparent;
-  //         font-weight: bolder;
-  //       }
-  //       .btn{
-  //         position: absolute;
-  //         right: 0;
-  //         bottom: 50%;
-  //         width: 50%;
-  //         border: none;
-  //         border-radius: 50px;
-  //         background: linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%);
-  //         color: white;
-  //       }
-  //   }
+  .payed{
+    display: inline;
+    color: transparent;
+    font-weight: bold;
+    border-left: 3px solid $primary;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+  }
+  .Footer{
+    position: absolute;
+    bottom: 0;
   }
 }
-// .Footer{
-//   position: relative;
-//   background: white;
-//   width: 100%;
-//   bottom: -10%;
-//   z-index: 2;
-// }
+
 </style>

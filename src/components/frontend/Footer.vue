@@ -3,7 +3,7 @@
       <div class="section">
         <span>© 2020 Healthy Diet All Rights Reserved.  圖片為練習使用，無商業用途。</span>
       </div>
-      <router-link to="/admin/products" class="gobackend">後台管理</router-link>
+      <router-link to="/admin/products" class="gobackend"><button class="btn">後台管理</button></router-link>
     </div>
 </template>
 
@@ -20,8 +20,9 @@ $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
 .Footer{
+  width: 100%;
   background: #F7F7F7;
-  position: relative;
+  position: sticky;
   .section{
     padding: 0 10%;
     height: 64px;
@@ -30,10 +31,13 @@ $bgL:#F7F7F7;
     font-weight: bold;
     color: $primary;
   }
-  .gobackend{
+  .btn{
     position: absolute;
-    top: 20px;
+    top: 14px;
     right: 15%;
+    color: $primary;
+    border: 1px solid $primary;
+    padding: 5px 15px;
   }
 }
 

@@ -89,10 +89,11 @@ export default {
     this.$bus.$on('get-cart', () => {
       this.getCart()
     })
-  },
-  beforeDestroy () {
-    this.$bus.$off('get-cart')
   }
+  // 加 beforeDestroy ，我從購物車0件的狀態下按"來去購物"，轉到產品列表按加入購物車，數量顯示上會有問題
+  // beforeDestroy () {
+  //   this.$bus.$off('get-cart')
+  // }
 }
 </script>
 

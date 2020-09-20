@@ -8,6 +8,7 @@
               <th width="25%">品名</th>
               <th width="30%">數量</th>
               <th >單價</th>
+              <!-- <th ><button class="btn delete" style="font-size: 13px" @click="delAll">All</button></th> -->
             </tr>
           </thead>
           <tbody>
@@ -80,11 +81,13 @@ export default {
           this.isLoading = false
         })
     },
-    clearCart () {
+    delAll () {
+      this.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`
       this.axios.delete(api)
         .then((res) => {
-          console.log(res)
+          this.$emit('update')
+          this.isLoading = false
         })
     },
     closeCart () {
@@ -154,7 +157,7 @@ $bgL:#F7F7F7;
       display: flex;
       justify-content: center;
       background-color: $bgL;
-      margin: 8px 0;
+      margin: 16px 0;
     }
     .load{
       width: 100%;
@@ -178,16 +181,20 @@ $bgL:#F7F7F7;
       width: 50%;
       padding: 5px 15px;
       margin: 0 auto;
-      background: $primary;
-      color: white;
+      background: transparent;
+      color: $primary;
       border-radius: 50px;
     }
   }
   .empty{
     color: $primary;
     font-weight: bold;
+    .btn{
+      padding: 5px 30px;
+    }
   }
   .btn{
+    border-radius: 50px;
     border: 1px solid $primary;
     color: $primary;
     font-weight: bold;

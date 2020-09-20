@@ -16,7 +16,6 @@ export default {
   },
   methods: {
     showGotop () {
-      console.log(window.pageYOffset)
       if (window.pageYOffset >= 560) {
         this.show = true
       } else {

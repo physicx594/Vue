@@ -12,14 +12,14 @@
                     <div class="form-row">
                       <div class="form-group col">
                         <Validation-Provider rules="required|min:3" v-slot="{ errors, classes }">
-                          <label for="name">姓名</label>
+                          <label for="name">姓名<span class="asterisk">*</span></label>
                           <input type="text" class="form-control" id="name" name="姓名" placeholder="請輸入姓名" v-model="form.name" :class="classes">
                           <span class="invalid-feedback text-left" >{{ errors[0] }}</span>
                         </Validation-Provider>
                       </div>
                       <div class="form-group col">
                         <Validation-provider rules="required|min:10" v-slot="{ errors, classes }">
-                          <label for="tel">電話</label>
+                          <label for="tel">電話<span class="asterisk">*</span></label>
                           <input type="tel" class="form-control" id="tel" name="電話" placeholder="請輸入電話" v-model="form.tel" :class="classes">
                           <span class="invalid-feedback">{{ errors[0] }}</span>
                         </Validation-provider>
@@ -28,14 +28,14 @@
                     <div class="form-row">
                       <div class="form-group col">
                         <Validation-Provider rules="required|email" v-slot="{ errors, classes }">
-                          <label for="email">電子信箱</label>
+                          <label for="email">電子信箱<span class="asterisk">*</span></label>
                           <input type="email" class="form-control" id="email" name='電子信箱' placeholder="請輸入信箱" v-model="form.email" :class="classes">
                           <span class="invalid-feedback">{{ errors[0] }}</span>
                         </Validation-Provider>
                       </div>
                       <div class="form-group col">
                         <Validation-Provider rules="required" v-slot="{ errors, classes }">
-                          <label for="address">地址</label>
+                          <label for="address">地址<span class="asterisk">*</span></label>
                           <input type="text" class="form-control" id="address" name="地址" placeholder="請輸入地址" v-model="form.address" :class="classes">
                           <span class="invalid-feedback">{{ errors[0] }}</span>
                         </Validation-Provider>
@@ -47,7 +47,7 @@
                         <textarea style="height: 120px"  class="form-control" id="message" v-model="form.message"></textarea>
                       </div>
                       <div class="form-group col footer mb-0">
-                        <label for="payment">付款方式</label>
+                        <label for="payment">付款方式<span class="asterisk">*</span></label>
                         <select  v-model="form.payment" id="payment" class="form-control" required style="font-size:13px;">
                           <option value="" disabled selected >
                             請選擇付款方式
@@ -76,7 +76,7 @@
                         </select>
                         <div class="footBtn">
                           <router-link to="/cart">←回購物車</router-link>
-                          <router-link to="/CheckoutPay" ><button :disabled="invalid" type="button" class="btn btn-success d-block w-100" style="font-size: 13px;" @click="createOrder">提交訂單</button></router-link>
+                          <router-link to="/CheckoutPay" ><button :disabled="invalid" type="button" class="btn" style="font-size: 13px;" @click="createOrder">提交訂單</button></router-link>
                         </div>
                       </div>
                     </div>
@@ -153,6 +153,12 @@ export default {
 </script>
 
 <style lang="scss">
+$primary : #2a5529;
+$secondary: #FEC81A;
+$contrast: #800000;
+$bgD:#CED4DA;
+$bgL:#F7F7F7;
+
 .Checkout{
   counter-reset: step;
   .checkContent{
@@ -174,6 +180,18 @@ export default {
       form{
         padding: 24px;
         text-align: left;
+        label{
+          position: relative;
+          .asterisk{
+            color: #800000;
+            font-weight: bold;
+            padding-bottom: 10px;
+            position: absolute;
+            top: -5px;
+            right: -10px;
+          }
+        }
+
         .footer{
           position: relative;
           .footBtn{
@@ -185,6 +203,10 @@ export default {
             bottom: 0;
             right: 0;
             padding: 0 5px;
+            .btn{
+              background: $primary;
+              color: #fff;
+            }
           }
         }
       }
