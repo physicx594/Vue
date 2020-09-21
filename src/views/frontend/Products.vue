@@ -78,7 +78,8 @@ export default {
       products: [],
       pagination: {},
       openMsg: false,
-      joinMsg: true
+      joinMsg: true,
+      randomItem: []
     }
   },
   methods: {

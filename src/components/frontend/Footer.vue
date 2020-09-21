@@ -1,6 +1,6 @@
 <template>
     <div class="Footer">
-      <div class="section">
+      <div class="Footer_section">
         <span>© 2020 Healthy Diet All Rights Reserved.  圖片為練習使用，無商業用途。</span>
       </div>
       <router-link to="/admin/products" class="gobackend"><button class="btn">後台管理</button></router-link>
@@ -23,10 +23,10 @@ $bgL:#F7F7F7;
   width: 100%;
   background: #F7F7F7;
   position: sticky;
-  .section{
+  &_section{
     padding: 0 10%;
     height: 64px;
-      text-align: center;
+    text-align: center;
     line-height: 64px;
     font-weight: bold;
     color: $primary;

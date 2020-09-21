@@ -49,19 +49,29 @@
           </div>
         </div>
         <div class="productDetail col-md-12">
-          <div class="detail h3 my-5"><span>商品描述</span></div>
+          <div class="sectionTitle h3 my-5"><span>商品描述</span></div>
           <div class="section d-flex">
             <div class="description p-0" >{{ tempProduct.description }}</div>
             <!-- <div class="content col-md-6 p-0">{{ tempProduct.content }}</div> -->
           </div>
         </div>
-        <div class="my-5">
+        <!-- <div class="my-5">
           <div class="productImg">
             <img src="@/assets/Images/product/itemDetail-3big.png" class="img-fluid">
           </div>
+        </div> -->
+        <div class="relateItem">
+          <div class="sectionTitle h3 my-5"><span>你可能會喜歡</span></div>
+          <Swiper ref="mySwiper" :options="swiperOptions" class="swiper my-5">
+            <SwiperSlide v-for="(item, index) in randomItems" :key="index"><figure><img :src="item.imageUrl[0]" alt=""></figure></SwiperSlide>
+            <div class="swiper-pagination" slot="pagination"></div>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+          </Swiper>
         </div>
       </div>
     </div>
+
     <div class="joinMsg px-5" :class="{ open: openMsg }" v-if="joinMsg">
       <span >成功加入購物車</span>
     </div>
@@ -69,6 +79,7 @@
       <span>該商品已放入購物車當中，</span><br>
       <span>請至購物車修改數量即可。</span>
     </div>
+
     <Footer></Footer>
   </div>
 </template>
@@ -78,6 +89,8 @@ import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
 import Breadcrumb from '@/components/frontend/Breadcrumb'
 import LoadingPage from '@/components/frontend/LoadingPage'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 
 export default {
   name: 'Product',
@@ -85,16 +98,55 @@ export default {
     Navbar,
     Footer,
     Breadcrumb,
-    LoadingPage
+    LoadingPage,
+    Swiper,
+    SwiperSlide
   },
   data () {
     return {
+      randomItems: [],
       tempProduct: {},
       selectPic: '',
       isLoading: false,
       openMsg: false,
-      joinMsg: true
-
+      joinMsg: true,
+      swiperOptions: {
+        speed: 1500,
+        slidesPerView: 4,
+        spaceBetween: 10,
+        slidesPerGroup: 1,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          dynamicBullets: true
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
+        autoplay: {
+          delay: 3000
+        }
+        // breakpoints: {
+        //   1024: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 40
+        //   },
+        //   768: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 30
+        //   },
+        //   640: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 20
+        //   },
+        //   320: {
+        //     slidesPerView: 1,
+        //     spaceBetween: 10
+        //   }
+        // }
+      }
     }
   },
   methods: {
@@ -121,9 +173,19 @@ export default {
           }, 2500)
           console.log(error)
         })
+    },
+    getRandomItem () {
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products`
+      this.axios.get(api)
+        .then(res => {
+          this.randomItems = res.data.data
+          this.randomItems = this.randomItems.sort((_a, b) => Math.random() - 0.5)
+          this.randomItems = this.randomItems.slice(0, 8)
+        })
     }
   },
   created () {
+    this.getRandomItem()
     this.isLoading = true
     const { id } = this.$route.params
     const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/product/${id}`
@@ -152,8 +214,25 @@ $bgL:#F7F7F7;
 $dark: #474747;
 
 .Product{
-  .frontNavBar{
+  .NavBar{
     position: sticky;
+  }
+  .sectionTitle{
+    font-weight: bold;
+    color: $primary;
+    span{
+      position: relative;
+      &::before{
+        position: absolute;
+        bottom: 0;
+        transform: translateX(50%);
+        content: "";
+        width: 50%;
+        height: 2px;
+        background: $primary;
+        margin-bottom: -10px;
+      }
+    }
   }
   .joinMsg{
     position: fixed;
@@ -207,14 +286,14 @@ $dark: #474747;
       font-weight: 300;
       padding: 0px 5px;
       border-radius: 10px;
-      background: #C64702;
+      background: $contrast;
       color: white;
     }
     .promotions>p{
       border-left: 3px solid #CED4DA;
       padding-left: 5px;
       &>span{
-        color:#C64702;
+        color:$contrast;
         font-weight: bold;
         font-size: 18px;
         margin-left: 5px;
@@ -256,7 +335,7 @@ $dark: #474747;
         padding: 0;
       }
        .btn:active{
-        animation: btn 0.5s infinite linear;
+        animation: btn 1s infinite linear;
         border-bottom-left-radius: 50px;
       }
       .btn.stop:active{
@@ -270,24 +349,6 @@ $dark: #474747;
     }
   }
   .productDetail{
-    .detail{
-      font-weight: bold;
-      color: $primary;
-      span{
-        position: relative;
-        &::before{
-          position: absolute;
-          bottom: 0;
-          transform: translateX(50%);
-          content: "";
-          width: 50%;
-          height: 2px;
-          background: $primary;
-          margin-bottom: -10px;
-        }
-      }
-
-    }
     .section{
       white-space: pre-wrap;
       text-align: center;
@@ -298,7 +359,6 @@ $dark: #474747;
         width: 100%;
       }
     }
-
   }
   .productImg{
     // background: url('../../assets/Images/product/itemDetail-3big.png') center center no-repeat;
@@ -309,6 +369,53 @@ $dark: #474747;
     img{
       object-fit: cover;
       object-position: center center;
+    }
+  }
+  .relateItem{
+    width: 100%;
+    padding: 0 15px;
+    .swiper {
+      height: 277.5px;
+      width: 100%;
+      padding-bottom:  50px;
+      position: relative;
+      // overflow: hidden;
+      .swiper-wrapper{
+                  // overflow: hidden;
+
+        // width: 80%;
+        // padding: 0 15px;
+        .swiper-slide {
+          // margin-right: 0;
+          // display: flex;
+          // justify-content: center;
+          // align-items: center;
+          // text-align: center;
+          // font-weight: bold;
+          // background-color: $primary;
+          figure{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+            img{
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+        }
+      }
+      .swiper-pagination{
+        position: absolute;
+        bottom: 0px;
+        .swiper-pagination-bullet-active{
+          width: 10px;
+          height: 10px;
+          background: $primary;
+        }
+      }
     }
   }
 }

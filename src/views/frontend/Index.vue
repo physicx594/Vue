@@ -184,7 +184,6 @@ $dark: #474747;
           color: #fff;
         }
       }
-
       figure{
         height: 390px;
         overflow: hidden;
