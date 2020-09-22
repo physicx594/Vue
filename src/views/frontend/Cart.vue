@@ -6,8 +6,7 @@
         <div class="row">
           <CheckoutNav :step1="step1" ></CheckoutNav>
           <div class="cartContent mb-5">
-              <div class="header"  v-if="formLoading === false"></div>
-              <div class="cartload" v-else></div>
+              <div class="header">購物清單</div>
                 <table class="table mb-0">
                   <thead class="table">
                       <tr scope="row" >
@@ -68,8 +67,9 @@
               </form>
             </div>
             <div class="orderSummary">
-              <div class="header">訂單資訊</div>
-              <!-- <div class="load" v-else></div> -->
+              <div class="header"  v-if="formLoading === false" >訂單資訊</div>
+              <div class="cartload" v-else></div>
+              <!-- <div class="cartload" ></div> -->
               <div class="info">
                 <div class="infoSection"> <div>小計:</div><div>{{ totalPrice | money }}</div></div>
                 <div class="infoSection"> <div>運費:</div><div>{{ shippingFee | money }}</div></div>
@@ -194,7 +194,7 @@ $bgL:#F7F7F7;
     padding: 6px 12px;
     text-align: left;
     letter-spacing: 5px;
-    background: linear-gradient(45deg,#fc0 0%,#fc0 20%,#de9e36 20%, #de9e36 45%,#fc0 45%,#fc0 70%,#de9e36 70%, #de9e36 95%,#fc0 95%,#fc0 100%);
+    background: linear-gradient(45deg,#fc0 0%,#fc0 20%,#000 20%, #000 45%,#fc0 45%,#fc0 70%,#000 70%, #000 95%,#fc0 95%,#fc0 100%);
     background-size:30px 30px;
     background-position:0 0;
     animation:loading 0.5s infinite linear;

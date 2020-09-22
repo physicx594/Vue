@@ -62,12 +62,7 @@
         </div> -->
         <div class="relateItem">
           <div class="sectionTitle h3 my-5"><span>你可能會喜歡</span></div>
-          <Swiper ref="mySwiper" :options="swiperOptions" class="swiper my-5">
-            <SwiperSlide v-for="(item, index) in randomItems" :key="index"><figure><img :src="item.imageUrl[0]" alt=""></figure></SwiperSlide>
-            <div class="swiper-pagination" slot="pagination"></div>
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
-          </Swiper>
+          <Swiper></Swiper>
         </div>
       </div>
     </div>
@@ -89,8 +84,7 @@ import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
 import Breadcrumb from '@/components/frontend/Breadcrumb'
 import LoadingPage from '@/components/frontend/LoadingPage'
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
+import Swiper from '@/components/frontend/Swiper'
 
 export default {
   name: 'Product',
@@ -99,8 +93,7 @@ export default {
     Footer,
     Breadcrumb,
     LoadingPage,
-    Swiper,
-    SwiperSlide
+    Swiper
   },
   data () {
     return {
@@ -109,44 +102,7 @@ export default {
       selectPic: '',
       isLoading: false,
       openMsg: false,
-      joinMsg: true,
-      swiperOptions: {
-        speed: 1500,
-        slidesPerView: 4,
-        spaceBetween: 10,
-        slidesPerGroup: 1,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-          dynamicBullets: true
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        },
-        autoplay: {
-          delay: 3000
-        }
-        // breakpoints: {
-        //   1024: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 40
-        //   },
-        //   768: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 30
-        //   },
-        //   640: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 20
-        //   },
-        //   320: {
-        //     slidesPerView: 1,
-        //     spaceBetween: 10
-        //   }
-        // }
-      }
+      joinMsg: true
     }
   },
   methods: {
@@ -173,19 +129,9 @@ export default {
           }, 2500)
           console.log(error)
         })
-    },
-    getRandomItem () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products`
-      this.axios.get(api)
-        .then(res => {
-          this.randomItems = res.data.data
-          this.randomItems = this.randomItems.sort((_a, b) => Math.random() - 0.5)
-          this.randomItems = this.randomItems.slice(0, 8)
-        })
     }
   },
   created () {
-    this.getRandomItem()
     this.isLoading = true
     const { id } = this.$route.params
     const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/product/${id}`
@@ -351,7 +297,7 @@ $dark: #474747;
   .productDetail{
     .section{
       white-space: pre-wrap;
-      text-align: center;
+      text-align: left;
       line-height: 30px;
       background: #F7F7F7;
       padding: 20px 40px;
@@ -374,49 +320,6 @@ $dark: #474747;
   .relateItem{
     width: 100%;
     padding: 0 15px;
-    .swiper {
-      height: 277.5px;
-      width: 100%;
-      padding-bottom:  50px;
-      position: relative;
-      // overflow: hidden;
-      .swiper-wrapper{
-                  // overflow: hidden;
-
-        // width: 80%;
-        // padding: 0 15px;
-        .swiper-slide {
-          // margin-right: 0;
-          // display: flex;
-          // justify-content: center;
-          // align-items: center;
-          // text-align: center;
-          // font-weight: bold;
-          // background-color: $primary;
-          figure{
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            overflow: hidden;
-            cursor: pointer;
-            img{
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-          }
-        }
-      }
-      .swiper-pagination{
-        position: absolute;
-        bottom: 0px;
-        .swiper-pagination-bullet-active{
-          width: 10px;
-          height: 10px;
-          background: $primary;
-        }
-      }
-    }
   }
 }
 </style>

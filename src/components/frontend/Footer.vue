@@ -23,18 +23,17 @@ $bgL:#F7F7F7;
   width: 100%;
   background: #F7F7F7;
   position: sticky;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 13px;
   &_section{
-    padding: 0 10%;
     height: 64px;
-    text-align: center;
     line-height: 64px;
     font-weight: bold;
     color: $primary;
   }
   .btn{
-    position: absolute;
-    top: 14px;
-    right: 15%;
     color: $primary;
     border: 1px solid $primary;
     padding: 5px 15px;

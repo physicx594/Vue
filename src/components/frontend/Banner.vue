@@ -15,10 +15,18 @@ export default {
   props: ['pageName', 'content'],
   methods: {
     scrollDown () {
-      window.scrollTo({
-        top: 561,
-        behavior: 'smooth'
-      })
+      const x = 625
+      if (window.innerHeight >= 722) {
+        window.scrollTo({
+          top: 600 + (window.innerHeight - x),
+          behavior: 'smooth'
+        })
+      } else if (window.innerHeight < 722) {
+        window.scrollTo({
+          top: 600 - (window.innerHeight - x),
+          behavior: 'smooth'
+        })
+      }
     }
   }
 }
