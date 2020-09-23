@@ -21,7 +21,7 @@ html,body{
 }
 #app {
 height: 100%;
-  font-family: 'Roboto','Noto Sans TC', Helvetica, Arial, sans-serif;
+  font-family: 'Arial','Noto Sans TC', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: black;

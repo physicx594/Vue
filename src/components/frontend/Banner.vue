@@ -45,6 +45,7 @@ $bgL:#F7F7F7;
     background-attachment: fixed;
     background-size: cover;
     .section {
+        width: 100%;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -112,6 +113,40 @@ $bgL:#F7F7F7;
                     }
                 }
             }
+        }
+    }
+    @media screen and (max-width: 768px){
+        .section{
+            .content{
+                font-size: 16px;
+                padding: 5px 10px;
+            }
+            @keyframes title {
+                0% {
+                opacity: 0;
+                transform: translate(-50%, -80%);
+                }
+                100% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+                }
+            }
+        }
+        .arrowDown{
+        @keyframes scroll {
+            25% {
+                transform: translate(-50%, 5px) rotate(-45deg);
+            }
+            50%{
+                transform: translate(-50%, 0) rotate(-45deg);
+            }
+            75% {
+                transform: translate(-50%, -5px) rotate(-45deg);
+            }
+            100% {
+                transform: translate(-50%, 0) rotate(-45deg);
+            }
+        }
         }
     }
 }

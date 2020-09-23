@@ -59,9 +59,9 @@
         <div class="container">
             <div class="row">
               <div class="products w-100 mt-5">
-                <div class="title h2 m-0 my-3 text-left" style="width:1000px"><span>產品分類</span></div>
+                <div class="title h2 m-0 my-3 text-left" style="width:100%"><span>產品分類</span></div>
                 <div class="category mb-5 mt-4">
-                  <div class="cardList lunchbox col-md-4" data-aos="flip-up" data-aos-duration="1000" @click="toCategory('健康餐盒')">
+                  <div class="cardList lunchbox" data-aos="flip-up" data-aos-duration="1000" @click="toCategory('健康餐盒')">
                     <span>Bento</span>
                     <div class="bg">
                       <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
@@ -74,7 +74,7 @@
                       </p>
                     </div>
                   </div>
-                  <div class="cardList sousvide col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="150" @click="toCategory('舒肥系列')">
+                  <div class="cardList sousvide" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="150" @click="toCategory('舒肥系列')">
                     <span class="float-left pl-3">Sous</span><br>
                     <span class="float-right pr-3">vide</span>
                     <div class="bg">
@@ -87,7 +87,7 @@
                       </p>
                     </div>
                   </div>
-                  <div class="cardList salad col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="300" @click="toCategory('新鮮沙拉')">
+                  <div class="cardList salad" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="300" @click="toCategory('新鮮沙拉')">
                     <span >Salad</span>
                     <div class="bg">
                       <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
@@ -298,9 +298,10 @@ $dark: #474747;
   }
   .category {
     display: flex;
-    justify-content: center;;
+    justify-content: space-between;;
     .cardList {
       position: relative;
+      width: 30%;
       height: 300px;
       padding: 60px 0;
       border: none;

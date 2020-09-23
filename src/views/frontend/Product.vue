@@ -160,9 +160,7 @@ $bgL:#F7F7F7;
 $dark: #474747;
 
 .Product{
-  .NavBar{
-    position: sticky;
-  }
+  margin-top: 64px;
   .sectionTitle{
     font-weight: bold;
     color: $primary;
