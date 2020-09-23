@@ -8,7 +8,9 @@
         <div class="container">
             <div class="row ">
               <div class="aboutUs" id="abs">
+                <div class="column_title h2 title"><span>關於我們</span></div>
                 <div class="content">
+                  <!-- <div class="title h2 mb-5"><span>關於我們</span></div> -->
                   <figure class="col-md-7 p-0 mb-0" data-aos="fade-right" data-aos-easing="ease-in-out"><img src="https://images.unsplash.com/photo-1595786802424-d6efbc413db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80" alt=""></figure>
                   <div class="col-md-5" data-aos="fade-left" data-aos-easing="ease-in-out" data-aos-delay="250">
                     <div class="article font-weight-bold">
@@ -21,7 +23,7 @@
                             蔬果，降低消費者對身體的負擔，注重消費者能夠吃得健康又安心。
                         </p>
                     </div>
-                    <router-link to="/about"><button class="btn mt-5">更多...</button></router-link>
+                    <router-link to="/about"><button class="btn">更多...</button></router-link>
                   </div>
                 </div>
               </div>
@@ -59,7 +61,7 @@
         <div class="container">
             <div class="row">
               <div class="products w-100 mt-5">
-                <div class="title h2 m-0 my-3 text-left" style="width:100%"><span>產品分類</span></div>
+                <div class="title h2 m-0 my-3" style="width:100%"><span>產品分類</span></div>
                 <div class="category mb-5 mt-4">
                   <div class="cardList lunchbox" data-aos="flip-up" data-aos-duration="1000" @click="toCategory('健康餐盒')">
                     <span>Bento</span>
@@ -75,8 +77,8 @@
                     </div>
                   </div>
                   <div class="cardList sousvide" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="150" @click="toCategory('舒肥系列')">
-                    <span class="float-left pl-3">Sous</span><br>
-                    <span class="float-right pr-3">vide</span>
+                    <span>Sous</span>
+                    <span>vide</span>
                     <div class="bg">
                       <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
                         <p class="font-weight-bold">
@@ -93,8 +95,8 @@
                       <div class="hoverpic"><img src="@/assets/logo.png" alt=""></div>
                       <p class="font-weight-bold">
                         新鮮沙拉<br>
-                        採用豐富的萵苣、蘿蔓、歐式生菜葉與蔬果<br>
-                        點綴自製的美味醬料，品嚐生菜的鮮甜爽脆<br>
+                        採用豐富的萵苣、蘿蔓、生菜葉與蔬果<br>
+                        自製的美味醬料，品嚐生菜的鮮甜爽脆<br>
                         並以最嚴謹的態度為您把關<br>
                         與您一同發掘，蔬食最純淨樸實的美味
                       </p>
@@ -188,11 +190,17 @@ $dark: #474747;
     }
   }
   .banner{
+    width: 100%;
     background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
   }
   .aboutUs{
     width: 100%;
     margin: 60px 0;
+    .column_title{
+      display: none;
+    }
     .content{
       display: flex;
       justify-content: space-between;
@@ -205,13 +213,16 @@ $dark: #474747;
         font-weight: bold;
         border-radius: 50px;
         padding: 5px 30px;
+        margin-top: 48px;
         &:hover{
           background: $contrast;
           color: #fff;
         }
       }
       figure{
-        height: 390px;
+        width: 100%;
+        max-height: 390px;
+        height: 100%;
         overflow: hidden;
         &::before{
           content: "";
@@ -238,6 +249,33 @@ $dark: #474747;
         object-fit: cover;
       }
     }
+    @media screen and (max-width: 767px) {
+      .column_title{
+        display:block;
+        margin-bottom: 16px;
+        font-size: 24px;
+      }
+      .content{
+        flex-direction: column;
+        text-align: center;
+        .title{
+          display: none;
+        }
+        figure{
+          &::before, &::after{
+          display: none;
+          }
+          img{
+            padding: 0;
+            margin: 0 0 16px;
+          }
+        }
+        .btn{
+          float: unset;
+          margin: 0;
+        }
+      }
+    }
   }
 
   .selected{
@@ -252,7 +290,8 @@ $dark: #474747;
       font-family: Arial;
       font-weight: bold;
       width: 100%;
-      height: 190px;
+      height: 100%;
+      max-height: 190px;
       padding: 40px 0;
       overflow: hidden;
       div{
@@ -263,8 +302,8 @@ $dark: #474747;
         margin-bottom: 8px;
       }
        p{
+        display: inline;
         margin: 0 auto;
-        width: 15%;
         padding: 5px 30px;
         color: #fff;
         background: #800000d0;
@@ -273,17 +312,20 @@ $dark: #474747;
     }
     .content{
       width: 100%;
+      max-width: 1440px;
       height: 350px;
       background: rgba(255, 255, 255, 0.9);
       display: flex;
       align-items: center;
       justify-content: space-around;
-      padding: 0 150px;
       .contentSction{
         font-family: Arial;
-        width: 250px;
+        width: 100%;
+        max-width: 350px;
+        margin: 0 10px;
         figure{
-          width: 150px;
+          max-width: 150px;
+          width: 100%;
           height: 150px;
           border-radius: 50%;
           background: #264710;
@@ -292,11 +334,37 @@ $dark: #474747;
           align-items: center;
           padding: 0 0 10px;
           margin: 0 auto;
+          img{
+            width: 100%;
+            max-width: 75px;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 767px) {
+      .content{
+        flex-direction: column;
+        padding: 0;
+        .contentSction{
+          display: flex;
+          align-items: center;
+          figure{
+            width: 100px;
+            height: 100px;
+            margin: 0 10px;
+            img{
+              width: 50px;
+            }
+          }
+          p{
+            display: none;
+          }
         }
       }
     }
   }
   .category {
+    width: 100%;
     display: flex;
     justify-content: space-between;;
     .cardList {
@@ -306,6 +374,7 @@ $dark: #474747;
       padding: 60px 0;
       border: none;
       cursor: pointer;
+      overflow: hidden;
       &:hover span{
         opacity: 0;
       }
@@ -316,6 +385,7 @@ $dark: #474747;
         }
       }
       .bg{
+        // display: none;
         width: 100%;
         height: 100%;
         position: absolute;
@@ -336,14 +406,12 @@ $dark: #474747;
         font-size: 100px;
         font-family: Yellowtail, cursive;
         font-weight: bold;
-        letter-spacing: 5px;
         transition: 0.5s ease-out;
         text-shadow: 1px 1px rgba(0, 0, 0, 0.3), 2px 2px rgba(0, 0, 0, 0.3), 3px 3px rgba(0, 0, 0, 0.3),
         4px 4px rgba(0, 0, 0, 0.3), 5px 5px rgba(0, 0, 0, 0.3), 6px 6px rgba(0, 0, 0, 0.3);
-
       }
       &.lunchbox {
-        background: url('https://hexschool-api.s3.us-west-2.amazonaws.com/custom/OPhdY2kmO8HAqDeuhKtYSjrASzxp7Pw1Aec1SlNBasCFMFltg3ZnHape0h8QrovzUQj2YkCyiTS3ZC4e4gdS8lXIc9FQU2wXh6QRlNNU2MGvsCQCo3nnkcwiTnAet9WY.jpg') no-repeat
+        background: url('https://img.lexie.tw/uploads/20200425185125_26.jpg') no-repeat
           center center;
         background-size: cover;
       }
@@ -361,17 +429,43 @@ $dark: #474747;
         background-size: cover;
       }
     }
+
+    @media screen and (max-width: 1023px) {
+      .cardList{
+        height: 150px;
+        padding: 0;
+        pointer-events: none;
+        span{
+          font-size: 60px;
+          line-height: 150px;
+        }
+        &.sousvide span:nth-child(2){
+          line-height: 45px;
+        }
+      }
+    }
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      .cardList{
+        width: 100%;
+        margin: 10px 0;
+        span{
+          font-size: 80px;
+        }
+      }
+    }
   }
   .subscription{
     background: url("https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80") center center no-repeat;
     width: 100%;
-    min-height: 300px;
+    max-height: 300px;
     background-attachment: fixed;
     background-size: cover;
-    padding-top: 50px;
+    padding: 51px 0;
     filter: saturate(80%);
     .content{
-      width: 500px;
+      width: 100%;
+      max-width: 500px;
       margin: 0 auto;
       background: rgba(255, 255, 255, 0.8);
       color: $primary;
@@ -381,6 +475,11 @@ $dark: #474747;
       .btn{
         background: $primary;
         color: #fff;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      .content{
+        font-size: 16px;
       }
     }
   }

@@ -38,6 +38,12 @@ $bgL:#F7F7F7;
     border: 1px solid $primary;
     padding: 5px 15px;
   }
+  @media screen and (max-width: 767px) {
+    justify-content: center;
+    .btn{
+      display: none;
+    }
+  }
 }
 
 </style>
