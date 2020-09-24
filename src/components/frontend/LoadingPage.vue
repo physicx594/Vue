@@ -71,6 +71,7 @@ $dark: #474747;
     display: block
     }
     .section{
+      width: 100%;
       position: absolute;
       top: 43%;
       left: 50%;

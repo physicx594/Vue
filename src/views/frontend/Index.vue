@@ -7,19 +7,20 @@
         <Banner :pageName="'Healthy Diet'" :content="'發現蔬食最新鮮純淨的美味'"></Banner>
         <div class="container">
             <div class="row ">
-              <div class="aboutUs" id="abs">
+              <div class="aboutUs">
                 <div class="column_title h2 title"><span>關於我們</span></div>
                 <div class="content">
-                  <!-- <div class="title h2 mb-5"><span>關於我們</span></div> -->
-                  <figure class="col-md-7 p-0 mb-0" data-aos="fade-right" data-aos-easing="ease-in-out"><img src="https://images.unsplash.com/photo-1595786802424-d6efbc413db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80" alt=""></figure>
-                  <div class="col-md-5" data-aos="fade-left" data-aos-easing="ease-in-out" data-aos-delay="250">
+                  <figure class="col-lg-7 p-0 mb-0" data-aos="fade-right" data-aos-easing="ease-in-out">
+                    <img src="https://images.unsplash.com/photo-1595786802424-d6efbc413db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80">
+                  </figure>
+                  <div class="col-lg-5" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="250">
+                    <div class="title h2 pt-0"><span>關於我們</span></div>
                     <div class="article font-weight-bold">
-                      <div class="title h2 mb-5"><span>關於我們</span></div>
                         <p> 在生活步調快速的現代，忙於課業、工作及娛樂上，<br>
                             飲食也是一種健康的代表，許多人經常用速食來解決三餐，忽略了營養均衡的重要。
                         </p>
-                        <p> Healthy Diet 屬於輕食文化，<br>
-                            採用低鹽低鈉少油，主餐以少量的肉類搭配大量的新鮮<br>
+                        <p> Healthy Diet 屬於輕食文化，
+                            採用低鹽低鈉少油，主餐以少量的肉類搭配大量的新鮮
                             蔬果，降低消費者對身體的負擔，注重消費者能夠吃得健康又安心。
                         </p>
                     </div>
@@ -190,6 +191,7 @@ $dark: #474747;
     }
   }
   .banner{
+    // display: none;
     width: 100%;
     background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
     background-size: cover;
@@ -205,6 +207,11 @@ $dark: #474747;
       display: flex;
       justify-content: space-between;
       text-align: left;
+      .col-lg-5{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
       .btn{
         float: right;
         border: 1px solid $contrast;
@@ -213,7 +220,6 @@ $dark: #474747;
         font-weight: bold;
         border-radius: 50px;
         padding: 5px 30px;
-        margin-top: 48px;
         &:hover{
           background: $contrast;
           color: #fff;
@@ -246,10 +252,9 @@ $dark: #474747;
         width: 100%;
         height: 100%;
         margin: 20px;
-        object-fit: cover;
       }
     }
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 996px) {
       .column_title{
         display:block;
         margin-bottom: 16px;
@@ -411,7 +416,7 @@ $dark: #474747;
         4px 4px rgba(0, 0, 0, 0.3), 5px 5px rgba(0, 0, 0, 0.3), 6px 6px rgba(0, 0, 0, 0.3);
       }
       &.lunchbox {
-        background: url('https://img.lexie.tw/uploads/20200425185125_26.jpg') no-repeat
+        background: url('https://images.unsplash.com/photo-1570078420152-d016091ec97a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat
           center center;
         background-size: cover;
       }

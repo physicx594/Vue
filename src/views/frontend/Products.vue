@@ -7,20 +7,17 @@
       <Banner :pageName="'Products List'" :content="'享受疏食的喜悅與美好'"></Banner>
       <div class="container mt-5">
         <div class="ProductsRow row">
-          <div class="navigationBar col-md-12">
-            <div class="menu w-100">
-              <ul class="list-unstyled w-75 my-2">
-                <li class="nav-item" @click="category='全部商品'"><button type="button" class="btn" >全部商品</button></li>
-                <li @click="category = '新鮮沙拉'"><button type="button" class="btn">新鮮沙拉</button></li>
-                <li @click="category='健康餐盒'"><button class="btn">健康餐盒</button></li>
-                <li @click="category='舒肥系列'"><button class="btn">舒肥系列</button></li>
+          <div class="navigationBar">
+              <ul class="list-unstyled my-2">
+                <li @click="category='全部商品'"><button class="btn" :class="{active:category==='全部商品'}">全部商品</button> </li>
+                <li @click="category = '新鮮沙拉'"><button class="btn" :class="{active:category==='新鮮沙拉'}">新鮮沙拉</button></li>
+                <li @click="category='健康餐盒'"><button class="btn" :class="{active:category==='健康餐盒'}">健康餐盒</button></li>
+                <li @click="category='舒肥系列'"><button class="btn" :class="{active:category==='舒肥系列'}">舒肥系列</button></li>
               </ul>
-            </div>
-            <!-- <div>{{ category }}</div> -->
           </div>
           <div class="col-md-12">
-            <div class="row justify-content-start p-5" >
-              <div class="circle mb-4 col-md-4" v-for="(item, index) in filtedProducts" :key="index" >
+            <div class="row justify-content-start" >
+              <div class="circle col-md-6 col-lg-4" v-for="(item, index) in filtedProducts" :key="index" >
                   <figure class="mb-3">
                     <router-link :to="`/product/${item.id}`">
                     <img  :src="item.imageUrl[0]" class="img-fluid"  :data-key = index>
@@ -177,20 +174,45 @@ $dark: #474747;
   .banner{
     position: relative;
     background: url('https://images.unsplash.com/photo-1543353071-10c8ba85a904?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjI0MX0&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
   }
   .ProductsRow{
     .navigationBar{
-      .menu{
-        display: flex;
-        justify-content: center;
+      width: 100%;
         ul{
+          display: block;
+          width: 100%;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
+          li{
+            margin: 0 20px;
+            .btn{
+              display: block;
+              border-radius: 50px;
+              color: white;
+              background: $primary;
+              padding: 5px 30px;
+              &.active{
+                background: $contrast;
+              }
+            }
+          }
+        }
+      @media screen and (max-width: 991px) {
+        ul li{
+          margin: 0 auto;
           .btn{
-            border-radius: 50px;
-            color: white;
-            background: $primary;
-            padding: 5px 30px;
+            padding: 5px 20px;
+          }
+        }
+      }
+      @media screen and (max-width: 768px) {
+        ul {
+          flex-direction: column;
+          li .btn{
+            padding: 5px 70px;
+            margin: 5px 0;
           }
         }
       }
@@ -200,8 +222,10 @@ $dark: #474747;
       figure{
         position: relative;
         box-sizing: content-box;
-        width: 250px;
-        height: 250px;
+        width: 100%;
+        height: 100%;
+        max-width: 250px;
+        max-height: 250px;
         border-radius: 50%;
         overflow: hidden;
         margin: 0 auto;
@@ -217,7 +241,6 @@ $dark: #474747;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: left center;
           transition: 0.3s;
           -webkit-user-drag: none;
         }
@@ -242,6 +265,16 @@ $dark: #474747;
         }
       }
     }
+    @media screen and (max-width: 768px) {
+      .circle{
+        padding: 0;
+        figure{
+          height: 200px;
+          width: 200px;
+        }
+      }
+    }
+
   }
   .Pagination {
     border-radius: 50px;
