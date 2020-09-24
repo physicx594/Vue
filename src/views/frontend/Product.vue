@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="col-md-5">
-          <div class="productInfo text-left">
+          <div class="productInfo">
             <div class="title"><h2 class="font-weight-bold">{{ tempProduct.title }}</h2></div>
             <!-- <div class="content">{{ tempProduct.description}}</div>
             <div class="content">{{ tempProduct.content}}</div> -->
@@ -55,11 +55,6 @@
             <!-- <div class="content col-md-6 p-0">{{ tempProduct.content }}</div> -->
           </div>
         </div>
-        <!-- <div class="my-5">
-          <div class="productImg">
-            <img src="@/assets/Images/product/itemDetail-3big.png" class="img-fluid">
-          </div>
-        </div> -->
         <div class="relateItem">
           <div class="sectionTitle h3 my-5"><span>你可能會喜歡</span></div>
           <Swiper></Swiper>
@@ -224,6 +219,7 @@ $dark: #474747;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    text-align: left;
     height: 100%;
     .sale{
       font-size: 12px;
@@ -304,20 +300,83 @@ $dark: #474747;
       }
     }
   }
-  .productImg{
-    // background: url('../../assets/Images/product/itemDetail-3big.png') center center no-repeat;
-    // background-size: cover;
-    // width: 100%;
-    // min-height: 600px;
-    // background-attachment: fixed;
-    img{
-      object-fit: cover;
-      object-position: center center;
+  @media screen and (max-width: 996px) {
+    .col-md-5{
+      padding: 0;
+      font-size: 13px;
+      .title h2, .h2{
+        font-size: 24px;
+      }
     }
   }
+  @media screen and (max-width: 991px) {
+    .pics{
+      flex-direction: column;
+      .show-pic{
+        width: 100%;
+        height: 80%;
+      }
+      .other-pic{
+        width: 100%;
+        height: 18%;
+        display: flex;
+        justify-content: space-between;
+        figure {
+          width: 70px;
+          margin-bottom: 10px;
+          &:nth-child(5){
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+      margin-top: 80px;
+    .pics .other-pic figure{
+      width: 85px;
+    }
+    .productInfo{
+      margin-top: 10px;
+      padding: 10px;
+      .title h2{
+        margin: 0;
+      }
+      .price, .content, .promotions{
+        background: $bgL;
+        padding: 10px;
+        margin: 5px 0;
+      }
+      .footer{
+        margin-top: 5px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .pics{
+      height: 200px;
+      .other-pic figure{
+        width: 48px;
+      }
+    }
+    .productInfo {
+      .promotions p{
+        padding-right: 30%;
+      }
+      .input-group, .cartBtn{
+        width: 45%;
+        font-size: 13px;
+      }
+    }
+    .productDetail .section{
+      padding: 10px;
+    }
+  }
+
   .relateItem{
     width: 100%;
-    padding: 0 15px;
   }
 }
 </style>

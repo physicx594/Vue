@@ -155,6 +155,7 @@ $bgL:#F7F7F7;
       justify-content: space-between;
       align-items: center;
       padding: 8px 16px;
+      max-height: 80px;
     }
     ul{
       display: flex;

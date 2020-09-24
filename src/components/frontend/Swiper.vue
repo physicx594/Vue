@@ -28,7 +28,7 @@ export default {
       swiperOptions: {
         speed: 1500,
         slidesPerView: 4,
-        spaceBetween: 10,
+        spaceBetween: 0,
         slidesPerGroup: 1,
         loop: true,
         pagination: {
@@ -42,25 +42,25 @@ export default {
         },
         autoplay: {
           delay: 3000
+        },
+        breakpoints: {
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 0
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 0
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 10
+          }
         }
-        // breakpoints: {
-        //   1024: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 40
-        //   },
-        //   768: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 30
-        //   },
-        //   640: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 20
-        //   },
-        //   320: {
-        //     slidesPerView: 1,
-        //     spaceBetween: 10
-        //   }
-        // }
       }
     }
   },
@@ -90,18 +90,22 @@ $bgL:#F7F7F7;
 $dark: #474747;
 
 .swiper {
-    height: 277.5px;
-    width: 100%;
-    // padding: 0 50px 50px;
-    padding-bottom:  50px;
     position: relative;
+    width: 100%;
+    height: 275px;
+    padding-bottom:  50px;
     .swiper-wrapper{
         .swiper-slide {
+          display: flex;
+          align-items: center;
             figure{
                 width: 100%;
                 height: 100%;
+                max-width: 200px;
+                max-height: 200px;
                 border-radius: 50%;
                 overflow: hidden;
+                margin: 0 auto;
                 cursor: pointer;
                 img{
                     width: 100%;
@@ -110,11 +114,15 @@ $dark: #474747;
                 }
             }
         }
+      @media (max-width: 1024px) {
+        .swiper-slide figure{
+          max-width: 180px;
+          max-height: 180px;
+        }
+      }
     }
     .swiper-button-prev,
     .swiper-button-next {
-        display: none;
-        @media (min-width: 768px) {
         display: inline-block;
         transform: translate(0,-50%);
         box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.2);
@@ -125,7 +133,6 @@ $dark: #474747;
         background: #ffffff;
         opacity: 0.8;
         transition: 0.25s ease-in-out;
-        }
     }
     .swiper-button-prev:after,
     .swiper-button-next:after {
