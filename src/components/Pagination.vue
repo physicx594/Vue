@@ -2,7 +2,7 @@
   <div class="Pagination">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item" :class="{ disabled: pages.current_page === 1 }">
+        <li class="page-item back" :class="{ disabled: pages.current_page === 1 }">
           <a class="page-link" @click.prevent="pageNum(pages.current_page - 1)">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
@@ -18,7 +18,7 @@
             {{ item }}
           </a>
         </li>
-        <li class="page-item" :class="{ disabled: pages.current_page === pages.total_pages }">
+        <li class="page-item next" :class="{ disabled: pages.current_page === pages.total_pages }">
           <a class="page-link" href="#" @click.prevent="pageNum(pages.current_page + 1)">
             <span aria-hidden="true" >&raquo;</span>
             <span class="sr-only">Next</span>
@@ -42,17 +42,15 @@ export default {
 
 <style lang="scss">
 .Pagination {
-  .page-link {
-    color: #343a40;
-    &:focus {
-      box-shadow: none;
+  .pagination{
+    .page-item:first-child .page-link {
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
     }
-  }
-  .active .page-link,
-  .page-link:hover {
-    color: #fff;
-    background-color: #343a40;
-    border-color: #343a40;
+    .page-item:last-child .page-link {
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
   }
 }
 </style>
