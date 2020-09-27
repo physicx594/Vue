@@ -7,15 +7,15 @@
           <CheckoutNav :step1="step1" ></CheckoutNav>
           <div class="cartContent mb-5">
               <div class="header">購物清單</div>
-                <table class="table mb-0">
+                <table class="table mb-0 rwd-table">
                   <thead class="table">
-                      <tr scope="row" >
-                      <th></th>
-                      <th width="25%">品名</th>
-                      <th >單價</th>
-                      <th width="30%">數量</th>
-                      <th>小計</th>
-                      <th ></th>
+                    <tr scope="row" >
+                      <th class="pic"></th>
+                      <th class="name">品名</th>
+                      <th class="price">單價</th>
+                      <th class="qty">數量</th>
+                      <th class="total">小計</th>
+                      <th class="del"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -25,19 +25,19 @@
                       <td v-if="!item.product.price">{{ item.product.origin_price | money }}</td>
                       <td v-else>{{ item.product.price | money }}</td>
                       <td>
-                          <div class="input-group">
-                          <div class="input-group-prepend">
-                              <button type="button" class="btn "  @click="item.quantity--;changeQuantity(item)"
-                              :disabled="item.quantity === 1 || isLoading === true">-</button>
-                          </div>
-                          <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.quantity" @change="changeQuantity(item)" >
-                          <div class="input-group-append">
-                              <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
-                          </div>
+                          <div class="input-group justify-content-center">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn "  @click="item.quantity--;changeQuantity(item)"
+                                :disabled="item.quantity === 1 || isLoading === true">-</button>
+                            </div>
+                            <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.quantity" @change="changeQuantity(item)" >
+                            <div class="input-group-append">
+                                <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
+                            </div>
                           </div>
                       </td>
                       <td>{{ item.product.price * item.quantity | money }}</td>
-                      <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
+                      <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt"></i></button>
                       </td>
                       </tr>
                   </tbody>
@@ -62,7 +62,7 @@
                 </div>
                 <div>
                   <p>全省可宅配，最低訂單量<span class="text-danger">需滿600元</span>才配送(不含運費)，冷凍運費200元，滿3000元即享免運費。</p>
-                  <p>「冷凍」和「常溫」為不同溫層的商品，無法一起出貨，請分開下單結帳，謝謝！</p>
+                  <p class="m-0">「冷凍」和「常溫」為不同溫層的商品，無法一起出貨，請分開下單結帳，謝謝！</p>
                 </div>
               </form>
             </div>
@@ -72,21 +72,27 @@
               <!-- <div class="cartload" ></div> -->
               <div class="info">
                 <div class="infoSection"> <div>小計:</div><div>{{ totalPrice | money }}</div></div>
-                <div class="infoSection"> <div>運費:</div><div>{{ shippingFee | money }}</div></div>
+                <div class="infoSection">
+                  <div v-if="shippingFee===0" class="text-success">滿額免運:</div>
+                  <div v-else>運費:</div>
+                  <div :class="{'text-success': shippingFee===0}">{{ shippingFee | money }}</div>
+                </div>
                 <!-- <div class="infoSection" v-if="totalPrice > 3000"> <div>滿額免運:</div><div>－{{ 200 | money }}</div></div> -->
-                <div class="infoSection"> <div>折扣碼:</div><div>－{{ discountPrice | money }}</div></div>
+                <div class="infoSection"><div>折扣碼:</div><div>－{{ discountPrice | money }}</div></div>
                 <div class="form-group infoSection">
-                  <input type="text" class="form-control w-75" id="coupon" placeholder="請輸入折扣碼">
-                  <button type="button" class="btn">使用</button>
+                  <input type="text" class="form-control" id="coupon"  v-model="couponCode" placeholder="請輸入折扣碼">
+                  <button type="button" class="btn btn-success" @click="useCoupon">使用</button>
                 </div>
+                <div v-if="couponMsg" class="text-danger text-left mb-1">{{ couponMsg }}</div>
+                <div class="minimum text-left text-danger" v-if="totalPrice < 600">最低訂單量，需滿600元才配送(不含運費)</div>
+              </div>
+              <div class="infoCheckout">
                 <div class="infoPrice">
-                  <div>總計:</div><div>{{ totalPrice + shippingFee | money }}</div>
+                  <div>總計:</div><div class="text-danger">{{ totalPrice + shippingFee - discountPrice | money }}</div>
                 </div>
-                <div class="minimum" v-if="totalPrice < 600">最低訂單量，需滿600元才配送(不含運費)</div>
-
-                <router-link to="/Checkout" class="toCheckout">
-                  <button :disabled="totalPrice < 600" type="button" class="btn">前往結帳</button>
-                </router-link>
+                  <router-link to="/Checkout" class="toCheckout">
+                    <button :disabled="totalPrice < 600" type="button" class="btn  btn-success">前往結帳</button>
+                  </router-link>
               </div>
             </div>
           </div>
@@ -117,6 +123,9 @@ export default {
       formLoading: false,
       totalPrice: 0,
       discountPrice: 0,
+      coupon: {},
+      couponCode: '',
+      couponMsg: '',
       shippingFee: 200,
       step1: true
     }
@@ -137,6 +146,24 @@ export default {
           })
           this.totalPrice > 3000 ? this.shippingFee = 0 : this.shippingFee = 200
           this.isLoading = false
+          this.formLoading = false
+        })
+    },
+    useCoupon () {
+      this.formLoading = true
+      this.couponMsg = ''
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/coupon/search`
+      this.axios.post(api, { code: this.couponCode })
+        .then(res => {
+          console.log(res)
+          this.coupon = res.data.data
+          this.discountPrice = Math.floor(this.totalPrice - this.totalPrice * (this.coupon.percent / 100))
+          this.formLoading = false
+        })
+        .catch(error => {
+          this.couponMsg = error.response.data.message
+          this.discountPrice = 0
+          this.couponCode = ''
           this.formLoading = false
         })
     },
@@ -185,6 +212,7 @@ $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
 .Cart{
+  font-weight: bold;
   counter-reset: step;
   .cartload{
     width: 100%;
@@ -217,7 +245,14 @@ $bgL:#F7F7F7;
     margin: 0 auto;
     border: 1px solid #EDEDED;
     table{
-      text-align: left;
+      width: 100%;
+      .name, .price, .qty, .total{
+        width: 20%;
+      }
+      .del, .pic{
+        width: 10%;
+      }
+      text-align: center;
       font-size: 13px;
       th{
         border: none;
@@ -232,10 +267,18 @@ $bgL:#F7F7F7;
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;
         }
+        .input-group > .input-group-prepend > .btn{
+          border-top-right-radius:0;
+          border-bottom-right-radius:0
+        }
+        .input-group > .input-group-append > .btn{
+          border-top-left-radius:0;
+          border-bottom-left-radius:0
+        }
         .btn{
+          border-radius: 50px;
           border: 1px solid $primary;
           color: $primary;
-          font-weight: bold;
           &:hover{
             background: $primary;
             color: $secondary;
@@ -273,45 +316,67 @@ $bgL:#F7F7F7;
       position: relative;
       width: 35%;
       border: 1px solid #EDEDED;
+      height: 300px;
       .info{
-        height: auto;
-        padding: 12px;
+        position: relative;
+        padding: 8px 10px ;
+      border-bottom: 1px solid #EDEDED;
         &Section{
           display: flex;
           justify-content: space-between;
           margin-bottom: 8px;
-          input::placeholder{
-            font-size: 13px;
+          input{
+            width: 70%;
+            &::placeholder{
+              font-size: 13px;
+            }
           }
           .btn{
-            width: 20%;
-            background: #ced4da;
-            color: white;
             font-size: 13px;
           }
         }
-        &Price{
+      }
+      .infoCheckout{
+        width: 100%;
+        height: 100%;
+        max-height: 75px;
+        padding: 8px 10px;
+        .infoPrice{
           display: flex;
           justify-content: space-between;
-          padding: 20px 0 0;
-          margin-top: 20px;
-          border-top: 1px solid #ced4da;
+          font-size: 13px;
+          position: relative;
+          margin-bottom: 5px;
         }
-        & .minimum{
-          text-align: left;
-          color: red;
+        & .toCheckout .btn{
+          width: 100%;
+          display: block;
+          font-size: 13px;
         }
-        & .toCheckout{
-          .btn{
-            position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 324px;
-            font-size: 13px;
-            color: #fff;
-            background: $primary;
-          }
+      }
+    }
+  }
+  @media screen and (max-width: 996px) {
+    .cartSection{
+      flex-direction: column;
+      .orderForm{
+        width: 100%;
+        margin-bottom: 48px;
+      }
+      .orderSummary{
+        width: 100%;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+
+    .cartContent{
+      table{
+        tbody tr td:nth-child(1), thead tr th:nth-child(1),tbody tr td:nth-child(5), thead tr th:nth-child(5){
+          display: none;
+        }
+        td{
+          padding: 8px 5px;
         }
       }
     }

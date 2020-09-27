@@ -3,7 +3,7 @@
     <Navbar></Navbar>
     <LoadingPage></LoadingPage>
     <div class="thanks"></div>
-    <div class="section mt-5">
+    <div class="section">
         <div class="h1 payed">付款完成</div>
         <span>我們已收到您的訂單，感謝您的支持</span>
     </div>
@@ -34,35 +34,38 @@ $bgL:#F7F7F7;
 $dark: #474747;
 
 .CheckoutSuccess {
+  height: 100%;
   .thanks{
     width: 100%;
-    height: 50vh;
+    height: 350px;
     background-attachment: fixed;
     background-size: cover;
     background: url("https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80") no-repeat center center;
   }
   .section{
-    position: relative;
-    width: 30%;
-    height: 30%;
-    margin: 0 auto;
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
     .payed{
-      padding: 20px;
       font-weight: bold;
-      // text-align: left;
       color: $primary;
-      &~ span{
-        font-weight: bold;
-        font-size: 20px;
-        background-image: linear-gradient(to right, $primary 30%, $contrast 100%);
-        background-clip: text;
-        color: transparent;
-      }
+    }
+    span{
+      font-weight: bold;
+      font-size: 20px;
+      background-image: linear-gradient(to right, $primary 30%, $contrast 100%);
+      background-clip: text;
+      color: transparent;
     }
   }
-  .Footer{
-    position: absolute;
-    bottom: 0;
+
+  @media screen and (max-width: 768px) {
+    .section .payed{
+      font-size: 30px;
+    }
+    .section span{
+        font-size: 13px;
+    }
   }
 }
 

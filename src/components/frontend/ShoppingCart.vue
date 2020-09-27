@@ -4,10 +4,11 @@
         <table class="table mb-0">
           <thead class="table">
             <tr scope="row" >
-              <th width="5%"></th>
-              <th width="25%">品名</th>
-              <th width="30%">數量</th>
-              <th >單價</th>
+              <th class="pic"></th>
+              <th class="name">品名</th>
+              <th class="price">單價</th>
+              <th class="qty">數量</th>
+              <th class="del"></th>
               <!-- <th ><button class="btn delete" style="font-size: 13px" @click="delAll">All</button></th> -->
             </tr>
           </thead>
@@ -15,20 +16,20 @@
             <tr scope="row" v-for="(item, index) in cart" :key="index">
               <td><img :src="item.product.imageUrl[0]"></td>
               <td>{{ item.product.title }}</td>
+              <td v-if="!item.product.price">{{ item.product.title }}{{ item.product.origin_price | money }}</td>
+              <td v-else>{{ item.product.price | money }}</td>
               <td>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <button type="button" class="btn"  @click="item.quantity--;changeQuantity(item)"
                     :disabled="item.quantity === 1 || isLoading === true">-</button>
                   </div>
-                  <input type="text" class="form-control col-4 quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+                  <input type="text" class="form-control quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
                   <div class="input-group-append">
                     <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
                   </div>
                 </div>
               </td>
-              <td v-if="!item.product.price">{{ item.product.origin_price | money }}</td>
-              <td v-else>{{ item.product.price | money }}</td>
               <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
               </td>
             </tr>
@@ -118,7 +119,8 @@ $bgL:#F7F7F7;
   position: fixed;
   right: -500px;
   top: 106px;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   max-height: 480px;
   color: black;
   overflow-x: hidden;
@@ -131,7 +133,13 @@ $bgL:#F7F7F7;
       right: 10px;
   }
   table{
-    text-align: left;
+    width: 100%;
+    .name, .price, .qty, .total{
+      width: 20%;
+    }
+    .del, .pic{
+      width: 10%;
+    }
     th{
       border: none;
     }
@@ -201,6 +209,27 @@ $bgL:#F7F7F7;
     &:hover{
       background: $primary;
       color: $secondary;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    max-width: 300px;
+    font-size: 13px;
+    table{
+      tbody tr td:nth-child(1), thead tr th:nth-child(1){
+        display: none;
+      }
+      td{
+        padding: 8px 0px;
+        .input-group{
+          justify-content: center;
+        }
+        .input-group-prepend,.input-group-append{
+          .btn{
+            width: 20px;
+            padding: 0px;
+          }
+        }
+      }
     }
   }
 }

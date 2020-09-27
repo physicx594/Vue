@@ -122,11 +122,10 @@ export default {
     this.$bus.$on('get-cart', () => {
       this.getCart()
     })
+  },
+  beforeDestroy () {
+    this.$bus.$off('get-cart')
   }
-  // 加 beforeDestroy ，我從購物車0件的狀態下按"來去購物"，轉到產品列表按加入購物車，數量顯示上會有問題
-  // beforeDestroy () {
-  //   this.$bus.$off('get-cart')
-  // }
 }
 </script>
 
@@ -233,8 +232,8 @@ $bgL:#F7F7F7;
           span{
             display: block;
             margin: 5px auto;
-            width: 40px;
-            height: 5px;
+            width: 30px;
+            height: 3px;
             background: $primary;
             transition: .3s ease-in;
           }
@@ -242,15 +241,15 @@ $bgL:#F7F7F7;
             span{
               &:nth-child(1){
                 transition: .3s ease-in-out;
-                transform: rotate(45deg) translate(7.5px,7.5px);
+                transform: rotate(45deg) translate(7px,9px);
               }
               &:nth-child(2){
                 transition: .3s ease-in-out;
-                transform: rotate(-45deg) translate(0);
+                transform: rotate(-45deg) translate(-3px,-0px);
               }
               &:nth-child(3){
                 transition: .3s ease-in-out;
-                transform: rotate(-45deg) translate(7px,-7px);
+                transform: rotate(-45deg) translate(2.5px,-5.5px);
               }
             }
           }

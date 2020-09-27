@@ -22,11 +22,15 @@ $bgL:#F7F7F7;
 $dark: #474747;
 
 .checkoutNav{
+    width: 100%;
     margin: 96px auto 30px;
     display: flex;
+    justify-content: center;
+    // padding: 0 70px;
     .step{
+        width: 100%;
         position: relative;
-        width: 240px;
+        max-width: 240px;
         height: 70px;
         color: $bgD;
         &::before{
