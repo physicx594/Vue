@@ -18,8 +18,6 @@
         <div class="col-md-5">
           <div class="productInfo">
             <div class="title"><h2 class="font-weight-bold">{{ tempProduct.title }}</h2></div>
-            <!-- <div class="content">{{ tempProduct.description}}</div>
-            <div class="content">{{ tempProduct.content}}</div> -->
             <div class="price">
               <div class=" h2 font-weight-bold m-0" v-if="tempProduct.price"> {{tempProduct.price | money }}  <span class="sale">sale</span> </div>
               <div class="origin_price text-muted font-italic" v-if="tempProduct.origin_price"> <del>{{ tempProduct.origin_price | money }}</del></div>
@@ -52,7 +50,6 @@
           <div class="sectionTitle h3 my-5"><span>商品描述</span></div>
           <div class="section d-flex">
             <div class="description p-0" >{{ tempProduct.description }}</div>
-            <!-- <div class="content col-md-6 p-0">{{ tempProduct.content }}</div> -->
           </div>
         </div>
         <div class="relateItem">

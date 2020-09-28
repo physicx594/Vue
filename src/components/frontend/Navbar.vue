@@ -56,7 +56,6 @@
               購物車<span v-if="cart.length > 0">( {{ cart.length }} )</span>
             </span>
           </router-link>
-          <!-- <div class="cartQTY" v-if="cart.length > 0">{{ cart.length }}</div> -->
         </li>
       </ul>
     </div>

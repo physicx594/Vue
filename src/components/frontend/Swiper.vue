@@ -1,6 +1,5 @@
 <template>
     <Swiper ref="mySwiper" :options="swiperOptions" class="swiper my-5">
-        <!-- <SwiperSlide ><img src="../../assets/vegetables.svg" alt="" width=50 style="fill:red"></SwiperSlide> -->
         <SwiperSlide v-for="(item, index) in randomItems" :key="index">
             <figure>
                 <img :src="item.imageUrl[0]" alt="">

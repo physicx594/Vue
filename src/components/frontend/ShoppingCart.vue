@@ -172,7 +172,7 @@ $bgL:#F7F7F7;
       height: 24px;
       text-align: center;
       letter-spacing: 10px;
-      background: linear-gradient(45deg,#fc0 0%,#fc0 20%,#de9e36 20%, #de9e36 45%,#fc0 45%,#fc0 70%,#de9e36 70%, #de9e36 95%,#fc0 95%,#fc0 100%);
+      background: linear-gradient(45deg,#FEC81A 0%,#FEC81A 20%,#2a5529 20%, #2a5529 45%,#FEC81A 45%,#FEC81A 70%,#2a5529 70%, #2a5529 95%,#FEC81A 95%,#FEC81A 100%);
       background-size:30px 30px;
       background-position:0 0;
       animation:loading 0.5s infinite linear;

@@ -26,8 +26,6 @@
                       <tr scope="row" v-for="(item, index) in tempProduct.products" :key="index">
                       <td class="pic"><img :src="item.product.imageUrl[0]" class="img-fluid"></td>
                       <td>{{ item.product.title }}</td>
-                      <!-- <td v-if="!item.product.price">{{item.product.origin_price | money}}</td>
-                      <td v-else>{{item.product.price | money}}</td> -->
                       <td >x{{ item.quantity }}</td>
                       <td v-if="item.product.price">{{ item.product.price * item.quantity | money }}</td>
                       </tr>
@@ -132,7 +130,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/${this.tempProduct.id}/paying`
       this.axios.post(api)
         .then(res => {
-          // this.tempProduct = res.data.data
+          this.tempProduct = res.data.data
           this.getOrder()
           console.log(res)
         })

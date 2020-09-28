@@ -69,7 +69,6 @@
             <div class="orderSummary">
               <div class="header"  v-if="formLoading === false" >訂單資訊</div>
               <div class="cartload" v-else></div>
-              <!-- <div class="cartload" ></div> -->
               <div class="info">
                 <div class="infoSection"> <div>小計:</div><div>{{ totalPrice | money }}</div></div>
                 <div class="infoSection">
@@ -77,7 +76,6 @@
                   <div v-else>運費:</div>
                   <div :class="{'text-success': shippingFee===0}">{{ shippingFee | money }}</div>
                 </div>
-                <!-- <div class="infoSection" v-if="totalPrice > 3000"> <div>滿額免運:</div><div>－{{ 200 | money }}</div></div> -->
                 <div class="infoSection"><div>折扣碼:</div><div>－{{ discountPrice | money }}</div></div>
                 <div class="form-group infoSection">
                   <input type="text" class="form-control" id="coupon"  v-model="couponCode" placeholder="請輸入折扣碼">
@@ -222,7 +220,7 @@ $bgL:#F7F7F7;
     padding: 6px 12px;
     text-align: left;
     letter-spacing: 5px;
-    background: linear-gradient(45deg,#fc0 0%,#fc0 20%,#000 20%, #000 45%,#fc0 45%,#fc0 70%,#000 70%, #000 95%,#fc0 95%,#fc0 100%);
+    background: linear-gradient(45deg,#FEC81A 0%,#FEC81A 20%,#2a5529 20%, #2a5529 45%,#FEC81A 45%,#FEC81A 70%,#2a5529 70%, #2a5529 95%,#FEC81A 95%,#FEC81A 100%);
     background-size:30px 30px;
     background-position:0 0;
     animation:loading 0.5s infinite linear;

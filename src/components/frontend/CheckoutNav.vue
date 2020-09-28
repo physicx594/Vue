@@ -26,7 +26,6 @@ $dark: #474747;
     margin: 96px auto 30px;
     display: flex;
     justify-content: center;
-    // padding: 0 70px;
     .step{
         width: 100%;
         position: relative;

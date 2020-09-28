@@ -191,7 +191,6 @@ $dark: #474747;
     }
   }
   .banner{
-    // display: none;
     width: 100%;
     background: url('https://images.unsplash.com/photo-1543353071-873f17a7a088?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80') no-repeat center center;
     background-size: cover;
@@ -390,7 +389,6 @@ $dark: #474747;
         }
       }
       .bg{
-        // display: none;
         width: 100%;
         height: 100%;
         position: absolute;
