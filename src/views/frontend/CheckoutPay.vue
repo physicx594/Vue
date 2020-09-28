@@ -1,5 +1,5 @@
 <template>
-  <div class="CheckoutPay">
+  <div class="CheckoutPay" >
     <Navbar></Navbar>
     <LoadingPage :isLoading="isLoading"></LoadingPage>
     <div class="container" v-if="!isLoading">
@@ -7,8 +7,8 @@
           <CheckoutNav :step1="step" :step2="step" :step3="step"></CheckoutNav>
           <div class="cartList p-3">
             <div class="text-center">
-              <div>合計{{ tempProduct.amount | money }}</div>
-              <span style="font-size:13px">購物車({{ tempProduct.products.length }}件)</span>
+              <div v-if="tempProduct.amount">合計{{ tempProduct.amount | money }}</div>
+              <span style="font-size:13px" v-if="tempProduct.products">購物車({{ tempProduct.products.length }}件)</span>
               <span class="arrowDown" @click="open = !open"><i class="fa fa-angle-down text-danger" :class="{open: open}" ></i></span>
             </div>
           </div>
@@ -36,19 +36,19 @@
                     <tr>
                       <td colspan="2" class="text-right" ><i class="fa fa-angle-up fa-2x text-danger" @click="open = !open"></i></td>
                       <th>合計</th>
-                      <th class="text-danger">{{ tempProduct.amount | money }}</th>
+                      <th class="text-danger" v-if="tempProduct.amount">{{ tempProduct.amount | money }}</th>
                     </tr>
                   </tfoot>
               </table>
           </div>
           <div class="orderInfo mt-5">
-            <div class="header">訂單資訊 <h6 class="float-right pt-1">{{ tempProduct.id | orderId}}</h6></div>
+            <div class="header">訂單資訊 <h6 class="float-right pt-1" v-if="tempProduct.id">{{ tempProduct.id | orderId}}</h6></div>
 
               <table class="table m-0">
-                <tbody>
+                <tbody v-if="tempProduct.user">
                   <tr>
                     <td>姓名</td>
-                    <td>{{ tempProduct.user.name }}</td>
+                    <td >{{ tempProduct.user.name }}</td>
                   </tr>
                   <tr>
                     <td>電話</td>
@@ -104,7 +104,7 @@ export default {
   methods: {
     getOrder (id) {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/uuPIle9vZhkmrNTfQDGsvKrE6fCpJX1AVaQ6a3HoRjTmrmtOXkAe8qFBh75VBmS2`
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/${id}`
       this.axios.get(api)
         .then(res => {
           this.tempProduct = res.data.data
@@ -113,6 +113,10 @@ export default {
           } else {
             this.tempProduct.paid = '已付款'
           }
+          this.isLoading = false
+        })
+        .catch(res => {
+          console.log(res)
           this.isLoading = false
         })
     },
@@ -135,7 +139,7 @@ export default {
     }
   },
   created () {
-    this.getOrder()
+    this.isLoading = true
     this.$bus.$on('orderId', item => {
       this.getOrder(item)
     })

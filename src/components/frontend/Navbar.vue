@@ -2,7 +2,7 @@
   <div class="NavBar">
     <div class="top">
       <div class="container">
-      <a class="p-0" href="/"><img src="@/assets/logo.png" width="60"></a>
+      <router-link class="p-0" to="/"><img src="@/assets/logo.png" width="60"></router-link>
       <div class="menu" :class="{show:show}" @click="show = !show">
         <span></span>
         <span></span>
@@ -106,6 +106,9 @@ export default {
           })
         })
     },
+    clearBus () {
+      this.$bus.$off('get-cart')
+    },
     clearCart () {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`
       this.axios.delete(api)
@@ -119,12 +122,13 @@ export default {
   },
   created () {
     this.getCart()
+    console.log('123')
     this.$bus.$on('get-cart', () => {
       this.getCart()
     })
   },
   beforeDestroy () {
-    this.$bus.$off('get-cart')
+    this.clearBus()
   }
 }
 </script>

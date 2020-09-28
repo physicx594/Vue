@@ -1,10 +1,13 @@
 <template>
     <div class="Footer">
       <div class="container">
-          <div class="Footer_section">
-            <span>© 2020 Healthy Diet All Rights Reserved. <span>圖片為練習使用，無商業用途。</span></span>
+          <div class="footer_section">
+            <span>© 2020 Healthy Diet All Rights Reserved.</span>
           </div>
-          <router-link to="/admin/products" class="gobackend">｜後台管理｜</router-link>
+          <div class="feature">
+            <router-link to="/admin/products" class="gobackend">｜後台管理｜</router-link>
+            <a  class="fab fa-github " href="https://github.com/physicx594?tab=repositories" target="_blank"></a>
+          </div>
       </div>
     </div>
 </template>
@@ -22,46 +25,43 @@ $bgD:#CED4DA;
 $bgL:#F7F7F7;
 
 .Footer{
-  width: 100%;
-  height: 100%;
-  max-height: 64px;
   background: #F7F7F7;
-  padding: 20px;
-  position: sticky;
-  font-size: 16px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  &_section {
-    width: 100%;
-    & span{
-      font-weight: bold;
-      color: $primary;
-    }
-  }
   .container{
-    position: relative;
-    .gobackend{
-      position: absolute;
-      right: 0%;
-      top: 50%;
-      transform: translateY(-50%);
-      color: $primary;
-      font-weight: bold;
-      padding: 5px 15px;
+    width: 100%;
+    height: 100%;
+    max-height: 64px;
+    background: #F7F7F7;
+    padding: 20px;
+    font-size: 16px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .footer_section {
+      & span{
+        font-weight: bold;
+        color: $primary;
+      }
     }
-  }
-  @media screen and (max-width: 992px) {
-    justify-content: center;
-    max-height: 80px;
-    font-size: 13px;
-    span span{
-      display: block;
+    .feature{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      a{
+        color: $primary;
+      }
     }
-    .gobackend{
-      display: none;
+    @media screen and (max-width: 992px) {
+      justify-content: center;
+      max-height: 80px;
+      font-size: 13px;
+      span span{
+        display: block;
+      }
+      a{
+        display: none;
+      }
     }
   }
 }
-
 </style>

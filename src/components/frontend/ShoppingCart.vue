@@ -46,7 +46,7 @@
       </div>
       <div class="py-3" v-else>
          <h3 class="empty mb-5">購物車是空的</h3>
-        <router-link to="/products"><button class="btn" @click="closeCart">來去購物</button></router-link>
+        <router-link to="/products"><button class="btn goShopping" @click="closeCart">來去購物</button></router-link>
       </div>
     </div>
 </template>
@@ -186,8 +186,7 @@ $bgL:#F7F7F7;
       }
     }
     .checkout{
-      width: 50%;
-      padding: 5px 15px;
+      padding: 5px 30px;
       margin: 0 auto;
       background: transparent;
       color: $primary;
@@ -197,9 +196,6 @@ $bgL:#F7F7F7;
   .empty{
     color: $primary;
     font-weight: bold;
-    .btn{
-      padding: 5px 30px;
-    }
   }
   .btn{
     border-radius: 50px;
@@ -210,6 +206,9 @@ $bgL:#F7F7F7;
       background: $primary;
       color: $secondary;
     }
+  }
+  .goShopping{
+    padding: 5px 30px;
   }
   @media screen and (max-width: 768px) {
     max-width: 300px;
