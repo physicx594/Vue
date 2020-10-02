@@ -1,7 +1,7 @@
 <template>
   <div class="Index">
     <Navbar></Navbar>
-    <LoadingPage :isLoading="isLoading"></LoadingPage>
+    <!-- <LoadingPage :isLoading="isLoading"></LoadingPage> -->
     <Gotop></Gotop>
       <div v-if="!isLoading">
         <Banner :pageName="'Healthy Diet'" :content="'發現蔬食最新鮮純淨的美味'"></Banner>
@@ -126,7 +126,7 @@
 
 <script>
 import Gotop from '@/components/frontend/Gotop'
-import LoadingPage from '@/components/frontend/LoadingPage'
+// import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
 import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
@@ -134,7 +134,7 @@ import Footer from '@/components/frontend/Footer'
 export default {
   components: {
     Gotop,
-    LoadingPage,
+    // LoadingPage,
     Navbar,
     Banner,
     Footer
