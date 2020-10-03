@@ -1,9 +1,8 @@
 <template>
   <div class="Index">
     <Navbar></Navbar>
-    <!-- <LoadingPage :isLoading="isLoading"></LoadingPage> -->
     <Gotop></Gotop>
-      <div v-if="!isLoading">
+      <div v-if="!$store.state.isLoading">
         <Banner :pageName="'Healthy Diet'" :content="'發現蔬食最新鮮純淨的美味'"></Banner>
         <div class="container">
             <div class="row ">
@@ -126,7 +125,6 @@
 
 <script>
 import Gotop from '@/components/frontend/Gotop'
-// import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
 import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
@@ -134,15 +132,13 @@ import Footer from '@/components/frontend/Footer'
 export default {
   components: {
     Gotop,
-    // LoadingPage,
     Navbar,
     Banner,
     Footer
   },
   data () {
     return {
-      email: '',
-      isLoading: false
+      email: ''
     }
   },
   methods: {
@@ -154,9 +150,9 @@ export default {
     }
   },
   created () {
-    this.isLoading = true
-    setInterval(() => {
-      this.isLoading = false
+    this.$store.dispatch('updateLoading', true)
+    setTimeout(() => {
+      this.$store.dispatch('updateLoading', false)
     }, 1000)
   }
 }

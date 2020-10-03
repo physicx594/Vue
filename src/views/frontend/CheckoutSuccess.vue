@@ -1,7 +1,6 @@
 <template>
   <div class="CheckoutSuccess">
     <Navbar></Navbar>
-    <LoadingPage :isLoading="isLoading"></LoadingPage>
     <div class="thanks"></div>
     <div class="section">
         <div class="h1 payed">付款完成</div>
@@ -15,23 +14,17 @@
 <script>
 import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
-import LoadingPage from '@/components/frontend/LoadingPage'
 
 export default {
   components: {
     Navbar,
-    Footer,
-    LoadingPage
-  },
-  data () {
-    return {
-      isLoading: false
-    }
+    Footer
   },
   created () {
-    this.isLoading = true
-    setInterval(() => {
-      this.isLoading = false
+    this.$store.dispatch('updateLoading', true)
+
+    setTimeout(() => {
+      this.$store.dispatch('updateLoading', false)
     }, 1000)
   }
 }

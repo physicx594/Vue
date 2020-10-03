@@ -133,7 +133,7 @@ export default {
             )
           })
           this.totalPrice > 3000 ? this.shippingFee = 0 : this.shippingFee = 200
-          this.isLoading = false
+          this.$store.dispatch('updateLoading', false)
         })
     },
     createOrder () {
@@ -147,6 +147,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('updateLoading', true)
     this.getCart()
   }
 }

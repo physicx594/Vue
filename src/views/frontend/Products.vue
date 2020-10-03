@@ -1,9 +1,8 @@
 <template>
   <div class="Products" :class="{high: this.$route.params.category}">
     <Navbar></Navbar>
-    <LoadingPage :isLoading="isLoading"></LoadingPage>
     <Gotop></Gotop>
-    <div v-if="!isLoading">
+    <div v-if="!$store.state.isLoading">
       <Banner :pageName="'Products List'" :content="'享受疏食的喜悅與美好'"></Banner>
       <div class="container mt-5">
         <div class="ProductsRow row">
@@ -55,7 +54,6 @@
 </template>
 <script>
 // /* global $ */
-import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
 import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
@@ -63,14 +61,12 @@ import Footer from '@/components/frontend/Footer'
 export default {
   name: 'Products',
   components: {
-    LoadingPage,
     Navbar,
     Banner,
     Footer
   },
   data () {
     return {
-      isLoading: false,
       category: '全部商品',
       products: [],
       pagination: {},
@@ -81,7 +77,7 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
-      if (!this.openMsg) this.isLoading = true
+      if (!this.openMsg) this.$store.dispatch('updateLoading', true)
       const params = {
         page,
         paged: '15',
@@ -100,7 +96,7 @@ export default {
               behavior: 'smooth'
             })
           }
-          this.isLoading = false
+          this.$store.dispatch('updateLoading', false)
         })
         .catch(res => {
           console.log(res)

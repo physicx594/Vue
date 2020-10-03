@@ -1,7 +1,6 @@
 <template>
   <div class="Product">
     <Navbar></Navbar>
-    <LoadingPage :isLoading="isLoading"></LoadingPage>
     <Breadcrumb :product="tempProduct"></Breadcrumb>
     <div class="container">
       <div class="row">
@@ -75,7 +74,6 @@
 import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
 import Breadcrumb from '@/components/frontend/Breadcrumb'
-import LoadingPage from '@/components/frontend/LoadingPage'
 import Swiper from '@/components/frontend/Swiper'
 
 export default {
@@ -84,7 +82,6 @@ export default {
     Navbar,
     Footer,
     Breadcrumb,
-    LoadingPage,
     Swiper
   },
   data () {
@@ -92,7 +89,6 @@ export default {
       randomItems: [],
       tempProduct: {},
       selectPic: '',
-      isLoading: false,
       openMsg: false,
       joinMsg: true
     }
@@ -124,7 +120,7 @@ export default {
     }
   },
   created () {
-    this.isLoading = true
+    this.$store.dispatch('updateLoading', true)
     const { id } = this.$route.params
     const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/product/${id}`
     this.axios.get(api)
@@ -134,7 +130,7 @@ export default {
           quantity: 1
         }
         this.selectPic = this.tempProduct.imageUrl[0]
-        this.isLoading = false
+        this.$store.dispatch('updateLoading', false)
       })
       .catch(error => {
         console.log(error)

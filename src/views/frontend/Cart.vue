@@ -1,7 +1,6 @@
 <template>
   <div class="Cart">
     <Navbar></Navbar>
-    <LoadingPage :isLoading='isLoading'></LoadingPage>
     <div class="container">
         <div class="row">
           <CheckoutNav :step1="step1" ></CheckoutNav>
@@ -28,16 +27,16 @@
                           <div class="input-group justify-content-center">
                             <div class="input-group-prepend">
                                 <button type="button" class="btn "  @click="item.quantity--;changeQuantity(item)"
-                                :disabled="item.quantity === 1 || isLoading === true">-</button>
+                                :disabled="item.quantity === 1 || formLoading === true">-</button>
                             </div>
                             <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.quantity" @change="changeQuantity(item)" >
                             <div class="input-group-append">
-                                <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
+                                <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="formLoading === true">+</button>
                             </div>
                           </div>
                       </td>
                       <td>{{ item.product.price * item.quantity | money }}</td>
-                      <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt"></i></button>
+                      <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="formLoading === true"><i class="far fa-trash-alt"></i></button>
                       </td>
                       </tr>
                   </tbody>
@@ -104,20 +103,17 @@
 import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
 import CheckoutNav from '@/components/frontend/CheckoutNav'
-import LoadingPage from '@/components/frontend/LoadingPage'
 
 export default {
   name: 'Cart',
   components: {
     Navbar,
     Footer,
-    CheckoutNav,
-    LoadingPage
+    CheckoutNav
   },
   data () {
     return {
       cart: [],
-      isLoading: false,
       formLoading: false,
       totalPrice: 0,
       discountPrice: 0,
@@ -130,7 +126,7 @@ export default {
   },
   methods: {
     getCart () {
-      if (!this.formLoading) this.isLoading = true
+      if (!this.formLoading) this.$store.dispatch('updateLoading', true)
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
       this.axios.get(api)
         .then((res) => {
@@ -143,7 +139,7 @@ export default {
             )
           })
           this.totalPrice > 3000 ? this.shippingFee = 0 : this.shippingFee = 200
-          this.isLoading = false
+          this.$store.dispatch('updateLoading', false)
           this.formLoading = false
         })
     },

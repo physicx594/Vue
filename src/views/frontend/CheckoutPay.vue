@@ -1,8 +1,7 @@
 <template>
   <div class="CheckoutPay" >
     <Navbar></Navbar>
-    <LoadingPage :isLoading="isLoading"></LoadingPage>
-    <div class="container" v-if="!isLoading">
+    <div class="container" v-if="!$store.state.isLoading">
         <div class="row">
           <CheckoutNav :step1="step" :step2="step" :step3="step"></CheckoutNav>
           <div class="cartList p-3">
@@ -82,26 +81,23 @@
 import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
 import CheckoutNav from '@/components/frontend/CheckoutNav'
-import LoadingPage from '@/components/frontend/LoadingPage'
 
 export default {
   components: {
     Navbar,
     Footer,
-    CheckoutNav,
-    LoadingPage
+    CheckoutNav
   },
   data () {
     return {
       tempProduct: {},
-      isLoading: false,
       step: true,
       open: false
     }
   },
   methods: {
     getOrder (id) {
-      this.isLoading = true
+      this.$store.dispatch('updateLoading', true)
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/${id}`
       this.axios.get(api)
         .then(res => {
@@ -111,11 +107,11 @@ export default {
           } else {
             this.tempProduct.paid = '已付款'
           }
-          this.isLoading = false
+          this.$store.dispatch('updateLoading', false)
         })
         .catch(res => {
           console.log(res)
-          this.isLoading = false
+          this.$store.dispatch('updateLoading', false)
         })
     },
     getOrders () {
@@ -137,7 +133,7 @@ export default {
     }
   },
   created () {
-    this.isLoading = true
+    this.$store.dispatch('updateLoading', true)
     this.$bus.$on('orderId', item => {
       this.getOrder(item)
     })

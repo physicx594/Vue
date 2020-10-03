@@ -1,8 +1,7 @@
 <template>
   <div class="About">
     <Navbar></Navbar>
-    <LoadingPage :isLoading="isLoading"></LoadingPage>
-    <div v-if="!isLoading">
+    <div v-if="!$store.state.isLoading">
       <Banner :pageName="'About Us'" :content="'發掘蔬食的喜悅與美好'"></Banner>
       <div class="container">
         <div class="row">
@@ -40,28 +39,25 @@
 </template>
 
 <script>
-import LoadingPage from '@/components/frontend/LoadingPage'
 import Navbar from '@/components/frontend/Navbar'
 import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
 
 export default {
   components: {
-    LoadingPage,
     Navbar,
     Banner,
     Footer
   },
   data () {
     return {
-      category: true,
-      isLoading: false
+      category: true
     }
   },
   created () {
-    this.isLoading = true
-    setInterval(() => {
-      this.isLoading = false
+    this.$store.dispatch('updateLoading', true)
+    setTimeout(() => {
+      this.$store.dispatch('updateLoading', false)
     }, 1000)
   }
 }
