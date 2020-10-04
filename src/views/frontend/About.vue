@@ -49,11 +49,6 @@ export default {
     Banner,
     Footer
   },
-  data () {
-    return {
-      category: true
-    }
-  },
   created () {
     this.$store.dispatch('updateLoading', true)
     setTimeout(() => {

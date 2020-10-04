@@ -21,27 +21,27 @@
               <td>
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <button type="button" class="btn"  @click="item.quantity--;changeQuantity(item)"
-                    :disabled="item.quantity === 1 || isLoading === true">-</button>
+                    <button type="button" class="btn"  @click="changeQuantity(item, item.quantity - 1)"
+                    :disabled="item.quantity === 1 || formLoading === true">-</button>
                   </div>
-                  <input type="text" class="form-control quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+                  <input type="text" class="form-control quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item, item.quantity)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
                   <div class="input-group-append">
-                    <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="isLoading === true">+</button>
+                    <button type="button" class="btn" @click="changeQuantity(item, item.quantity + 1)" :disabled="formLoading === true">+</button>
                   </div>
                 </div>
               </td>
-              <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="isLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
+              <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="formLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
               </td>
             </tr>
           </tbody>
         </table>
         <div class="footer">
-          <div  class="totalPrice" v-if="isLoading === false">
+          <div  class="totalPrice" v-if="formLoading === false">
             <div class="mr-1">小計:</div>
             <div class=" text-danger font-weight-bolder" v-if="totalPrice">{{ totalPrice | money }}</div>
           </div>
           <div class="load" v-else></div>
-          <router-link to="/cart"><button class="btn checkout" v-if="isLoading === false" @click="closeCart">前往購物車</button></router-link>
+          <router-link to="/cart"><button class="btn checkout" v-if="formLoading === false" @click="closeCart">前往購物車</button></router-link>
         </div>
       </div>
       <div class="py-3" v-else>
@@ -60,27 +60,11 @@ export default {
     }
   },
   methods: {
-    changeQuantity (item) {
-      this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
-      const cart = {
-        product: item.product.id,
-        quantity: item.quantity
-      }
-      this.axios.patch(api, cart)
-        .then((res) => {
-          this.$emit('update')
-          this.isLoading = false
-        })
+    changeQuantity (item, quantity) {
+      this.$store.dispatch('changeQuantity', { item, quantity })
     },
     delItem (id) {
-      this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/${id}`
-      this.axios.delete(api)
-        .then((res) => {
-          this.$emit('update')
-          this.isLoading = false
-        })
+      this.$store.dispatch('delItem', id)
     },
     delAll () {
       this.isLoading = true
@@ -95,14 +79,9 @@ export default {
       this.$emit('close')
     }
   },
-  watch: {
-    cart: {
-      handler (value) {
-        value.forEach(item => {
-          if (item.quantity < 1) item.quantity = 1
-        })
-      },
-      deep: true
+  computed: {
+    formLoading () {
+      return this.$store.state.formLoading
     }
   }
 }

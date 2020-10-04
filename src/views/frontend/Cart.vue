@@ -26,12 +26,12 @@
                       <td>
                           <div class="input-group justify-content-center">
                             <div class="input-group-prepend">
-                                <button type="button" class="btn "  @click="item.quantity--;changeQuantity(item)"
+                                <button type="button" class="btn "  @click="changeQuantity(item, item.quantity - 1)"
                                 :disabled="item.quantity === 1 || formLoading === true">-</button>
                             </div>
-                            <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.quantity" @change="changeQuantity(item)" >
+                            <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.quantity" @change="changeQuantity(item, item.quantity)" >
                             <div class="input-group-append">
-                                <button type="button" class="btn" @click="item.quantity+=1;changeQuantity(item)" :disabled="formLoading === true">+</button>
+                                <button type="button" class="btn" @click="changeQuantity(item, item.quantity + 1)" :disabled="formLoading === true">+</button>
                             </div>
                           </div>
                       </td>
@@ -113,36 +113,14 @@ export default {
   },
   data () {
     return {
-      cart: [],
-      formLoading: false,
-      totalPrice: 0,
       discountPrice: 0,
       coupon: {},
       couponCode: '',
       couponMsg: '',
-      shippingFee: 200,
       step1: true
     }
   },
   methods: {
-    getCart () {
-      if (!this.formLoading) this.$store.dispatch('updateLoading', true)
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
-      this.axios.get(api)
-        .then((res) => {
-          this.$bus.$emit('get-cart')
-          this.cart = res.data.data
-          this.totalPrice = 0
-          this.cart.forEach((item) => {
-            this.totalPrice += Number(
-              item.product.price * item.quantity || item.product.origin_price * item.quantity
-            )
-          })
-          this.totalPrice > 3000 ? this.shippingFee = 0 : this.shippingFee = 200
-          this.$store.dispatch('updateLoading', false)
-          this.formLoading = false
-        })
-    },
     useCoupon () {
       this.formLoading = true
       this.couponMsg = ''
@@ -161,39 +139,32 @@ export default {
           this.formLoading = false
         })
     },
-    changeQuantity (item) {
-      this.formLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
-      const cart = {
-        product: item.product.id,
-        quantity: item.quantity
-      }
-      this.axios.patch(api, cart)
-        .then((res) => {
-          this.getCart()
-        })
+    changeQuantity (item, quantity) {
+      this.$store.dispatch('changeQuantity', { item, quantity })
     },
     delItem (id) {
-      this.formLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/${id}`
-      this.axios.delete(api)
-        .then((res) => {
-          this.getCart()
-        })
+      this.$store.dispatch('delItem', id)
     }
   },
-  watch: {
-    cart: {
-      handler (value) {
-        value.forEach(item => {
-          if (item.quantity < 1) item.quantity = 1
-        })
-      },
-      deep: true
+  computed: {
+    cart () {
+      return this.$store.state.cart
+    },
+    totalPrice () {
+      return this.$store.state.totalPrice
+    },
+    shippingFee () {
+      return this.$store.state.shippingFee
+    },
+    formLoading () {
+      return this.$store.state.formLoading
     }
   },
   created () {
-    this.getCart()
+    this.$store.dispatch('updateLoading', true)
+    setTimeout(() => {
+      this.$store.dispatch('updateLoading', false)
+    }, 1000)
   }
 }
 </script>

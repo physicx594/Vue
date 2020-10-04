@@ -88,35 +88,20 @@ export default {
     return {
       randomItems: [],
       tempProduct: {},
-      selectPic: '',
-      openMsg: false,
-      joinMsg: true
+      selectPic: ''
     }
   },
   methods: {
     addToCart (item, quantity = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
-      const cart = {
-        product: item.id,
-        quantity
-      }
-      this.axios.post(api, cart)
-        .then((res) => {
-          this.$bus.$emit('get-cart')
-          this.openMsg = true
-          setTimeout(() => {
-            this.openMsg = false
-          }, 2500)
-        })
-        .catch(error => {
-          this.openMsg = true
-          this.joinMsg = false
-          setTimeout(() => {
-            this.openMsg = false
-            this.joinMsg = true
-          }, 2500)
-          console.log(error)
-        })
+      this.$store.dispatch('addToCart', { item, quantity })
+    }
+  },
+  computed: {
+    openMsg () {
+      return this.$store.state.openMsg
+    },
+    joinMsg () {
+      return this.$store.state.joinMsg
     }
   },
   created () {

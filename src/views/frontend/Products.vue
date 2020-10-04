@@ -68,70 +68,33 @@ export default {
   data () {
     return {
       category: '全部商品',
-      products: [],
-      pagination: {},
-      openMsg: false,
-      joinMsg: true,
       randomItem: []
     }
   },
   methods: {
     getProducts (page = 1) {
-      if (!this.openMsg) this.$store.dispatch('updateLoading', true)
-      const params = {
-        page,
-        paged: '15',
-        orderBy: 'created_at, updated_at',
-        sort: 'asc' // 排序遞增
-      }
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products?page=${params.page}&sort=${params.sort}&paged=${params.paged}`
-      this.axios.get(api)
-        .then(res => {
-          this.products = res.data.data
-          this.pagination = res.data.meta.pagination
-          if (this.$route.params.category) {
-            this.category = this.$route.params.category
-            window.scrollTo({
-              top: 561,
-              behavior: 'smooth'
-            })
-          }
-          this.$store.dispatch('updateLoading', false)
-        })
-        .catch(res => {
-          console.log(res)
-        })
+      this.$store.dispatch('getProducts')
     },
     addToCart (item, quantity = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
-      const cart = {
-        product: item.id,
-        quantity
-      }
-      this.axios.post(api, cart)
-        .then((res) => {
-          this.$bus.$emit('get-cart')
-          this.openMsg = true
-          this.getProducts()
-          setTimeout(() => {
-            this.openMsg = false
-          }, 2500)
-        })
-        .catch(error => {
-          this.joinMsg = false
-          this.openMsg = true
-          setTimeout(() => {
-            this.openMsg = false
-            this.joinMsg = true
-          }, 2500)
-          console.log(error.response.data.errors[0])
-        })
+      this.$store.dispatch('addToCart', { item, quantity })
     }
   },
   computed: {
     filtedProducts () {
       if (this.category === '全部商品') return this.products
       return this.products.filter(item => this.category === item.category)
+    },
+    products () {
+      return this.$store.state.products
+    },
+    pagination () {
+      return this.$store.state.pagination
+    },
+    openMsg () {
+      return this.$store.state.openMsg
+    },
+    joinMsg () {
+      return this.$store.state.joinMsg
     }
   },
   created () {

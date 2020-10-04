@@ -59,7 +59,7 @@
         </li>
       </ul>
     </div>
-    <ShoppingCart :openCart="openCart" :cart="cart" :totalPrice="totalPrice" @update="getCart" @close="closeCart"></ShoppingCart>
+    <ShoppingCart :openCart="openCart" :cart="cart" :totalPrice="totalPrice"  @close="closeCart"></ShoppingCart>
     <div class="mask" :class="{ 'open': openCart, show}" @click.prevent="mask"></div>
   </div>
 </template>
@@ -73,11 +73,8 @@ export default {
   },
   data () {
     return {
-      cart: [],
       show: false,
       openCart: false,
-      totalPrice: 0,
-      isLoading: false,
       cancel: false
     }
   },
@@ -93,17 +90,7 @@ export default {
       }
     },
     getCart () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
-      this.axios.get(api)
-        .then((res) => {
-          this.cart = res.data.data
-          this.totalPrice = 0
-          this.cart.forEach((item) => {
-            this.totalPrice += Number(
-              item.product.price * item.quantity || item.product.origin_price * item.quantity
-            )
-          })
-        })
+      this.$store.dispatch('getCart')
     },
     clearBus () {
       this.$bus.$off('get-cart')
@@ -119,9 +106,16 @@ export default {
       this.openCart = false
     }
   },
+  computed: {
+    cart () {
+      return this.$store.state.cart
+    },
+    totalPrice () {
+      return this.$store.state.totalPrice
+    }
+  },
   created () {
     this.getCart()
-    console.log('123')
     this.$bus.$on('get-cart', () => {
       this.getCart()
     })

@@ -97,6 +97,7 @@ export default {
   },
   methods: {
     getOrder (id) {
+      console.log(id)
       this.$store.dispatch('updateLoading', true)
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/${id}`
       this.axios.get(api)
@@ -107,6 +108,7 @@ export default {
           } else {
             this.tempProduct.paid = '已付款'
           }
+          this.$store.dispatch('getCart')
           this.$store.dispatch('updateLoading', false)
         })
         .catch(res => {
@@ -130,6 +132,11 @@ export default {
           this.getOrder()
           console.log(res)
         })
+    }
+  },
+  computed: {
+    isLoading () {
+      return this.$store.state.isLoading
     }
   },
   created () {
