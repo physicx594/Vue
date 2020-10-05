@@ -312,7 +312,7 @@ $dark: #474747;
     }
     .content{
       width: 100%;
-      max-width: 1440px;
+      // max-width: 1440px;
       height: 350px;
       background: rgba(255, 255, 255, 0.9);
       display: flex;
