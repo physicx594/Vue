@@ -36,8 +36,8 @@
                   <button class="btn" @click="addToCart(item)">加入購物車</button>
               </div>
             </div>
-            <Pagination :pages="pagination" @update="getProducts"></Pagination>
           </div>
+        <Pagination :pages="pagination" @update="getProducts"></Pagination>
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@ $dark: #474747;
 
 .Products{
   &.high{
-    min-height: 1700px;
+    min-height: 3000px;
   }
   .joinMsg{
     position: fixed;
@@ -137,6 +137,7 @@ $dark: #474747;
     background-attachment: fixed;
   }
   .ProductsRow{
+    justify-content: center;
     .navigationBar{
       width: 100%;
         ul{
@@ -249,8 +250,7 @@ $dark: #474747;
       border-color: $primary;
     }
     ul{
-      justify-content: center;
-      margin-bottom: 72px;
+      margin: 72px 0;
     }
   }
 

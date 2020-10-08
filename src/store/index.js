@@ -26,7 +26,7 @@ export default new Vuex.Store({
       if (!this.openMsg) context.commit('LOADING', true)
       const params = {
         page,
-        paged: '15',
+        paged: '20',
         orderBy: 'created_at, updated_at',
         sort: 'asc' // 排序遞增
       }
