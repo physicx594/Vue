@@ -7,7 +7,7 @@ const routes = [
   // frontend
   {
     path: '/',
-    component: () => import('../views/Home.vue'),
+    component: () => import('../views/frontend/Home.vue'),
     children: [
       {
         path: '',
@@ -53,7 +53,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/backend/Login.vue')
   },
   // backend
   {

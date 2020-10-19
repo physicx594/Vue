@@ -36,12 +36,12 @@ export default new Vuex.Store({
           console.log(res.data)
           context.commit('GETPRODUCTS', res.data.data)
           context.commit('PAGINATION', res.data.meta.pagination)
-          // if (this.category !== '全部商品') {
-          //   window.scrollTo({
-          //     top: 561,
-          //     behavior: 'smooth'
-          //   })
-          // }
+          if (this.category !== '全部商品') {
+            window.scrollTo({
+              top: 561,
+              behavior: 'smooth'
+            })
+          }
           context.commit('LOADING', false)
         })
         .catch(res => {
