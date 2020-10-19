@@ -78,6 +78,10 @@ const routes = [
         component: () => import('../views/backend/Storages.vue')
       }
     ]
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
