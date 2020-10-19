@@ -16,6 +16,7 @@ import Navbar from '@/components/frontend/Navbar'
 import Footer from '@/components/frontend/Footer'
 
 export default {
+  name: 'CheckoutSuccess',
   components: {
     Navbar,
     Footer

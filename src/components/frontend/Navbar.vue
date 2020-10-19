@@ -68,6 +68,7 @@
 import ShoppingCart from './ShoppingCart'
 
 export default {
+  name: 'Navbar',
   components: {
     ShoppingCart
   },

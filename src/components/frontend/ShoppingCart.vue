@@ -53,6 +53,7 @@
 
 <script>
 export default {
+  name: 'ShoppingCart',
   props: ['openCart', 'cart', 'totalPrice'],
   data () {
     return {

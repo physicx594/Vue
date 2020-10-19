@@ -12,12 +12,6 @@
     </div>
 </template>
 
-<script>
-export default {
-
-}
-</script>
-
 <style lang="scss">
 $primary : #264710;
 $secondary: #de9e36;

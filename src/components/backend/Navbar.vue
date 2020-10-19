@@ -39,6 +39,7 @@
 
 <script>
 export default {
+  name: 'Navbar',
   methods: {
     signOut () {
       document.cookie = 'token=; expires=; path=/'
