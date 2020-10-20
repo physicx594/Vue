@@ -1,5 +1,11 @@
 @import "~bootstrap/scss/functions";
 @import './helpers/variables';
-
 @import '~bootstrap';
+@import './helpers/mixin';
 
+
+@import './helpers/frontend/about';
+@import './helpers/frontend/cart';
+@import './helpers/frontend/checkout';
+@import './helpers/frontend/checkoutPay';
+@import './helpers/frontend/checkoutSuccess';

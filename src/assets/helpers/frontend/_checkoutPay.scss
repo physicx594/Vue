@@ -1,0 +1,66 @@
+.CheckoutPay{
+    counter-reset: step;
+    .cartList{
+      position: relative;
+      width: 100%;
+      border: 1px solid #EDEDED;
+      .arrowDown{
+        position: absolute;
+        top: 50%;
+        left: 56%;
+        transform: translateY(-50%);
+        padding: 20px;
+        cursor: pointer;
+        i{
+          transition: .5s;
+          &.open{
+            transition: .5s;
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    .opensection{
+      height: 0px;
+      overflow: hidden;
+      transition: all .5s ease-out;
+      table{
+        font-size: 16px;
+        tr{
+          border-bottom: 1px solid #EDEDED;
+                    position: relative;
+          .fa-angle-up{
+            margin-right: 90px;
+            left: 50%;
+            cursor: pointer;
+          }
+        }
+        img{
+          width: 80px;
+          height: 80px;
+        }
+      }
+      &.open{
+        height: 529px;
+      }
+    }
+    .orderInfo{
+      position: relative;
+      width: 100%;
+      margin: 0 auto 96px;
+      border: 1px solid #EDEDED;
+      font-size: 13px;
+      .form-control-plaintext{
+        border-bottom: 1px solid #000;
+      }
+      .pay{
+        position: absolute;
+        right: 0;
+        bottom: -43px;
+      }
+      table{
+        opacity: 1;
+      }
+    }
+}

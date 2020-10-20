@@ -1,0 +1,172 @@
+.Cart{
+    font-weight: bold;
+    counter-reset: step;
+    .cartload{
+      width: 100%;
+      height: 40px;
+      font-size: 17px;
+      line-height: 28px;
+      padding: 6px 12px;
+      text-align: left;
+      letter-spacing: 5px;
+      background: linear-gradient(45deg,#FEC81A 0%,#FEC81A 20%,#2a5529 20%, #2a5529 45%,#FEC81A 45%,#FEC81A 70%,#2a5529 70%, #2a5529 95%,#FEC81A 95%,#FEC81A 100%);
+      background-size:30px 30px;
+      background-position:0 0;
+      animation:loading 0.5s infinite linear;
+      @keyframes loading{
+        0%{
+          background-position:0 0;
+        }
+        100%{
+          background-position:30px 0;
+        }
+      }
+    }
+  
+    .form-control:focus, .btn:focus{
+      border: 1px solid #ced4da;
+      box-shadow: none;
+    }
+    .cartContent{
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid #EDEDED;
+      table{
+        width: 100%;
+        .name, .price, .qty, .total{
+          width: 20%;
+        }
+        .del, .pic{
+          width: 10%;
+        }
+        text-align: center;
+        font-size: 13px;
+        th{
+          border: none;
+        }
+        td, th{
+          padding: 8px;
+          img{
+            width: 50px;
+            height: 50px;
+          }
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+          }
+          .input-group > .input-group-prepend > .btn{
+            border-top-right-radius:0;
+            border-bottom-right-radius:0
+          }
+          .input-group > .input-group-append > .btn{
+            border-top-left-radius:0;
+            border-bottom-left-radius:0
+          }
+          .btn{
+            border-radius: 50px;
+            border: 1px solid $primary;
+            color: $primary;
+            &:hover{
+              background: $primary;
+              color: $secondary;
+            }
+          }
+          .delete{
+            color: $contrast;
+            border: 1px solid $contrast;
+            &:hover{
+              background: $contrast;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+    .cartSection{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      .orderForm{
+        width: 60%;
+        border: 1px solid #EDEDED;
+        form{
+          padding: 12px;
+          text-align: left;
+          p{
+            border-left: 3px solid #CED4DA;
+            padding: 0 5px;
+          }
+        }
+      }
+      .orderSummary{
+        position: relative;
+        width: 35%;
+        border: 1px solid #EDEDED;
+        height: 300px;
+        .info{
+          position: relative;
+          padding: 8px 10px ;
+        border-bottom: 1px solid #EDEDED;
+          &Section{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            input{
+              width: 70%;
+              &::placeholder{
+                font-size: 13px;
+              }
+            }
+            .btn{
+              font-size: 13px;
+            }
+          }
+        }
+        .infoCheckout{
+          width: 100%;
+          height: 100%;
+          max-height: 75px;
+          padding: 8px 10px;
+          .infoPrice{
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            position: relative;
+            margin-bottom: 5px;
+          }
+          & .toCheckout .btn{
+            width: 100%;
+            display: block;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 996px) {
+      .cartSection{
+        flex-direction: column;
+        .orderForm{
+          width: 100%;
+          margin-bottom: 48px;
+        }
+        .orderSummary{
+          width: 100%;
+        }
+      }
+    }
+    @media screen and (max-width: 768px) {
+  
+      .cartContent{
+        table{
+          tbody tr td:nth-child(1), thead tr th:nth-child(1),tbody tr td:nth-child(5), thead tr th:nth-child(5){
+            display: none;
+          }
+          td{
+            padding: 8px 5px;
+          }
+        }
+      }
+    }
+  }
+  
