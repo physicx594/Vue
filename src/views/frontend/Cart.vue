@@ -105,7 +105,6 @@ import Footer from '@/components/frontend/Footer'
 import CheckoutNav from '@/components/frontend/CheckoutNav'
 
 export default {
-  name: 'Cart',
   components: {
     Navbar,
     Footer,

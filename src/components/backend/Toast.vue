@@ -17,7 +17,6 @@
 /* global $ */
 
 export default {
-  name: 'Toast',
   data () {
     return {
       animate: {

@@ -16,7 +16,6 @@ import Navbar from '@/components/backend/Navbar'
 import Toast from '@/components/backend/Toast'
 
 export default {
-  name: 'Dashboard',
   components: {
     Navbar,
     Toast

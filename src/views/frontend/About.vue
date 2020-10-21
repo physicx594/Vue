@@ -44,7 +44,6 @@ import Banner from '@/components/frontend/Banner'
 import Footer from '@/components/frontend/Footer'
 
 export default {
-  name: 'About',
   components: {
     Navbar,
     Banner,

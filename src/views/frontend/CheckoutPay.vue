@@ -83,7 +83,6 @@ import Footer from '@/components/frontend/Footer'
 import CheckoutNav from '@/components/frontend/CheckoutNav'
 
 export default {
-  name: 'CheckoutPay',
   components: {
     Navbar,
     Footer,

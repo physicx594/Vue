@@ -41,7 +41,6 @@
 
 <script>
 export default {
-  name: 'LoadingPage',
   props: ['isLoading'],
   data () {
     return {

@@ -8,7 +8,6 @@
 
 <script>
 export default {
-  name: 'CheckoutNav',
   props: ['step1', 'step2', 'step3']
 
 }

@@ -59,7 +59,6 @@
 /* global $ */
 
 export default {
-  name: 'Storages',
   data () {
     return {
       options: {

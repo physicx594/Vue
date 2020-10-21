@@ -31,7 +31,6 @@
 
 <script>
 export default {
-  name: 'Pagination',
   props: ['pages'],
   methods: {
     pageNum (item) {

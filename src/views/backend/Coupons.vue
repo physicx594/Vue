@@ -150,7 +150,6 @@
 <script>
 export default {
   /* global $ */
-  name: 'Coupons',
   data () {
     return {
       isLoading: false,

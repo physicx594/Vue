@@ -9,7 +9,6 @@
 import LoadingPage from '@/components/frontend/LoadingPage'
 
 export default {
-  name: 'Home',
   components: {
     LoadingPage
   },

@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: 'Gotop',
   data () {
     return {
       show: false

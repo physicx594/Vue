@@ -199,7 +199,6 @@
 /* global $ */
 
 export default {
-  name: 'Products',
   props: ['token'],
   data () {
     return {

@@ -77,7 +77,6 @@ import Breadcrumb from '@/components/frontend/Breadcrumb'
 import Swiper from '@/components/frontend/Swiper'
 
 export default {
-  name: 'Product',
   components: {
     Navbar,
     Footer,

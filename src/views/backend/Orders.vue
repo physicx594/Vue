@@ -63,7 +63,6 @@
 
 <script>
 export default {
-  name: 'Orders',
   data () {
     return {
       isLoading: false,
