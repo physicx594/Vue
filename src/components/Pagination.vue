@@ -39,18 +39,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.Pagination {
-  .pagination{
-    .page-item:first-child .page-link {
-      border-top-left-radius: 50px;
-      border-bottom-left-radius: 50px;
-    }
-    .page-item:last-child .page-link {
-      border-top-right-radius: 50px;
-      border-bottom-right-radius: 50px;
-    }
-  }
-}
-</style>

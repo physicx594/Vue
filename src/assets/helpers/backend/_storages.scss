@@ -1,0 +1,50 @@
+.adminStorages {
+  .modal-body{
+    width: 1580;
+    margin:  auto;
+  }
+  margin-top: 70px;
+  tbody tr{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    th{
+      position: relative;
+      width: 25%;
+      &:hover{
+        cursor: zoom-in;
+      }
+      &:hover img{
+        filter:brightness(20%);
+      }
+      &:hover .imgHover{
+        color: white;
+        opacity: 1;
+      }
+      .imgHover{
+        position: absolute;
+        left: 50%;
+        top:50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        &:hover{
+          cursor: pointer;
+          color: red;
+        }
+      }
+    }
+  }
+  figure{
+    height: 150px;
+    overflow: hidden;
+    img{
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+}

@@ -49,33 +49,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-.navbar-dark .navbar-nav .nav-link{
-  position: relative;
-  font-weight: bold;
-  display: block;
-  margin:  0 8px;
-
-  &::after{
-    content: '';
-    // position: absolute;
-    // left: 0;
-    display: block;
-    width: 0;
-    height: 2px;
-    background:white;
-    transition: width .5s linear;
-  }
-  &:hover::after{
-    width: 100%;
-  }
-  span{
-    position: relative;
-    display: block;
-    padding: 8px 0;
-  }
-}
-
-</style>

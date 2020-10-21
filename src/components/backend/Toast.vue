@@ -43,18 +43,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.toast-body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 350px;
-  height: 44px;
-  border-radius: 6px;
-}
-  .fa-check-circle, .fa-ban{
-    padding-top: 3px;
-    color: white;
-  }
-</style>

@@ -106,9 +106,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.adminOrders{
-  margin-top: 70px;
-}
-</style>

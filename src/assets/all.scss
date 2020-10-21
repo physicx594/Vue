@@ -2,7 +2,7 @@
 @import './helpers/variables';
 @import '~bootstrap';
 @import './helpers/mixin';
-
+@import './helpers/pagination';
 
 @import './helpers/frontend/about';
 @import './helpers/frontend/cart';
@@ -23,3 +23,11 @@
 @import './helpers/frontend/components/navbar';
 @import './helpers/frontend/components/shoppingCart';
 @import './helpers/frontend/components/swiper';
+
+@import './helpers/backend/Coupons';
+@import './helpers/backend/login';
+@import './helpers/backend/orders';
+@import './helpers/backend/products';
+@import './helpers/backend/storages';
+@import './helpers/backend/components/navbar';
+@import './helpers/backend/components/toast';
