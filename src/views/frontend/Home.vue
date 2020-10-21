@@ -19,10 +19,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-
-  .home{
-    text-align: center;
-    height: 100%;
-  }
-</style>
