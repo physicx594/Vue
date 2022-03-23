@@ -52,7 +52,7 @@ export default new Vuex.Store({
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
       axios.get(api)
         .then((res) => {
-          context.commit('CART', res.data.data)
+          context.commit('CART', { type: 'getlist', data: res.data.data })
           context.commit('TOTALPRICE')
           context.commit('SHIPPINGFEE')
           //     this.totalPrice > 3000 ? this.shippingFee = 0 : this.shippingFee = 200
@@ -68,7 +68,7 @@ export default new Vuex.Store({
       }
       axios.post(api, cart)
         .then((res) => {
-          context.dispatch('getCart')
+          context.commit('CART', { type: 'add', data: res.data.data.product })
           context.commit('OPENMSG', true)
           setTimeout(() => {
             context.commit('OPENMSG', false)
@@ -120,7 +120,11 @@ export default new Vuex.Store({
       state.pagination = payload
     },
     CART (state, payload) {
-      state.cart = payload
+      if (payload.type === 'getlist') {
+        state.cart = payload.data
+      } else {
+        state.cart.push(payload.data)
+      }
     },
     TOTALPRICE (state) {
       state.totalPrice = 0
