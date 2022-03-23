@@ -224,7 +224,7 @@ export default {
       if (this.status.type === '') this.isLoading = true
       const params = {
         page,
-        paged: '15',
+        paged: '5',
         orderBy: 'created_at, updated_at',
         sort: 'asc' // 排序遞增
       }
