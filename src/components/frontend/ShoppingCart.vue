@@ -21,16 +21,16 @@
               <td>
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <button type="button" class="btn"  @click="changeQuantity(item, item.quantity - 1)"
-                    :disabled="item.quantity === 1 || formLoading === true">-</button>
+                    <button type="button" class="btn"  @click="changeQuantity(item, item.qty - 1)"
+                    :disabled="item.qty === 1 || formLoading === true">-</button>
                   </div>
-                  <input type="text" class="form-control quantity text-center p-0" min="1"  v-model="item.quantity" @change="changeQuantity(item, item.quantity)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+                  <input type="text" class="form-control quantity text-center p-0" min="1"  v-model="item.qty" @change="changeQuantity(item, item.qty)" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
                   <div class="input-group-append">
-                    <button type="button" class="btn" @click="changeQuantity(item, item.quantity + 1)" :disabled="formLoading === true">+</button>
+                    <button type="button" class="btn" @click="changeQuantity(item, item.qty + 1)" :disabled="formLoading === true">+</button>
                   </div>
                 </div>
               </td>
-              <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="formLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
+              <td><button type="button" class="btn delete" @click="delItem(item.id)" :disabled="formLoading === true"><i class="far fa-trash-alt fa-1x"></i></button>
               </td>
             </tr>
           </tbody>
@@ -69,7 +69,7 @@ export default {
     },
     delAll () {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/carts`
       this.axios.delete(api)
         .then((res) => {
           this.$emit('update')

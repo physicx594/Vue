@@ -1,5 +1,5 @@
 <template>
-    <Swiper ref="mySwiper" :options="swiperOptions" class="swiper my-5">
+    <SwiperContainer ref="mySwiper" :options="swiperOptions" class="swiper my-5">
         <SwiperSlide v-for="(item, index) in randomItems" :key="index">
             <figure>
                 <img :src="item.imageUrl[0]" alt="">
@@ -8,18 +8,18 @@
         <div class="swiper-pagination" slot="pagination"></div>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
-    </Swiper>
+    </SwiperContainer>
 
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import { Swiper as SwiperContainer, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
 export default {
-  name: 'Swiper',
+  name: 'SwiperCarousel',
   components: {
-    Swiper,
+    SwiperContainer,
     SwiperSlide
   },
   data () {
@@ -66,10 +66,10 @@ export default {
   },
   methods: {
     getRandomItem () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/products/all`
       this.axios.get(api)
         .then(res => {
-          this.randomItems = res.data.data
+          this.randomItems = res.data.products
           this.randomItems = this.randomItems.sort((_a, b) => Math.random() - 0.5)
           this.randomItems = this.randomItems.slice(0, 8)
         })

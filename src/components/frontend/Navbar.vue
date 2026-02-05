@@ -97,7 +97,7 @@ export default {
       this.$bus.$off('get-cart')
     },
     clearCart () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/carts`
       this.axios.delete(api)
         .then((res) => {
           console.log(res)

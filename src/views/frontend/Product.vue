@@ -107,11 +107,11 @@ export default {
   created () {
     this.$store.dispatch('updateLoading', true)
     const { id } = this.$route.params
-    const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/product/${id}`
+    const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/product/${id}`
     this.axios.get(api)
       .then(res => {
         this.tempProduct = {
-          ...res.data.data,
+          ...res.data.product,
           quantity: 1
         }
         this.selectPic = this.tempProduct.imageUrl[0]

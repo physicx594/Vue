@@ -75,10 +75,10 @@ export default {
   methods: {
     getStorages () {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/upload`
       this.axios.get(api)
         .then((res) => {
-          this.storages = res.data.data
+          this.storages = res.data.images
           this.isLoading = false
           if (this.status === 'delete') this.$bus.$emit('message', '刪除成功')
           this.status = ''
@@ -90,7 +90,7 @@ export default {
     },
     deleteImg (item) {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage/${item.id}`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/upload/${item.id}`
       this.axios.delete(api)
         .then((res) => {
           $('#deleteModal').modal('hide')

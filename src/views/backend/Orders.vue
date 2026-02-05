@@ -16,25 +16,25 @@
         <tbody>
           <tr scope="row" v-for="(item, index) in orders" :key="index">
             <th class="text-center">{{ index + 1 }}</th>
-            <td>{{ item.created.datetime }}</td>
+            <td>{{ new Date(item.create_at * 1000).toLocaleString() }}</td>
             <td>
               <ul class="list-unstyled">
                 <li
                   v-for="(product, i) in item.products"
                   :key="i"
                 >
-                  {{ product.product.title }} 數量：{{ product.quantity }}
+                  {{ product.product.title }} 數量：{{ product.qty }}
                   {{ product.product.unit }}
                 </li>
               </ul>
             </td>
             <td>{{ item.payment }}</td>
-            <td>${{ item.amount }}</td>
+            <td>${{ item.total }}</td>
             <td>
               <div class="custom-control custom-switch">
                 <input
                   :id="item.id"
-                  v-model="item.paid"
+                  v-model="item.is_paid"
                   type="checkbox"
                   class="custom-control-input"
                   @click="orderPaid(item)"
@@ -44,7 +44,7 @@
                   :for="item.id"
                 >
                   <strong
-                    v-if="item.paid"
+                    v-if="item.is_paid"
                     class="text-success"
                   >已付款</strong>
                   <span
@@ -73,11 +73,11 @@ export default {
   methods: {
     getOrders () {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/orders`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/orders`
       this.axios
         .get(api)
         .then((res) => {
-          this.orders = res.data.data
+          this.orders = res.data.orders
           this.isLoading = false
         })
         .catch((res) => {
@@ -87,11 +87,8 @@ export default {
     },
     orderPaid (item) {
       this.isLoading = true
-      let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/orders/${item.id}/paid`
-      if (item.paid) {
-        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/orders/${item.id}/unpaid`
-      }
-      this.axios.patch(api)
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/order/${item.id}`
+      this.axios.put(api, { data: { is_paid: !item.is_paid } })
         .then((res) => {
           this.getOrders()
           this.$bus.$emit('message', '修改成功')

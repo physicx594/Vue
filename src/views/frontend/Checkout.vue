@@ -122,14 +122,14 @@ export default {
   },
   methods: {
     getCart () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/cart`
       this.axios.get(api)
         .then((res) => {
-          this.cart = res.data.data
+          this.cart = res.data.data.carts
           this.totalPrice = 0
           this.cart.forEach((item) => {
             this.totalPrice += Number(
-              item.product.price * item.quantity || item.product.origin_price * item.quantity
+              item.product.price * item.qty || item.product.origin_price * item.qty
             )
           })
           this.totalPrice > 3000 ? this.shippingFee = 0 : this.shippingFee = 200
@@ -137,12 +137,22 @@ export default {
         })
     },
     createOrder () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders`
-      const order = { ...this.form }
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/order`
+      const order = {
+        data: {
+          user: {
+            name: this.form.name,
+            email: this.form.email,
+            tel: this.form.tel,
+            address: this.form.address
+          },
+          message: this.form.message
+        }
+      }
       this.axios.post(api, order)
         .then(res => {
           this.getCart()
-          this.$bus.$emit('orderId', res.data.data.id)
+          this.$bus.$emit('orderId', res.data.orderId)
         })
     }
   },

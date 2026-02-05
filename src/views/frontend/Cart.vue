@@ -26,17 +26,17 @@
                       <td>
                           <div class="input-group justify-content-center">
                             <div class="input-group-prepend">
-                                <button type="button" class="btn "  @click="changeQuantity(item, item.quantity - 1)"
-                                :disabled="item.quantity === 1 || formLoading === true">-</button>
+                                <button type="button" class="btn "  @click="changeQuantity(item, item.qty - 1)"
+                                :disabled="item.qty === 1 || formLoading === true">-</button>
                             </div>
-                            <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.quantity" @change="changeQuantity(item, item.quantity)" >
+                            <input type="number" class="form-control col-4 quantity text-center p-0" min= 1  v-model="item.qty" @change="changeQuantity(item, item.qty)" >
                             <div class="input-group-append">
-                                <button type="button" class="btn" @click="changeQuantity(item, item.quantity + 1)" :disabled="formLoading === true">+</button>
+                                <button type="button" class="btn" @click="changeQuantity(item, item.qty + 1)" :disabled="formLoading === true">+</button>
                             </div>
                           </div>
                       </td>
-                      <td>{{ item.product.price * item.quantity | money }}</td>
-                      <td><button type="button" class="btn delete" @click="delItem(item.product.id)" :disabled="formLoading === true"><i class="far fa-trash-alt"></i></button>
+                      <td>{{ item.product.price * item.qty | money }}</td>
+                      <td><button type="button" class="btn delete" @click="delItem(item.id)" :disabled="formLoading === true"><i class="far fa-trash-alt"></i></button>
                       </td>
                       </tr>
                   </tbody>
@@ -124,12 +124,12 @@ export default {
     useCoupon () {
       this.formLoading = true
       this.couponMsg = ''
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/coupon/search`
-      this.axios.post(api, { code: this.couponCode })
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/coupon`
+      this.axios.post(api, { data: { code: this.couponCode } })
         .then(res => {
           console.log(res)
           this.coupon = res.data.data
-          this.discountPrice = Math.floor(this.totalPrice - this.totalPrice * (this.coupon.percent / 100))
+          this.discountPrice = Math.floor(this.totalPrice - this.coupon.final_total)
           this.formLoading = false
         })
         .catch(error => {

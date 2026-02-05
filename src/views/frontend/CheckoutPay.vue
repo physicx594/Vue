@@ -6,7 +6,7 @@
           <CheckoutNav :step1="step" :step2="step" :step3="step"></CheckoutNav>
           <div class="cartList p-3">
             <div class="text-center">
-              <div v-if="tempProduct.amount">合計{{ tempProduct.amount | money }}</div>
+              <div v-if="tempProduct.total">合計{{ tempProduct.total | money }}</div>
               <span style="font-size:13px" v-if="tempProduct.products">購物車({{ tempProduct.products.length }}件)</span>
               <span class="arrowDown" @click="open = !open"><i class="fa fa-angle-down text-danger" :class="{open: open}" ></i></span>
             </div>
@@ -25,15 +25,15 @@
                       <tr scope="row" v-for="(item, index) in tempProduct.products" :key="index">
                       <td class="pic"><img :src="item.product.imageUrl[0]" class="img-fluid"></td>
                       <td>{{ item.product.title }}</td>
-                      <td >x{{ item.quantity }}</td>
-                      <td v-if="item.product.price">{{ item.product.price * item.quantity | money }}</td>
+                      <td >x{{ item.qty }}</td>
+                      <td v-if="item.product.price">{{ item.product.price * item.qty | money }}</td>
                       </tr>
                   </tbody>
                   <tfoot>
                     <tr>
                       <td colspan="2" class="text-right" ><i class="fa fa-angle-up fa-2x text-danger" @click="open = !open"></i></td>
                       <th>合計</th>
-                      <th class="text-danger" v-if="tempProduct.amount">{{ tempProduct.amount | money }}</th>
+                      <th class="text-danger" v-if="tempProduct.total">{{ tempProduct.total | money }}</th>
                     </tr>
                   </tfoot>
               </table>
@@ -65,7 +65,7 @@
                   </tr>
                   <tr>
                     <td>付款狀態</td>
-                    <td class="text-danger font-weight-bold">{{ tempProduct.paid }}</td>
+                    <td class="text-danger font-weight-bold">{{ tempProduct.is_paid }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -100,14 +100,14 @@ export default {
     getOrder (id) {
       console.log(id)
       this.$store.dispatch('updateLoading', true)
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/${id}`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/order/${id}`
       this.axios.get(api)
         .then(res => {
-          this.tempProduct = res.data.data
-          if (this.tempProduct.paid === false) {
-            this.tempProduct.paid = '未付款'
+          this.tempProduct = res.data.order
+          if (this.tempProduct.is_paid === false) {
+            this.tempProduct.is_paid = '未付款'
           } else {
-            this.tempProduct.paid = '已付款'
+            this.tempProduct.is_paid = '已付款'
           }
           this.$store.dispatch('getCart')
           this.$store.dispatch('updateLoading', false)
@@ -118,7 +118,7 @@ export default {
         })
     },
     getOrders () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/orders`
       this.axios.get(api)
         .then(res => {
           // this.tempProduct = res.data.data
@@ -126,12 +126,12 @@ export default {
         })
     },
     paying () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders/${this.tempProduct.id}/paying`
+      const orderId = this.tempProduct.id
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/pay/${orderId}`
       this.axios.post(api)
         .then(res => {
-          this.tempProduct = res.data.data
-          this.getOrder()
           console.log(res)
+          this.getOrder(orderId)
         })
     }
   },

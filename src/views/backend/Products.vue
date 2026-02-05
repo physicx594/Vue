@@ -61,10 +61,10 @@
             <td>
               <div
                 class="box"
-                :class="{ open: item.enabled }"
+                :class="{ open: item.is_enabled }"
                 @click="state('enabled', item)"
               >
-                <div class="circle" :class="{ open: item.enabled }"></div>
+                <div class="circle" :class="{ open: item.is_enabled }"></div>
               </div>
             </td>
             <td>
@@ -129,11 +129,11 @@
                   <div class="row">
                     <div class="form-group col-4">
                       <label for="origin_price">原價</label>
-                      <input type="number" id="origin_price" class="form-control"  placeholder="請輸入原價" v-model="tempProduct.origin_price">
+                      <input type="number" id="origin_price" class="form-control"  placeholder="請輸入原價" v-model.number="tempProduct.origin_price">
                     </div>
                     <div class="form-group col">
                       <label for="price">售價</label>
-                      <input type="number" id="price" class="form-control"  placeholder="請輸入售價" v-model="tempProduct.price">
+                      <input type="number" id="price" class="form-control"  placeholder="請輸入售價" v-model.number="tempProduct.price">
                     </div>
                     <div class="form-group col">
                       <label for="coupon" >可用優惠券</label>
@@ -157,8 +157,8 @@
                     </div>
                   </div>
                     <div class="form-group">
-                      <input type="checkbox" id="enabled" v-model="tempProduct.enabled">
-                      <label for="enabled">是否上架
+                      <input type="checkbox" id="is_enabled" v-model="tempProduct.is_enabled" :true-value="1" :false-value="0">
+                      <label for="is_enabled">是否上架
                       </label>
                     </div>
                   </div>
@@ -213,7 +213,7 @@ export default {
       isLoading: false,
       pagination: {},
       tempProduct: {
-        enabled: true,
+        is_enabled: 1,
         imageUrl: [],
         options: {}
       }
@@ -228,13 +228,13 @@ export default {
         orderBy: 'created_at, updated_at',
         sort: 'asc' // 排序遞增
       }
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/products?page=${params.page}&sort=${params.sort}&paged=${params.paged}`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/products?page=${params.page}`
       this.axios
         .get(api)
         .then((res) => {
           this.isLoading = false
-          this.products = res.data.data
-          this.pagination = res.data.meta.pagination
+          this.products = res.data.products
+          this.pagination = res.data.pagination
           if (this.status.message) {
             this.$bus.$emit('message', this.status.message)
           }
@@ -251,7 +251,7 @@ export default {
       switch (type) {
         case 'add':
           this.tempProduct = {
-            enabled: true,
+            is_enabled: 1,
             imageUrl: [],
             options: {
               quantity: 0,
@@ -260,17 +260,11 @@ export default {
           }
           $('#productModal').modal('show')
           break
-        case 'edit': {
-          const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${item.id}`
-          this.axios.get(api)
-            .then(res => {
-              this.tempProduct = res.data.data
-              $('#productModal').modal('show')
-            })
-            .catch(error => {
-              console.log(error)
-            })
-        }
+        case 'edit':
+          this.tempProduct = { ...item }
+          if (!this.tempProduct.imageUrl) this.tempProduct.imageUrl = []
+          if (!this.tempProduct.options) this.tempProduct.options = {}
+          $('#productModal').modal('show')
           break
         case 'delete':
           $('#deleteModal').modal('show')
@@ -283,16 +277,16 @@ export default {
     updateProduct () {
       this.isLoading = true
       // 新增
-      let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product`
+      let api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/product`
       let httpMethod = 'post'
       this.status.message = '新增成功'
       // 編輯
       if (this.tempProduct.id) {
         this.status.message = '編輯成功'
-        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`
-        httpMethod = 'patch'
+        api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/product/${this.tempProduct.id}`
+        httpMethod = 'put'
       }
-      this.axios[httpMethod](api, this.tempProduct)
+      this.axios[httpMethod](api, { data: this.tempProduct })
         .then(() => {
           this.isLoading = false
           $('#productModal').modal('hide')
@@ -313,7 +307,7 @@ export default {
       formData.append('file', uploadedFile)
 
       // 路由、驗證
-      const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage`
+      const url = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/upload`
       // axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`
 
       // 請自行完成 Ajax 範例
@@ -325,7 +319,7 @@ export default {
         .then((res) => {
           console.log(res)
           if (res.status === 200) {
-            this.tempProduct.imageUrl.push(res.data.data.path)
+            this.tempProduct.imageUrl.push(res.data.imageUrl)
           }
         })
         .catch((error) => {
@@ -335,7 +329,7 @@ export default {
     },
     deleteItem () {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/product/${this.tempProduct.id}`
       this.axios
         .delete(api, this.tempProduct)
         .then((res) => {
@@ -354,7 +348,7 @@ export default {
           this.products.forEach((item) => {
             if (item.id === stateItem.id) {
               this.tempProduct = stateItem
-              this.tempProduct.enabled = !this.tempProduct.enabled
+              this.tempProduct.is_enabled = this.tempProduct.is_enabled ? 0 : 1
             }
           })
           break
@@ -368,8 +362,8 @@ export default {
           })
           break
       }
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`
-      this.axios.patch(api, this.tempProduct)
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/product/${this.tempProduct.id}`
+      this.axios.put(api, { data: this.tempProduct })
         .then(() => {
           this.getProducts()
         })

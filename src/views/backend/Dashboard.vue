@@ -34,14 +34,18 @@ export default {
         /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
-      this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`
-      const api = `${process.env.VUE_APP_APIPATH}/auth/check`
+      this.axios.defaults.headers.common.Authorization = this.token
+      const api = `${process.env.VUE_APP_API_URL}/api/user/check`
       this.axios
         .post(api, {
           api_token: this.token
         })
         .then((res) => {
-          this.checkSuccess = true
+          if (res.data.success) {
+            this.checkSuccess = true
+          } else {
+            this.$router.push('/login')
+          }
         })
         .catch((error) => {
           this.$router.push('/login')

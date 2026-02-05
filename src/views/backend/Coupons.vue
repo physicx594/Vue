@@ -24,7 +24,7 @@
             <th class="text-center">{{ index + 1 }}</th>
             <td>{{ item.title }}</td>
             <td>{{ item.percent }}</td>
-            <td>{{ item.deadline.datetime }}</td>
+            <td>{{ new Date(item.due_date * 1000).toLocaleString() }}</td>
             <td class="countdown text-danger" v-if="item.countdownStatus === '過期囉'">{{ countdown(item) }}</td>
             <td class="countdown" v-else>{{ countdown(item) }}</td>
 
@@ -34,8 +34,8 @@
               </div>
             </td>
             <td v-else>
-              <div class="box" :class="{ open: item.enabled }" @click="state('enabled', item)">
-                <div class="circle" :class="{ open: item.enabled }"></div>
+              <div class="box" :class="{ open: item.is_enabled }" @click="state('enabled', item)">
+                <div class="circle" :class="{ open: item.is_enabled }"></div>
               </div>
             </td>
             <td>
@@ -90,14 +90,15 @@
               </div>
               <div class="form-group">
                 <label for="price">折扣百分比</label>
-                <input id="price" v-model="tempCoupon.percent" type="number" class="form-control" placeholder="請輸入折扣數量">
+                <input id="price" v-model.number="tempCoupon.percent" type="number" class="form-control" placeholder="請輸入折扣數量">
               </div>
               <div class="form-group">
                 <div class="form-check">
-                  <input id="enabled" v-model="tempCoupon.enabled"
+                  <input id="is_enabled" v-model="tempCoupon.is_enabled"
                     class="form-check-input" type="checkbox"
+                    :true-value="1" :false-value="0"
                     :disabled="tempCoupon.countdownStatus === '過期囉'">
-                  <label class="form-check-label" for="enabled">
+                  <label class="form-check-label" for="is_enabled">
                     是否啟用
                   </label>
                 </div>
@@ -161,9 +162,9 @@ export default {
       },
       tempCoupon: {
         title: '',
-        enabled: false,
+        is_enabled: 0,
         percent: 100,
-        deadline_at: 0,
+        due_date: 0,
         code: ''
       },
       due_date: '',
@@ -173,10 +174,10 @@ export default {
   methods: {
     getCoupons () {
       this.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupons`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/coupons`
       this.axios.get(api)
         .then((res) => {
-          this.coupons = res.data.data
+          this.coupons = res.data.coupons
           this.coupons.forEach((item) => {
             this.$set(item, 'countdownStatus', '')
           })
@@ -191,16 +192,16 @@ export default {
         })
     },
     updateCoupons () {
-      this.tempCoupon.deadline_at = `${this.due_date} ${this.due_time}`
-      let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon`
+      this.tempCoupon.due_date = Math.floor(new Date(`${this.due_date} ${this.due_time}`).getTime() / 1000)
+      let api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/coupon`
       let http = 'post'
       this.status.message = '新增成功'
       if (this.tempCoupon.id) {
         this.status.message = '編輯成功'
-        api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
-        http = 'patch'
+        api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/coupon/${this.tempCoupon.id}`
+        http = 'put'
       }
-      this.axios[http](api, this.tempCoupon)
+      this.axios[http](api, { data: this.tempCoupon })
         .then((res) => {
           $('#couponModal').modal('hide')
           this.getCoupons()
@@ -210,7 +211,7 @@ export default {
         })
     },
     deleteCoupon () {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/coupon/${this.tempCoupon.id}`
       this.axios.delete(api)
         .then((res) => {
           this.status.message = '刪除成功'
@@ -229,8 +230,9 @@ export default {
           break
         case 'edit': {
           this.tempCoupon = { ...item }
-          const deadLineAt = this.tempCoupon.deadline.datetime.split(' ');
-          [this.due_date, this.due_time] = deadLineAt
+          const deadlineDate = new Date(this.tempCoupon.due_date * 1000)
+          this.due_date = deadlineDate.toISOString().split('T')[0]
+          this.due_time = deadlineDate.toTimeString().split(' ')[0]
           $('#couponModal').modal('show')
           break
         }
@@ -246,13 +248,13 @@ export default {
           this.coupons.forEach((item) => {
             if (item.id === stateItem.id) {
               this.tempCoupon = stateItem
-              this.tempCoupon.enabled = !this.tempCoupon.enabled
+              this.tempCoupon.is_enabled = this.tempCoupon.is_enabled ? 0 : 1
             }
           })
           break
       }
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
-      this.axios.patch(api, this.tempCoupon)
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/coupon/${this.tempCoupon.id}`
+      this.axios.put(api, { data: this.tempCoupon })
         .then(() => {
           this.getCoupons()
         })
@@ -268,7 +270,7 @@ export default {
     countdown () {
       return function (v) {
         console.log(v)
-        const deadline = Date.parse(v.deadline.datetime)
+        const deadline = v.due_date * 1000
         const now = new Date().getTime()
         const days = Math.floor(((deadline - now) / 1000 / 60 / 60) / 24)
         const hours = Math.floor(((deadline - now) / 1000 / 60 / 60) % 24)
@@ -276,7 +278,7 @@ export default {
 
         if (minutes < 0) {
           v.countdownStatus = '過期囉'
-          v.enabled = false
+          v.is_enabled = 0
           return v.countdownStatus
         } else if (days <= 0 && hours <= 0) {
           return minutes + '分鐘'

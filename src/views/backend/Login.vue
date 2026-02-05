@@ -51,9 +51,9 @@ export default {
   },
   methods: {
     signin () {
-      const api = `${process.env.VUE_APP_APIPATH}/auth/login`
+      const api = `${process.env.VUE_APP_API_URL}/admin/signin`
       this.axios
-        .post(api, this.user)
+        .post(api, { username: this.user.email, password: this.user.password })
         .then(res => {
           const token = res.data.token
           const expired = res.data.expired
@@ -74,9 +74,9 @@ export default {
         /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/products`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/admin/products`
       // 將 Token 加入到 Headers 內
-      this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`
+      this.axios.defaults.headers.common.Authorization = this.token
       this.axios.get(api).then(res => {
         console.log(res)
       })

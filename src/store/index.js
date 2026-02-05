@@ -30,12 +30,12 @@ export default new Vuex.Store({
         orderBy: 'created_at, updated_at',
         sort: 'asc' // 排序遞增
       }
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products?page=${params.page}&sort=${params.sort}&paged=${params.paged}`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/products?page=${params.page}`
       axios.get(api)
         .then(res => {
           console.log(res.data)
-          context.commit('GETPRODUCTS', res.data.data)
-          context.commit('PAGINATION', res.data.meta.pagination)
+          context.commit('GETPRODUCTS', res.data.products)
+          context.commit('PAGINATION', res.data.pagination)
           if (this.category !== '全部商品') {
             window.scrollTo({
               top: 561,
@@ -49,10 +49,10 @@ export default new Vuex.Store({
         })
     },
     getCart (context) {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/cart`
       axios.get(api)
         .then((res) => {
-          context.commit('CART', { type: 'getlist', data: res.data.data })
+          context.commit('CART', { type: 'getlist', data: res.data.data.carts })
           context.commit('TOTALPRICE')
           context.commit('SHIPPINGFEE')
           //     this.totalPrice > 3000 ? this.shippingFee = 0 : this.shippingFee = 200
@@ -61,14 +61,16 @@ export default new Vuex.Store({
         })
     },
     addToCart (context, { item, quantity }) {
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/cart`
       const cart = {
-        product: item.id,
-        quantity
+        data: {
+          product_id: item.id,
+          qty: quantity
+        }
       }
       axios.post(api, cart)
-        .then((res) => {
-          context.commit('CART', { type: 'add', data: res.data.data.product })
+        .then(() => {
+          context.dispatch('getCart')
           context.commit('OPENMSG', true)
           setTimeout(() => {
             context.commit('OPENMSG', false)
@@ -86,7 +88,7 @@ export default new Vuex.Store({
     },
     delItem (context, id) {
       context.commit('FORMLOADING', true)
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/${id}`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/cart/${id}`
       axios.delete(api)
         .then((res) => {
           context.dispatch('getCart')
@@ -95,12 +97,14 @@ export default new Vuex.Store({
     },
     changeQuantity (context, { item, quantity }) {
       context.commit('FORMLOADING', true)
-      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`
+      const api = `${process.env.VUE_APP_API_URL}/api/${process.env.VUE_APP_UUID}/cart/${item.id}`
       const cart = {
-        product: item.product.id,
-        quantity
+        data: {
+          product_id: item.product.id,
+          qty: quantity
+        }
       }
-      axios.patch(api, cart)
+      axios.put(api, cart)
         .then((res) => {
           context.dispatch('getCart')
         })
@@ -130,7 +134,7 @@ export default new Vuex.Store({
       state.totalPrice = 0
       state.cart.forEach((item) => {
         state.totalPrice += Number(
-          item.product.price * item.quantity || item.product.origin_price * item.quantity
+          item.product.price * item.qty || item.product.origin_price * item.qty
         )
       })
     },
